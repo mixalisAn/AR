@@ -238,6 +238,7 @@ public class PoiAboutFragment extends SherlockFragment implements
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.wikipediaLink:
+			((PoiActivity) getActivity()).pauseAudioForFragment();
 			Intent webIntent = new Intent();
 			webIntent.setClass(getActivity(), PoiBrowser.class);
 			webIntent.putExtra("Link", markerLink);

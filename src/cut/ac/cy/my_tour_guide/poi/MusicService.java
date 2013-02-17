@@ -33,9 +33,13 @@ public class MusicService extends Service{
 	
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.i(TAG, "onBind has been called");
 		return mBinder;
 	}
 	
+	/**kaleitai mono mia fora stin arxi pou dimiourgeitai to service
+	 * 
+	 */
 	@Override
 	public void onCreate(){
 		Log.i(TAG, "service created");
@@ -43,8 +47,18 @@ public class MusicService extends Service{
 				MusicResources.getMusicResources(), "raw", "cut.ac.cy.my_tour_guide");
 		mPlayer = MediaPlayer.create(this, audioRes);	
 	}
-
+	
+	/**
+	 * kaleitai otan kapoio activity kalei to startservice. An polla activities to kaloun kai exei ksekiniese
+	 * to service mono auti i methodos ekteleitai kai oxi i onCreate
+	 */
     @Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+    	Log.i(TAG, "Service onStartCommand executed.");
+		return START_STICKY;
+	}
+
+	@Override
     public void onDestroy() {
     	Log.i(TAG, "service destroyed");
         mPlayer.release();
@@ -89,7 +103,7 @@ public class MusicService extends Service{
     
     @Override
     public boolean onUnbind(Intent intent){
-    	Log.w("service","onUnbind");
+    	Log.i(TAG,"onUnbind");
     	return false;
     	
     }

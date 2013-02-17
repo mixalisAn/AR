@@ -52,10 +52,12 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	private ImageView forwardView;
 	private MusicService mService;
 	private boolean mBound = false;
+	private Intent intentService = null;
 
 	private boolean showMusicPlayer = false;
 	private boolean audioExists = false;
 	private boolean audioStarted = false;
+	private boolean audioPlaying = false;
 	private int audioPosition;
 
 	private long markerId;
@@ -78,6 +80,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		if (isAudioResourceExist()) {
 			MusicResources.setMusicResources(markerResName);
+			intentService = new Intent(this, MusicService.class);
+			startService(intentService);
 		}
 
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -92,11 +96,13 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		musicLayout.setBackgroundColor(Color.argb(180, 00, 00, 00));
 		if (savedInstanceState != null) {
 			showMusicPlayer = savedInstanceState
-					.getBoolean("Music Player State");
-		Log.i(TAG, "na dw an mpainei edw" + String.valueOf(mBound));
-			
+					.getBoolean("Music Player Visibility");
 			if (showMusicPlayer) {
 				musicLayout.setVisibility(LinearLayout.VISIBLE);
+			}
+			audioPlaying = savedInstanceState.getBoolean("Music Player State");
+			if (audioPlaying){
+				pausePlayView.setImageResource(R.drawable.pause);
 			}
 
 		}
@@ -133,6 +139,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
+		Log.i(TAG, "on Start executed");
 		if (audioExists) {
 			// Bind to service
 			Intent intent = new Intent(this, MusicService.class);
@@ -148,17 +155,27 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.i(TAG, "On Pause executed");
 		if (audioExists) {
-			// UnBind from the service
-			if (mBound && isFinishing()) {
-				unbindService(mConnection);
-				mBound = false;
-			} else if (mBound && isNotTopActivity()) {
-				unbindService(mConnection);
-				mBound = false;
+			//stop service
+			if (isFinishing()) {
+				Log.i(TAG, "isFinishing executed");
+				if(mBound){
+					unbindService(mConnection);
+					mBound = false;
+				}
+				
+				stopService(intentService);
+			} else if (isNotTopActivity()) {
+				Log.i(TAG, "is Not top Activity executed");
 				audioPosition = mService.getAudioPosition();
 				audioStarted = mService.isAudioStarted();
+				mService.stopAudio();
 			}
+		}
+		if(mBound){
+			unbindService(mConnection);
+			mBound = false;
 		}
 	}
 
@@ -171,10 +188,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Log.i(TAG, String.valueOf(taskInfo.size()));
 		if (!taskInfo.isEmpty()) {
 			ComponentName topActivity = taskInfo.get(0).topActivity;
-			// Log.i(TAG, "Top activity package name: " +
-			// topActivity.getPackageName());
-			// Log.i(TAG, "Top activity package name: " +
-			// context.getPackageName());
+		
 			if (!topActivity.getPackageName().equals(context.getPackageName())) {
 
 				return true;
@@ -193,7 +207,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 
-		outState.putBoolean("Music Player State", showMusicPlayer);
+		outState.putBoolean("Music Player Visibility", showMusicPlayer);
+		outState.putBoolean("Music Player State", audioPlaying);
 	}
 
 	@Override
@@ -225,7 +240,17 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		}
 	}
-
+	
+	//auti i methodos xrisimopoieitai gia na mporei to fragment PoiAboutFragment otan kaleitai 
+	//i activity poy anoigei ton browser tote na stamataei to tragoudi
+	public void pauseAudioForFragment(){
+		if(mBound && mService.isAudioPlaying()){
+			audioPosition = mService.getAudioPosition();
+			audioStarted = mService.isAudioStarted();
+			mService.playPauseAudio();
+		}
+	}
+	
 	public long getMarkerId() {
 		return markerId;
 	}
@@ -241,7 +266,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			// We've bound to LocalService, cast the IBinder and get
 			// LocalService instance
-			Log.i(TAG, "Service connection Started");
+			Log.i(TAG, "Service binded");
 			LocalBinder binder = (LocalBinder) service;
 			mService = binder.getService();
 			mBound = true;
@@ -342,6 +367,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 	}
 
+	
+	
 	@Override
 	public void onClick(View view) {
 		if (mBound) {
@@ -367,8 +394,10 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			case R.id.pausePlay:
 				if (mService.isAudioPlaying()) {
 					pausePlayView.setImageResource(R.drawable.play);
+					audioPlaying = false;
 				} else {
 					pausePlayView.setImageResource(R.drawable.pause);
+					audioPlaying = true;
 				}
 				mService.playPauseAudio();
 				break;
