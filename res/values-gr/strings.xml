@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AugmentedReality</string>
+    <string name="menu_settings">Ρυθμίσεις</string>
+    <string name="title_activity_maps">Χάρτες</string>
+    <string name="mapDisplay">Προβολή χάρτη</string>
+    <string name="gallery">Gallery of:</string>
+    <string name="title_activity_poi_info">Πληροφορίες</string>
+    <string name="wikipedia">Wikipedia:</string>
+    <string name="navigation">Navigate to:</string>
+    <string name="share">Share:</string>
+    <string name="network_settings">Ρυθμίσεις Δικτύου</string>
+    <string name="map_settings">Ρυθμίσεις</string>
+    <string name="info">Πληροφορίες</string>	
+     <string name="title_activity_map_about">Πληροφορίες</string>
+    <string name="map_about">This is a google map v2 which shows the markers and your position on map</string>
+</resources>

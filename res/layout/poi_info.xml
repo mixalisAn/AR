@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7CB51" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+
+            <ImageView
+                android:id="@+id/markerMainImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                 />
+
+            <TextView
+                android:id="@+id/markerTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/markerMainImage"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/markerAddress"
+                android:layout_toRightOf="@+id/markerMainImage"
+                android:paddingLeft="30dp"
+                android:text="@string/marker_address"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/markerAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/markerMainImage"
+                android:layout_toRightOf="@+id/markerMainImage"
+                android:gravity="center_vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:textColor="#000000"
+                android:textStyle="italic"
+                android:typeface="serif" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/markerOtherActions"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/textlines"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="@string/poi_actions"
+            android:textColor="#B6B0A0"
+            android:textSize="18sp"
+            android:typeface="serif" />
+
+        <TableRow
+            android:id="@+id/wikipediaLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp" >
+
+            <ImageView
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wikipedia" />
+
+            <TextView
+                android:id="@+id/wikipedia"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/wikipedia"
+                android:textColor="#000000" />
+            
+
+            <TextView
+                android:id="@+id/markerLink1"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:textColor="#524DF0"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textStyle="italic" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/navigationLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="startNavigation"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp" >
+
+            <ImageView
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/navigation" />
+
+            <TextView
+                android:id="@+id/navigation"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/navigation"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/markerLink2"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textStyle="italic" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/shareLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="shareInfo"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp" >
+
+            <ImageView
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/share" />
+
+            <TextView
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@string/share"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/markerLink3"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:textColor="#000000"
+                android:maxLines="1"
+                android:scrollbars="horizontal"
+                android:textStyle="italic" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/markerInfoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/textlines"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="5dp"
+            android:text="@string/info"
+            android:textColor="#B6B0A0"
+            android:textSize="18sp"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/markerInfo"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:gravity="fill_horizontal"
+            android:padding="10dp"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="10dp" >
+
+            <Button
+                android:id="@+id/readMoreButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/style_button_read"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

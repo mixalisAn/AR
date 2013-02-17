@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="On screen icons" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="zoom_buttons"
+            android:summary="Enable zoom buttons"
+            android:title="Zoom Buttons" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="compass"
+            android:summary="Enable compass"
+            android:title="Compass Display" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="mylocation"
+            android:summary="Enable my location button"
+            android:title="My Location Display" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Map Display" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/map_displays"
+            android:entryValues="@array/map_displays_values"
+            android:key="map_display_preference"
+            android:summary="Select the default display of the map"
+            android:title="Display Options" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Actions" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="zoom_gesture"
+            android:summary="Enable double tap or pinch to zoom the camera"
+            android:title="Zoom Gesture" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="scroll_gesture"
+            android:summary="Enable swipe to pan the camera"
+            android:title="Scroll Gesture" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="rotate_gesture"
+            android:summary="Enable two-finger rotation of camera"
+            android:title="Rotate Gesture" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="tilt_gesture"
+            android:summary="Enable two-finger down swipe to tilte the camera"
+            android:title="Tilt Gesture" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
