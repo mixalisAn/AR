@@ -3,28 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
-     <ViewAnimator
-        android:id="@+id/nowImageAnimator"
+
+    <ImageView
+        android:id="@+id/present"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/now" />
-
-    </ViewAnimator>
-
-	<ImageView
-	    android:id="@+id/imageView2"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_weight="1"
-	    android:scaleType="fitXY"
-	    android:src="@drawable/then" />
-    
+    <ImageView
+        android:id="@+id/past"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

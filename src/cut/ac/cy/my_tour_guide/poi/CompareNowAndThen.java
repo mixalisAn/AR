@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -22,8 +23,19 @@ public class CompareNowAndThen extends SherlockFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i(TAG, "onCreateView has been called");
-		View view = inflater.inflate(R.layout.compare_now_and_then, container, false);
-
+		String markerResName = ((PoiActivity) getActivity()).getMarkerResName();
+		final View view = inflater.inflate(R.layout.compare_now_and_then, container, false);
+		//set the imageresources for the imageviews
+		ImageView presentImageView = (ImageView)view.findViewById(R.id.present);
+		ImageView pastImageView = (ImageView)view.findViewById(R.id.past);
+		int presentRes = getResources().getIdentifier(markerResName + "_present", "drawable",
+				"cut.ac.cy.my_tour_guide");
+		presentImageView.setImageResource(presentRes);
+		int pastRes = getResources().getIdentifier(markerResName + "_past", "drawable",
+				"cut.ac.cy.my_tour_guide");
+		pastImageView.setImageResource(pastRes);
+		
+		
 		return view;
 	}
 

@@ -255,6 +255,10 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		return markerId;
 	}
 
+	public String getMarkerResName(){
+		return markerResName;
+	}
+	
 	/**
 	 * Defines callbacks for service binding, passed to bindService() i iBinder
 	 * einai ousiastika i localBinder pou exei tin methodo pou kaleiitai
