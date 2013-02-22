@@ -1065,7 +1065,10 @@ containing a value of this type.
         public static final int style_button_read=0x7f020087;
         public static final int test=0x7f020088;
         public static final int textlines=0x7f020089;
-        public static final int wikipedia=0x7f02008a;
+        public static final int town_hall=0x7f02008a;
+        public static final int town_hall_past=0x7f02008b;
+        public static final int town_hall_present=0x7f02008c;
+        public static final int wikipedia=0x7f02008d;
     }
     public static final class id {
         public static final int FrameLayout=0x7f060065;
@@ -1235,6 +1238,7 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int rialto_theater=0x7f050000;
+        public static final int town_hall=0x7f050001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

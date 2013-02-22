@@ -116,14 +116,6 @@ public class MusicService extends Service{
     	return mPlayer.getCurrentPosition();
     }
     
-    public void setAudioStarted(boolean audioState){
-    	audio_started = audioState; 
-    }
-    
-    public boolean isAudioStarted(){
-    	return audio_started;
-    }
-    
     public boolean isAudioPlaying(){
     	return mPlayer.isPlaying();
     }
@@ -140,7 +132,6 @@ public class MusicService extends Service{
   		if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
   			mPlayer.setVolume(1f, 1f);
   			mPlayer.start();
-  			setAudioStarted(true);
   		}
   	}
 

@@ -285,7 +285,10 @@ int drawable stop 0x7f020086
 int drawable style_button_read 0x7f020087
 int drawable test 0x7f020088
 int drawable textlines 0x7f020089
-int drawable wikipedia 0x7f02008a
+int drawable town_hall 0x7f02008a
+int drawable town_hall_past 0x7f02008b
+int drawable town_hall_present 0x7f02008c
+int drawable wikipedia 0x7f02008d
 int id FrameLayout 0x7f060065
 int id FrameLayout1 0x7f06003c
 int id FrameLayout2 0x7f060038
@@ -445,6 +448,7 @@ int menu home 0x7f0e0000
 int menu maps 0x7f0e0001
 int menu poi 0x7f0e0002
 int raw rialto_theater 0x7f050000
+int raw town_hall 0x7f050001
 int string abs__action_bar_home_description 0x7f0b0000
 int string abs__action_bar_up_description 0x7f0b0001
 int string abs__action_menu_overflow_description 0x7f0b0002

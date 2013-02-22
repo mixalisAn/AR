@@ -56,8 +56,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 	private boolean showMusicPlayer = false;
 	private boolean audioExists = false;
-	private boolean audioStarted = false;
-	private boolean audioPlaying = false;
+	private boolean audioWasPlaying = false;
+	private boolean audioPausedFromFragment = false;
 	private int audioPosition;
 
 	private long markerId;
@@ -83,7 +83,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			intentService = new Intent(this, MusicService.class);
 			startService(intentService);
 		}
-
+		
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		tabsAdapter = new TabsAdapter(this, viewPager, actionBar);
 		transparentView = (View) findViewById(R.id.transparentView);
@@ -100,12 +100,13 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			if (showMusicPlayer) {
 				musicLayout.setVisibility(LinearLayout.VISIBLE);
 			}
-			audioPlaying = savedInstanceState.getBoolean("Music Player State");
-			if (audioPlaying){
+			audioWasPlaying = savedInstanceState
+					.getBoolean("Music Player State");
+			if (audioWasPlaying) {
 				pausePlayView.setImageResource(R.drawable.pause);
 			}
-
 		}
+		
 		Tab tab1 = actionBar.newTab().setText("ABOUT");
 
 		Tab tab2 = actionBar.newTab().setText("PHOTO");
@@ -137,9 +138,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	}
 
 	@Override
-	protected void onStart() {
-		super.onStart();
-		Log.i(TAG, "on Start executed");
+	protected void onResume() {
+		super.onResume();
+		Log.i(TAG, "on Resume executed");
 		if (audioExists) {
 			// Bind to service
 			Intent intent = new Intent(this, MusicService.class);
@@ -147,35 +148,38 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 	}
 
-	/*
-	 * @Override protected void onResume() { super.onResume(); if (mBound &&
-	 * audioStarted && audioPosition > 0) {
-	 * mService.setAudioPosition(audioPosition); } }
-	 */
 	@Override
 	protected void onPause() {
 		super.onPause();
 		Log.i(TAG, "On Pause executed");
 		if (audioExists) {
-			//stop service
-			if (isFinishing()) {
+			// stop service
+			if (isNotTopActivity()) {
+				Log.i(TAG, "is Not top Activity executed");
+				audioPosition = mService.getAudioPosition();
+				audioWasPlaying = mService.isAudioPlaying();
+				mService.stopAudio();
+				unbindService(mConnection);
+				mBound = false;
+			} else if (isFinishing()) {
 				Log.i(TAG, "isFinishing executed");
-				if(mBound){
+				if (mBound) {
 					unbindService(mConnection);
 					mBound = false;
 				}
-				
 				stopService(intentService);
-			} else if (isNotTopActivity()) {
-				Log.i(TAG, "is Not top Activity executed");
-				audioPosition = mService.getAudioPosition();
-				audioStarted = mService.isAudioStarted();
-				mService.stopAudio();
+			} else {
+				if (mBound) {
+					if (audioPausedFromFragment) {
+						audioPausedFromFragment = false;
+					} else {
+						audioPosition = mService.getAudioPosition();
+						audioWasPlaying = mService.isAudioPlaying();
+					}
+					unbindService(mConnection);
+					mBound = false;
+				}
 			}
-		}
-		if(mBound){
-			unbindService(mConnection);
-			mBound = false;
 		}
 	}
 
@@ -188,7 +192,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Log.i(TAG, String.valueOf(taskInfo.size()));
 		if (!taskInfo.isEmpty()) {
 			ComponentName topActivity = taskInfo.get(0).topActivity;
-		
+
 			if (!topActivity.getPackageName().equals(context.getPackageName())) {
 
 				return true;
@@ -208,7 +212,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		super.onSaveInstanceState(outState);
 
 		outState.putBoolean("Music Player Visibility", showMusicPlayer);
-		outState.putBoolean("Music Player State", audioPlaying);
+		outState.putBoolean("Music Player State", audioWasPlaying);
 	}
 
 	@Override
@@ -240,25 +244,27 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		}
 	}
-	
-	//auti i methodos xrisimopoieitai gia na mporei to fragment PoiAboutFragment otan kaleitai 
-	//i activity poy anoigei ton browser tote na stamataei to tragoudi
-	public void pauseAudioForFragment(){
-		if(mBound && mService.isAudioPlaying()){
+
+	// auti i methodos xrisimopoieitai gia na mporei to fragment
+	// PoiAboutFragment otan kaleitai
+	// i activity poy anoigei ton browser tote na stamataei to tragoudi
+	public void pauseAudioForFragment() {
+		if (mBound && mService.isAudioPlaying()) {
+			audioPausedFromFragment = true;
 			audioPosition = mService.getAudioPosition();
-			audioStarted = mService.isAudioStarted();
+			audioWasPlaying = mService.isAudioPlaying();
 			mService.playPauseAudio();
 		}
 	}
-	
+
 	public long getMarkerId() {
 		return markerId;
 	}
 
-	public String getMarkerResName(){
+	public String getMarkerResName() {
 		return markerResName;
 	}
-	
+
 	/**
 	 * Defines callbacks for service binding, passed to bindService() i iBinder
 	 * einai ousiastika i localBinder pou exei tin methodo pou kaleiitai
@@ -278,11 +284,13 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 
 		private void restoreAudioIfPaused() {
-			if (audioStarted && audioPosition > 0 && mBound) {
-				mService.setAudioPosition(audioPosition);
-				mService.playPauseAudio();
+			if (audioPosition > 0 && mBound) {
+				if (audioWasPlaying && !mService.isAudioPlaying()){
+					mService.setAudioPosition(audioPosition);
+					mService.playPauseAudio();
+					audioWasPlaying = mService.isAudioPlaying();
+				}
 			}
-
 		}
 
 		@Override
@@ -371,8 +379,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 	}
 
-	
-	
 	@Override
 	public void onClick(View view) {
 		if (mBound) {
@@ -390,20 +396,22 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				mService.seekBackward();
 				break;
 			case R.id.stop:
-				if (mService.isAudioStarted()) {
+				if (mService.getAudioPosition() > 0) {
 					mService.stopAudio();
+					audioWasPlaying = mService.isAudioPlaying();
 					pausePlayView.setImageResource(R.drawable.play);
 				}
 				break;
 			case R.id.pausePlay:
 				if (mService.isAudioPlaying()) {
 					pausePlayView.setImageResource(R.drawable.play);
-					audioPlaying = false;
+					// audioWasPlaying = false;
 				} else {
 					pausePlayView.setImageResource(R.drawable.pause);
-					audioPlaying = true;
+					// audioWasPlaying = true;
 				}
 				mService.playPauseAudio();
+				audioWasPlaying = mService.isAudioPlaying();
 				break;
 			case R.id.forward:
 				mService.seekForward();
