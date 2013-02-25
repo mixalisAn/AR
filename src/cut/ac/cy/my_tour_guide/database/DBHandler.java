@@ -26,7 +26,7 @@ public class DBHandler extends DBSchemaVariables{
 	private static class DatabaseHelper extends SQLiteOpenHelper{
 		long id;
 		int i = 0;
-		ContentValues poiValue, urlValue;
+		ContentValues poiValue, urlValue, categoryValue;
 		
 		public DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,11 +34,13 @@ public class DBHandler extends DBSchemaVariables{
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			Log.w(TAG, "Creating database!");
+			Log.i(TAG, "Creating database!");
+			
 			db.execSQL(CREATE_TABLE_POI);
 			db.execSQL(CREATE_TABLE_IMAGES_URLS);
-			System.out.println("Creating db : ");
-			for(PoiData poi : initialRows){
+			db.execSQL(CREATE_TABLE_CATEGORIES);
+
+			for(PoiData poi : initialPois){
 				poiValue = insertInitialPOIS(poi.getName() , poi.getLatitude() , poi.getLongtitude() , poi.getAltitude() , poi.getLink() , poi.getAddress() , poi.getDescription() , poi.getResName());
 				id = db.insert(POI_TABLE, null, poiValue);
 				for(String url : ImagesUrls.urls[i]){
@@ -46,6 +48,11 @@ public class DBHandler extends DBSchemaVariables{
 					db.insert(IMAGES_URLS_TABLE, null, urlValue);
 				}
 				i++;
+			}
+			
+			for(String category : initialCategories){
+				categoryValue = insertInitialCategories(category);
+				db.insert(CATEGORIES_TABLE, null, categoryValue);
 			}
 		}
 
@@ -113,6 +120,12 @@ public class DBHandler extends DBSchemaVariables{
 		return values;
 	}
 	
+	public static ContentValues insertInitialCategories(String category){
+		ContentValues values = new ContentValues();
+		values.put(CATEGORIES_COLUMN_CATEGORY, category);
+		return values;
+	}
+	
 	public Cursor getMarkers(){
 		String[] projection = {
 				POI_COLUMN_ENTRY_ID,
@@ -130,9 +143,11 @@ public class DBHandler extends DBSchemaVariables{
 	
 	public Cursor getPins(){
 		String[] projection = {
+				POI_COLUMN_ENTRY_ID,
 				POI_COLUMN_NAME,
 				POI_COLUMN_LAT,
-				POI_COLUMN_LNG
+				POI_COLUMN_LNG,
+				POI_COLUMN_RES_NAME
 		};
 		
 		Cursor mCursor = db.query(POI_TABLE, projection, null, null, null, null, null);
@@ -164,6 +179,16 @@ public class DBHandler extends DBSchemaVariables{
 		
 		return mCursor;
 		
+	}
+	
+	public Cursor getCategories(){
+		String[] projection = {
+				CATEGORIES_COLUMN_CATEGORY
+		};
+		
+		Cursor mCursor = db.query(CATEGORIES_TABLE, projection, null, null, null, null, null);
+		
+		return mCursor;
 	}
 	
 	public boolean deletePoi(){

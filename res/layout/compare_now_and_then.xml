@@ -4,50 +4,60 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/FrameLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:paddingBottom="5dp" >
+
+        <ImageView
+            android:id="@+id/past"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/rialto_theater_past" />
 
         <TextView
+            android:id="@+id/textViewPast"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:gravity="center"
-            android:text="@string/present"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/past"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:typeface="serif" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/present"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:layout_marginLeft="2dp"
-               android:layout_marginRight="2dp"
-               android:gravity="center"
-               android:text="@string/past"
-               android:textSize="20sp"
-               android:textStyle="bold" />
-        
-        <ImageView
-            android:id="@+id/past"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY" />
-    </LinearLayout>
+            android:scaleType="fitCenter"
+            android:src="@drawable/rialto_theater_past" />
+
+        <TextView
+            android:id="@+id/textViewPresent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/present"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="20sp"
+            android:typeface="serif" />
+
+    </FrameLayout>
 
 </LinearLayout>

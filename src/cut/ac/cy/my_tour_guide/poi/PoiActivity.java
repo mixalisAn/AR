@@ -32,6 +32,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.gallery.GridFragment;
+import cut.ac.cy.my_tour_guide.helpers.MusicResources;
 import cut.ac.cy.my_tour_guide.poi.MusicService.LocalBinder;
 
 /**

@@ -33,7 +33,7 @@ import cut.ac.cy.my_tour_guide.camera.Preview;
 import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.LocalDataSource;
-import cut.ac.cy.my_tour_guide.maps.Map;
+import cut.ac.cy.my_tour_guide.maps.MapActivity;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 
@@ -144,6 +144,9 @@ public class AugmentedReality extends SensorsActivity implements
 			item.setTitle(((showZoomBar) ? "Hide" : "Show") + " Zoom Bar");
 			zoomLayout.setVisibility((showZoomBar) ? RelativeLayout.VISIBLE
 					: RelativeLayout.GONE);
+			break;
+		case R.id.categories:
+			startActivity(new Intent(this, MarkersCategories.class));
 			break;
 		case R.id.exit:
 			finish();
@@ -264,13 +267,7 @@ public class AugmentedReality extends SensorsActivity implements
 		Intent intent = new Intent(this, PoiActivity.class);
 		intent.putExtra("Id", marker.getId());
 		intent.putExtra("Res Name", marker.getResName());
-		// na valw to id edw
-		/*
-		 * intent.putExtra("markerUrl", marker.getUrl());
-		 * intent.putExtra("markerAddress", marker.getAdddress());
-		 * intent.putExtra("markerLng", marker.getLng());
-		 * intent.putExtra("markerLat", marker.getLat());
-		 */
+		
 		startActivity(intent);
 		Log.w(TAG, "markerTouched() not implemented.");
 	}
@@ -312,7 +309,7 @@ public class AugmentedReality extends SensorsActivity implements
 			public void onClick(View v) {
 
 				Intent intent = new Intent();
-				intent.setClass(getApplicationContext(), Map.class);
+				intent.setClass(getApplicationContext(), MapActivity.class);
 				startActivity(intent);
 
 			}

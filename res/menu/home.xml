@@ -8,6 +8,9 @@
     <item android:id="@+id/showZoomBar" 
           android:title="Show Zoom Bar">
     </item>
+    <item android:id="@+id/categories"
+          android:title="Pois Categories">
+    </item>
     <item android:id="@+id/exit" 
           android:title="Exit">
     </item>

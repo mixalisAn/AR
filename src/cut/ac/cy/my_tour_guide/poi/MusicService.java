@@ -1,4 +1,5 @@
 package cut.ac.cy.my_tour_guide.poi;
+import cut.ac.cy.my_tour_guide.helpers.MusicResources;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
