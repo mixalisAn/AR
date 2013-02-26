@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.camera.Preview;
 import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
@@ -46,6 +47,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
 public class AugmentedReality extends SensorsActivity implements
 		OnTouchListener {
 	private static final String TAG = "AugmentedReality";
+	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
 	private int photoNumInc;
 	private static final DecimalFormat FORMAT = new DecimalFormat("#.##");
@@ -63,6 +65,7 @@ public class AugmentedReality extends SensorsActivity implements
 	// protected static VerticalTextView endLabel = null;
 	protected static RelativeLayout zoomLayout = null;
 	protected static AugmentedView augmentedView = null;
+	private static LocalDataSource localData;
 
 	public static final float MAX_ZOOM = 20; // in KM
 	// ti kanoun auta?
@@ -75,6 +78,7 @@ public class AugmentedReality extends SensorsActivity implements
 	public static boolean useCollisionDetection = false;
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
+
 
 	/**
 	 * {@inheritDoc}
@@ -113,7 +117,7 @@ public class AugmentedReality extends SensorsActivity implements
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = pm
 				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
-		LocalDataSource localData = new LocalDataSource(this.getResources(),
+		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
 		ARData.addMarkers(localData.getMarkers());
 	}
@@ -146,7 +150,8 @@ public class AugmentedReality extends SensorsActivity implements
 					: RelativeLayout.GONE);
 			break;
 		case R.id.categories:
-			startActivity(new Intent(this, MarkersCategories.class));
+			Intent intent = new Intent(this, MarkersCategories.class);
+			startActivityForResult(intent, REQUEST_CODE);
 			break;
 		case R.id.exit:
 			finish();
@@ -183,6 +188,20 @@ public class AugmentedReality extends SensorsActivity implements
 		}
 		wakeLock.release();
 	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+			if(data.hasExtra("selectedCategories")){
+				long[] categoriesId = data.getExtras().getLongArray("selectedCategories");
+				ARData.addCategorizedMarkers(localData.getCategorizedMarkers(categoriesId));
+				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+	
+	
 
 	/**
 	 * {@inheritDoc}
@@ -315,4 +334,5 @@ public class AugmentedReality extends SensorsActivity implements
 			}
 		});
 	}
+
 }

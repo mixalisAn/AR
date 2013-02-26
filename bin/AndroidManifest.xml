@@ -61,7 +61,8 @@
         </activity>
          <activity
             android:name="cut.ac.cy.my_tour_guide.activity.MarkersCategories"
-           	android:label="@string/categories" android:theme="@style/Theme.Sherlock">
+           	android:label="@string/categories" android:theme="@style/Theme.Sherlock"
+           	android:configChanges="orientation|keyboardHidden">"
         </activity>
          <activity
             android:name="cut.ac.cy.my_tour_guide.poi.PoiActivity"

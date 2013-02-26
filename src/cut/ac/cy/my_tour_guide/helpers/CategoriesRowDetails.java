@@ -2,16 +2,26 @@ package cut.ac.cy.my_tour_guide.helpers;
 
 public class CategoriesRowDetails {
 
+	private long categoryId;
 	private String name;
 	private String resName;
 	private boolean selected;
 	
-	public CategoriesRowDetails(String name, boolean isSelected){
+	public CategoriesRowDetails(long categoryId , String name, boolean isSelected){
+		setCategoryId(categoryId);
 		setName(name);
 		setResName(name);
 		setSelected(isSelected);
 	}
+	
+	private void setCategoryId(long id){
+		this.categoryId = id;
+	}
 
+	public long getCategoryId(){
+		return categoryId;
+	}
+	
 	private void setName(String name) {
 		this.name = name;
 	}

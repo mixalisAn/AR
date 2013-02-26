@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
-import android.util.Log;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Vector;
@@ -57,6 +56,8 @@ public class Marker implements Comparable<Marker> {
     private String name = null;
     // Unique resources Name of Marker
     private String resName = null;
+    //Category id for markers
+    private long categotyId;
     // Marker's physical location (Lat, Lon, Alt)
     private final PhysicalLocation physicalLocation = new PhysicalLocation();
     // Distance from camera to PhysicalLocation in meters
@@ -83,8 +84,8 @@ public class Marker implements Comparable<Marker> {
     private PaintableBox touchBox = null;
     private volatile PaintablePosition touchPosition = null;
 
-    public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, int color, Bitmap bitmap) {
-		set(id, name, latitude, longitude, altitude, resName, color , bitmap);
+    public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color, Bitmap bitmap) {
+		set(id, name, latitude, longitude, altitude, resName, categoryId, color , bitmap);
 	}
 
     /**
@@ -95,12 +96,13 @@ public class Marker implements Comparable<Marker> {
 	 * @param altitude Altitude of the Marker in meters (>0 is above sea level). 
 	 * @param color Color of the Marker.
 	 */
-    public synchronized void set(long id, String name, double latitude, double longitude, double altitude, String resName, int color , Bitmap bitmap) {
+    public synchronized void set(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color , Bitmap bitmap) {
         if (name == null) throw new NullPointerException();
         
         this.id = id;
         this.name = name;
         this.resName = resName;
+        this.categotyId = categoryId;
         this.bitmap = bitmap;
         this.physicalLocation.set(latitude, longitude, altitude);
         this.color = color;
@@ -133,6 +135,13 @@ public class Marker implements Comparable<Marker> {
     	return this.resName;
     }
     
+    
+    /**
+     * Get the categoryId of the marker
+     */
+    public synchronized long getCategoryId(){
+    	return this.categotyId;
+    }
     /**
      * Get the color of this Marker.
      * 

@@ -76,6 +76,11 @@ public class CategoriesAdapter extends ArrayAdapter<CategoriesRowDetails>{
 		return rowView;
 	}
 
+	
+	public List<CategoriesRowDetails> getCategories(){
+		return categories;
+	}
+	
 	//Auti i class einai gia logous optimazation. des vongella tutorial. Den xrisimopoiei to layoutInflater pouy einai akrivo alla pernei 
 	//to tag apo tin viewholder gia to kathe view.
 	public static class ViewHolder{

@@ -36,12 +36,11 @@ public class DBHandler extends DBSchemaVariables{
 		public void onCreate(SQLiteDatabase db) {
 			Log.i(TAG, "Creating database!");
 			
+			db.execSQL(CREATE_TABLE_CATEGORIES);
 			db.execSQL(CREATE_TABLE_POI);
 			db.execSQL(CREATE_TABLE_IMAGES_URLS);
-			db.execSQL(CREATE_TABLE_CATEGORIES);
-
 			for(PoiData poi : initialPois){
-				poiValue = insertInitialPOIS(poi.getName() , poi.getLatitude() , poi.getLongtitude() , poi.getAltitude() , poi.getLink() , poi.getAddress() , poi.getDescription() , poi.getResName());
+				poiValue = insertInitialPOIS(poi.getName() , poi.getLatitude() , poi.getLongtitude() , poi.getAltitude() , poi.getLink() , poi.getAddress() , poi.getDescription() , poi.getResName() , poi.getCategoryId());
 				id = db.insert(POI_TABLE, null, poiValue);
 				for(String url : ImagesUrls.urls[i]){
 					urlValue = insertInitialUrls(id , url);
@@ -62,6 +61,7 @@ public class DBHandler extends DBSchemaVariables{
 					+ newVersion + ", which will destroy all data");
 			db.execSQL("DROP TABLE IF EXISTS " + POI_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + IMAGES_URLS_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
 			onCreate(db);
 		}
 		
@@ -79,7 +79,7 @@ public class DBHandler extends DBSchemaVariables{
 		DBHelper.close();
 	}
 	
-	public static long insertPOI(String name, double lat, double lng, double alt , String link ,  String address , String description, String resName){
+	public static long insertPOI(String name, double lat, double lng, double alt , String link ,  String address , String description, String resName , long categoryId){
 		ContentValues values = new ContentValues();
 		values.put(POI_COLUMN_NAME, name);
 		values.put(POI_COLUMN_LAT, lat);
@@ -89,10 +89,11 @@ public class DBHandler extends DBSchemaVariables{
 		values.put(POI_COLUMN_ADDRESS, address);
 		values.put(POI_COLUMN_DESC, description);
 		values.put(POI_COLUMN_RES_NAME, resName);
+		values.put(POI_COLUMN_CATEGORY_ID, categoryId);
 		return db.insert(POI_TABLE, null, values);
 	}
 	
-	public static ContentValues insertInitialPOIS(String name, double lat, double lng, double alt , String link ,  String address , String description, String resName){
+	public static ContentValues insertInitialPOIS(String name, double lat, double lng, double alt , String link ,  String address , String description, String resName , long categoryId){
 		ContentValues values = new ContentValues();
 		values.put(POI_COLUMN_NAME, name);
 		values.put(POI_COLUMN_LAT, lat);
@@ -102,6 +103,7 @@ public class DBHandler extends DBSchemaVariables{
 		values.put(POI_COLUMN_ADDRESS, address);
 		values.put(POI_COLUMN_DESC, description);
 		values.put(POI_COLUMN_RES_NAME, resName);
+		values.put(POI_COLUMN_CATEGORY_ID, categoryId);
 		return values;
 	}
 	
@@ -133,10 +135,30 @@ public class DBHandler extends DBSchemaVariables{
 				POI_COLUMN_LAT,
 				POI_COLUMN_LNG,
 				POI_COLUMN_ALT,
-				POI_COLUMN_RES_NAME
+				POI_COLUMN_RES_NAME,
+				POI_COLUMN_CATEGORY_ID
 		};
 		
 		Cursor mCursor = db.query(POI_TABLE, projection, null, null, null, null, null);
+		
+		return mCursor;
+	}
+	
+	public Cursor getSpecificCategoriesMarkers(long[] categories){
+		String sql = "SELECT " + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
+					POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + 
+					" FROM " + POI_TABLE;
+		String whereClause = " WHERE " + POI_COLUMN_CATEGORY_ID + " = ";
+		for(int i = 0; i < categories.length; i++){
+			whereClause += String.valueOf(categories[i]);
+			if(!((i + 1) == categories.length)){
+				whereClause += " or " + POI_COLUMN_CATEGORY_ID + " = ";
+			}
+		}
+		
+		sql += whereClause + ";";
+		Log.i(TAG, sql);
+		Cursor mCursor = db.rawQuery(sql, null);
 		
 		return mCursor;
 	}
@@ -183,6 +205,7 @@ public class DBHandler extends DBSchemaVariables{
 	
 	public Cursor getCategories(){
 		String[] projection = {
+				CATEGORIES_COLUMN_ENTRY_ID,
 				CATEGORIES_COLUMN_CATEGORY
 		};
 		
