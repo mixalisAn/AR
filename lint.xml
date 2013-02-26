@@ -2,5 +2,6 @@
 <lint>
     <issue id="DefaultLocale">
         <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesAdapter.java" />
+        <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesRowDetails.java" />
     </issue>
 </lint>

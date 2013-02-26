@@ -23,7 +23,7 @@
 		android:lines="1"
         android:paddingLeft="5dp"
 		android:scrollHorizontally="true"
-        android:textSize="24sp" />
+        android:textSize="23sp" />
 
     <CheckBox
         android:id="@+id/checkBoxCategory"
@@ -32,6 +32,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_centerVertical="true"
+        android:focusable="false"
+        android:clickable="false"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" />
 
