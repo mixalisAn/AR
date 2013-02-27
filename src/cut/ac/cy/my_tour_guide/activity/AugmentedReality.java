@@ -75,7 +75,7 @@ public class AugmentedReality extends SensorsActivity implements
 	public static final float EIGHTY_PERCENTY = 4f * TWENTY_PERCENT;
 
 	public static boolean portrait = false;
-	public static boolean useCollisionDetection = false;
+	public static boolean useCollisionDetection = true;
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
 
@@ -119,7 +119,8 @@ public class AugmentedReality extends SensorsActivity implements
 				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
-		ARData.addMarkers(localData.getMarkers());
+		ARData.addMarkers(localData.getMarkers());   //edw se perptwsi pou einai oloi miden epistrefei tous markers oi opoioi den einai
+													//null alla einai miden ara kanei return i getMarkers()
 	}
 
 	@Override
@@ -199,7 +200,9 @@ public class AugmentedReality extends SensorsActivity implements
 				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG).show();
 			}
 		}else if(resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE){
-			ARData.addCategorizedMarkers(localData.getMarkers());
+			ARData.addCategorizedMarkers(localData.getMarkers());		//otan einai ola ta categories apenergopoimena tote epistrefei markers
+																		//pou den einai null alla size = 0. tote stin addcategorizedmarkers 
+																		//diagrafei olous tous markers apo tin lista
 		}
 	}
 	

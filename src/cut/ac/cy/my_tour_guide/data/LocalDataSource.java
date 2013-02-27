@@ -68,11 +68,7 @@ public class LocalDataSource extends DataSource {
 								.getString(5), cursor.getLong(6), Color.GREEN,
 								monument));
 					} while (cursor.moveToNext());
-				}else{
-					Log.i("LocalDataSource" , "No data but cursor not null");
 				}
-			}else{
-				Log.i("LocalDataSource" , "No data cursor null");
 			}
 
 			db.close();

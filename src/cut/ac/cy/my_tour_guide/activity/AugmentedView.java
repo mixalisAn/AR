@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
+import android.widget.Toast;
 
 
 import cut.ac.cy.my_tour_guide.data.ARData;
@@ -40,6 +41,8 @@ public class AugmentedView extends View {
      */
     @Override
     protected void onDraw(Canvas canvas) {
+    	List<Marker> collisionMarkers = null;
+    	String markersNames;
         if (canvas == null) return;
 
         if (drawing.compareAndSet(false, true)) {
@@ -55,8 +58,15 @@ public class AugmentedView extends View {
             }
             collection = cache;
 
-            if (AugmentedReality.useCollisionDetection) adjustForCollisions(canvas, collection);
-
+            if (AugmentedReality.useCollisionDetection) collisionMarkers = adjustForCollisions(canvas, collection);
+            
+            if(collisionMarkers.size() > 0){
+            	markersNames = "";
+            	for(Marker marker : collisionMarkers){
+            		markersNames += marker.getName() + " , ";
+            	}
+            	Toast.makeText(this.getContext(), "The markers with collision are: " + markersNames, Toast.LENGTH_SHORT).show();
+            }
             // Draw AR markers in reverse order since the last drawn should be
             // the closest
             ListIterator<Marker> iter = collection.listIterator(collection.size());
@@ -71,9 +81,9 @@ public class AugmentedView extends View {
         }
     }
 
-    private static void adjustForCollisions(Canvas canvas, List<Marker> collection) {
+    private static List<Marker> adjustForCollisions(Canvas canvas, List<Marker> collection) {
         updated.clear();
-
+        List<Marker> collisionMarkers = new ArrayList<Marker>();
         // Update the AR markers for collisions
         for (Marker marker1 : collection) {
             if (updated.contains(marker1) || !marker1.isInView())
@@ -85,17 +95,21 @@ public class AugmentedView extends View {
                     continue;
 
                 if (marker1.isMarkerOnMarker(marker2)) {
-                    marker2.getLocation().get(locationArray);
+                   /* marker2.getLocation().get(locationArray);
                     float y = locationArray[1];
                     float h = collisions * COLLISION_ADJUSTMENT;
                     locationArray[1] = y + h;
                     marker2.getLocation().set(locationArray);
-                    marker2.update(canvas, 0, 0);
+                    marker2.update(canvas, 0, 0);*/
                     collisions++;
                     updated.add(marker2);
+                    collisionMarkers.add(marker2);
                 }
             }
+            if(collisions > 1)
+            	collisionMarkers.add(marker1);
             updated.add(marker1);
         }
+       return collisionMarkers;
     }
 }

@@ -229,6 +229,7 @@ public abstract class ARData {
 
 	/**
 	 * Add delete existed markers and update with categorized markers
+	 * if categorized markers are null then it just clears the marker list
 	 */
 
 	public static void addCategorizedMarkers(Collection<Marker> markers) {
