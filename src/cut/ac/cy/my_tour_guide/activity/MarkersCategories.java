@@ -31,41 +31,58 @@ public class MarkersCategories extends SherlockListActivity {
 		db = new DBHandler(this);
 
 		// String[] categories = getCategories();
-	    categories = getCategories();
+		categories = getCategories();
 		listAdapter = new CategoriesAdapter(this, categories);
 		setListAdapter(listAdapter);
 	}
 
-
-
 	@Override
 	public void finish() {
-		for(int i=0; i < categories.size(); i++){
-			if(categories.get(i).isSelected()){
-				selectedCategories[i] = categories.get(i).getCategoryId();
-				Log.i("MarkersCategories" , String.valueOf(selectedCategories[i]));
+		try {
+			db.open();
+			for (int i = 0; i < categories.size(); i++) {
+				db.updateCategory(categories.get(i).getCategoryId(), categories
+						.get(i).isSelected());
+				if (categories.get(i).isSelected()) {
+					selectedCategories[i] = categories.get(i).getCategoryId();
+					Log.i("MarkersCategories",
+							String.valueOf(selectedCategories[i]));
+				}
 			}
-		}
-		if(selectedCategories.length > 0){
-			Intent data = new Intent();
-			data.putExtra("selectedCategories", selectedCategories);
-			setResult(RESULT_OK, data);
+			if (selectedCategories.length > 0) {
+				Intent data = new Intent();
+				data.putExtra("selectedCategories", selectedCategories);
+				setResult(RESULT_OK, data);
+			}else{
+				setResult(RESULT_CANCELED);
+			}
+			db.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		super.finish();
 	}
 
 	private List<CategoriesRowDetails> getCategories() {
 		List<CategoriesRowDetails> categories = new ArrayList<CategoriesRowDetails>();
+		boolean isSelected;
 		try {
 			db.open();
 			Cursor cursor = db.getCategories();
 			if (cursor != null) {
-				cursor.moveToFirst();
-				selectedCategories = new long[cursor.getCount()];
-				do {
-					categories.add(new CategoriesRowDetails(
-							cursor.getLong(0), cursor.getString(1), true));
-				} while (cursor.moveToNext());
+				if (cursor.moveToFirst()) {
+					selectedCategories = new long[cursor.getCount()];
+					do {
+						if (cursor.getInt(2) == 1)
+							isSelected = true;
+						else
+							isSelected = false;
+
+						categories.add(new CategoriesRowDetails(cursor
+								.getLong(0), cursor.getString(1), isSelected));
+					} while (cursor.moveToNext());
+				}
 			}
 			db.close();
 		} catch (SQLException e) {
@@ -75,8 +92,6 @@ public class MarkersCategories extends SherlockListActivity {
 		return categories;
 	}
 
-
-	
 	/**
 	 * se periptwsi poy to aferaisw auto na vgalw kai to focusable kai clickable
 	 * apo to checkbox
@@ -90,8 +105,5 @@ public class MarkersCategories extends SherlockListActivity {
 				.getTag();
 		holder.checkBox.setChecked(row.isSelected());
 	}
-
-
-
 
 }

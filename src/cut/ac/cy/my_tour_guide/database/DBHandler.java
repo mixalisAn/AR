@@ -49,8 +49,8 @@ public class DBHandler extends DBSchemaVariables{
 				i++;
 			}
 			
-			for(String category : initialCategories){
-				categoryValue = insertInitialCategories(category);
+			for(CategoriesData category : initialCategories){
+				categoryValue = insertInitialCategories(category.getCategory(), category.getSelected());
 				db.insert(CATEGORIES_TABLE, null, categoryValue);
 			}
 		}
@@ -122,14 +122,22 @@ public class DBHandler extends DBSchemaVariables{
 		return values;
 	}
 	
-	public static ContentValues insertInitialCategories(String category){
+	public static ContentValues insertInitialCategories(String category, boolean boolSelected){
 		ContentValues values = new ContentValues();
+		int intSelected;
+		
+		if(boolSelected){
+			intSelected = 1;
+		}else{
+			intSelected = 0;
+		}
 		values.put(CATEGORIES_COLUMN_CATEGORY, category);
+		values.put(CATEGORIES_COLUMN_SELECTED, intSelected);
 		return values;
 	}
 	
 	public Cursor getMarkers(){
-		String[] projection = {
+		/*String[] projection = {
 				POI_COLUMN_ENTRY_ID,
 				POI_COLUMN_NAME,
 				POI_COLUMN_LAT,
@@ -140,7 +148,12 @@ public class DBHandler extends DBSchemaVariables{
 		};
 		
 		Cursor mCursor = db.query(POI_TABLE, projection, null, null, null, null, null);
-		
+		*/
+		String sql = "SELECT " + POI_TABLE + "." + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
+				POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + 
+				" FROM " + POI_TABLE + " INNER JOIN " + CATEGORIES_TABLE + " ON " + POI_TABLE + "." + POI_COLUMN_CATEGORY_ID + 
+				" = " + CATEGORIES_TABLE + "." + CATEGORIES_COLUMN_ENTRY_ID + " WHERE " +  CATEGORIES_COLUMN_SELECTED + " = 1";
+		Cursor mCursor = db.rawQuery(sql, null);
 		return mCursor;
 	}
 	
@@ -206,12 +219,26 @@ public class DBHandler extends DBSchemaVariables{
 	public Cursor getCategories(){
 		String[] projection = {
 				CATEGORIES_COLUMN_ENTRY_ID,
-				CATEGORIES_COLUMN_CATEGORY
+				CATEGORIES_COLUMN_CATEGORY,
+				CATEGORIES_COLUMN_SELECTED
 		};
 		
 		Cursor mCursor = db.query(CATEGORIES_TABLE, projection, null, null, null, null, null);
 		
 		return mCursor;
+	}
+	
+	public boolean updateCategory(long categoryId, boolean boolSelected){
+		ContentValues values = new ContentValues();
+		int intSelected;
+		
+		if(boolSelected)
+			intSelected = 1;
+		else
+			intSelected = 0;
+		
+		values.put(CATEGORIES_COLUMN_SELECTED, intSelected);
+		return db.update(CATEGORIES_TABLE, values, CATEGORIES_COLUMN_ENTRY_ID + " = " + categoryId, null) > 0;
 	}
 	
 	public boolean deletePoi(){

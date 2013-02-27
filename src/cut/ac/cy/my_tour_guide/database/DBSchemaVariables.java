@@ -6,7 +6,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 16;
+	static final int DATABASE_VERSION = 20;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";
@@ -30,11 +30,12 @@ public class DBSchemaVariables {
 	static final String CATEGORIES_TABLE = "categories";
 	static final String CATEGORIES_COLUMN_ENTRY_ID = "_id";
 	static final String CATEGORIES_COLUMN_CATEGORY = "category";
+	static final String CATEGORIES_COLUMN_SELECTED = "selected";
 	
 	//CREATE TABLES
 	static final String CREATE_TABLE_CATEGORIES = 
 			"CREATE TABLE " + CATEGORIES_TABLE + " (" + CATEGORIES_COLUMN_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			CATEGORIES_COLUMN_CATEGORY + " TEXT NOT NULL);";
+			CATEGORIES_COLUMN_CATEGORY + " TEXT NOT NULL, " + CATEGORIES_COLUMN_SELECTED + " INTEGER NOT NULL);";              //evala integer anti gia bool giati den ipostirizei bool i sqlite
 	
 	static final String CREATE_TABLE_POI = 
 			"CREATE TABLE " + POI_TABLE + " (" + POI_COLUMN_ENTRY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -53,7 +54,7 @@ public class DBSchemaVariables {
 	//INSERT INITIAL ROWS
 	static final List<PoiData> initialPois = new ArrayList<PoiData>();
 	
-	static final List<String> initialCategories = new ArrayList<String>();
+	static final List<CategoriesData> initialCategories = new ArrayList<CategoriesData>();
 	
 	public DBSchemaVariables(){
 		initializePois();
@@ -148,11 +149,11 @@ public class DBSchemaVariables {
 	//check names because they are used as drawable resource with
 	//lowercase and spaces replaced by _
 	private void initializeCategories() {
-		initialCategories.add("Ancient monuments");
-		initialCategories.add("Churches");
-		initialCategories.add("Important Buildings");
-		initialCategories.add("Other");
-		initialCategories.add("Roads");
+		initialCategories.add(new CategoriesData("Ancient monuments", true));
+		initialCategories.add(new CategoriesData("Churches", true));
+		initialCategories.add(new CategoriesData("Important Buildings", true));
+		initialCategories.add(new CategoriesData("Other", true));
+		initialCategories.add(new CategoriesData("Roads", true));
 	}
 
 }

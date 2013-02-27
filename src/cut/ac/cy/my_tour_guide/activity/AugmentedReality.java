@@ -198,6 +198,8 @@ public class AugmentedReality extends SensorsActivity implements
 				ARData.addCategorizedMarkers(localData.getCategorizedMarkers(categoriesId));
 				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG).show();
 			}
+		}else if(resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE){
+			ARData.addCategorizedMarkers(localData.getMarkers());
 		}
 	}
 	
