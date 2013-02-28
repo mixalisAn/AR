@@ -2,6 +2,10 @@ package cut.ac.cy.my_tour_guide.activity;
 
 import java.text.DecimalFormat;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,7 +49,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class AugmentedReality extends SensorsActivity implements
-		OnTouchListener {
+		OnTouchListener, OnClickListener {
 	private static final String TAG = "AugmentedReality";
 	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
@@ -79,7 +83,6 @@ public class AugmentedReality extends SensorsActivity implements
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -87,16 +90,19 @@ public class AugmentedReality extends SensorsActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// eginan allages kai mpike dikos mou kwdikas
-		
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 		setContentView(R.layout.home_screen);
 
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
-		//captureButton = (Button) findViewById(R.id.captureButton);
-		//gMapsButton = (Button) findViewById(R.id.gmapsButton);
+		captureButton = (Button) findViewById(R.id.buttonCamera);
+		gMapsButton = (Button) findViewById(R.id.buttonMaps);
 		// set up listeners
-		//buttonListeners();
+		// buttonListeners();
+		captureButton.setOnClickListener(this);
+		gMapsButton.setOnClickListener(this);
 
 		FrameLayout liveLayout = (FrameLayout) findViewById(R.id.liveImage);
 
@@ -119,8 +125,13 @@ public class AugmentedReality extends SensorsActivity implements
 				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
-		ARData.addMarkers(localData.getMarkers());   //edw se perptwsi pou einai oloi miden epistrefei tous markers oi opoioi den einai
-													//null alla einai miden ara kanei return i getMarkers()
+		ARData.addMarkers(localData.getMarkers()); // edw se perptwsi pou einai
+													// oloi miden epistrefei
+													// tous markers oi opoioi
+													// den einai
+													// null alla einai miden ara
+													// kanei return i
+													// getMarkers()
 	}
 
 	@Override
@@ -190,23 +201,39 @@ public class AugmentedReality extends SensorsActivity implements
 		wakeLock.release();
 	}
 
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
-			if(data.hasExtra("selectedCategories")){
-				long[] categoriesId = data.getExtras().getLongArray("selectedCategories");
-				ARData.addCategorizedMarkers(localData.getCategorizedMarkers(categoriesId));
-				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG).show();
+		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+			if (data.hasExtra("selectedCategories")) {
+				long[] categoriesId = data.getExtras().getLongArray(
+						"selectedCategories");
+				ARData.addCategorizedMarkers(localData
+						.getCategorizedMarkers(categoriesId));
+				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG)
+						.show();
 			}
-		}else if(resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE){
-			ARData.addCategorizedMarkers(localData.getMarkers());		//otan einai ola ta categories apenergopoimena tote epistrefei markers
-																		//pou den einai null alla size = 0. tote stin addcategorizedmarkers 
-																		//diagrafei olous tous markers apo tin lista
+		} else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE) {
+			ARData.addCategorizedMarkers(localData.getMarkers()); // otan einai
+																	// ola ta
+																	// categories
+																	// apenergopoimena
+																	// tote
+																	// epistrefei
+																	// markers
+																	// pou den
+																	// einai
+																	// null alla
+																	// size = 0.
+																	// tote stin
+																	// addcategorizedmarkers
+																	// diagrafei
+																	// olous
+																	// tous
+																	// markers
+																	// apo tin
+																	// lista
 		}
 	}
-	
-	
 
 	/**
 	 * {@inheritDoc}
@@ -291,53 +318,52 @@ public class AugmentedReality extends SensorsActivity implements
 		Intent intent = new Intent(this, PoiActivity.class);
 		intent.putExtra("Id", marker.getId());
 		intent.putExtra("Res Name", marker.getResName());
-		
+
 		startActivity(intent);
 		Log.w(TAG, "markerTouched() not implemented.");
 	}
 
-	private void buttonListeners() {
-		// listener gia to captureButton
-		captureButton.setOnClickListener(new OnClickListener() {
+	@Override
+	public void onClick(View view) {
 
-			@Override
-			public void onClick(View v) {
-				// retrieve photonum gia na to steiloume stin camera gia na to
-				// apothikeusei stin photo afou to auksisei kata 1
-				SharedPreferences appPrefs = getSharedPreferences(PREFS_NAME,
-						MODE_PRIVATE);
-				// getapplicationcontext() gia metepeita xrisi apo to scanfile
-				CaptureImage image = new CaptureImage(getApplicationContext());
-				photoNumInc = appPrefs.getInt("photoIncrement", 1);
-				if (camera != null) {
-					image.takePicture(camera, photoNumInc);
-				}
-				// save photo number to preffile gia na diatirithei to noumero
-				// meta apo kill
-				SharedPreferences appPrefsEdit = getSharedPreferences(
-						PREFS_NAME, MODE_PRIVATE);
-				SharedPreferences.Editor editor = appPrefsEdit.edit();
-				System.out.println("Photo increment" + image.getPhotoNum());
-				editor.putInt("photoIncrement", image.getPhotoNum());
-
-				// Commit the edits!
-				editor.commit();
-
+		switch (view.getId()) {
+		case R.id.buttonCamera:
+			// retrieve photonum gia na to steiloume stin camera gia na to
+			// apothikeusei stin photo afou to auksisei kata 1
+			SharedPreferences appPrefs = getSharedPreferences(PREFS_NAME,
+					MODE_PRIVATE);
+			// getapplicationcontext() gia metepeita xrisi apo to scanfile
+			CaptureImage image = new CaptureImage(getApplicationContext());
+			photoNumInc = appPrefs.getInt("photoIncrement", 1);
+			if (camera != null) {
+				image.takePicture(camera, photoNumInc);
 			}
+			// save photo number to preffile gia na diatirithei to noumero
+			// meta apo kill
+			SharedPreferences appPrefsEdit = getSharedPreferences(PREFS_NAME,
+					MODE_PRIVATE);
+			SharedPreferences.Editor editor = appPrefsEdit.edit();
+			System.out.println("Photo increment" + image.getPhotoNum());
+			editor.putInt("photoIncrement", image.getPhotoNum());
 
-		});
-		// listener gia to gMaps button
-		gMapsButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
+			// Commit the edits!
+			editor.commit();
+			break;
+		case R.id.buttonMaps:
+			//elegxos an yparxoun ta  google play services sto kinito kai einai updated kai stin idia version 
+			//me tis efarmogis
+			int result = GooglePlayServicesUtil
+					.isGooglePlayServicesAvailable(getApplicationContext());
+			if (result == ConnectionResult.SUCCESS) {
 				Intent intent = new Intent();
 				intent.setClass(getApplicationContext(), MapActivity.class);
 				startActivity(intent);
-
+			} else {
+				GooglePlayServicesUtil.getErrorDialog(result, this, 1);
 			}
-		});
+			break;
+		}
+
 	}
 
 }
