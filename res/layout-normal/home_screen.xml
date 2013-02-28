@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/RelativeLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:baselineAligned="false"
-    android:orientation="horizontal" >
-
-    <FrameLayout
+   
         android:id="@+id/liveImage"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/sideButtons"
-        android:gravity="left"
-        android:orientation="vertical" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <cut.ac.cy.my_tour_guide.camera.Preview
             android:id="@+id/cameraPreview"
@@ -24,76 +13,76 @@
         </cut.ac.cy.my_tour_guide.camera.Preview>
 
         <RelativeLayout
-            android:id="@+id/zoomLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="10dp" >
+            android:layout_height="match_parent" >
 
-            <SeekBar
-                android:id="@+id/zoombar"
+            <RelativeLayout
+                android:id="@+id/zoomLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/zoombarText"
-                android:max="100"
-                android:progress="50" >
-            </SeekBar>
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@id/sideButtons"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="10dp" >
 
-            <TextView
-                android:id="@+id/zoombarText"
+                <SeekBar
+                    android:id="@+id/zoombar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/zoombarText"
+                    android:max="100"
+                    android:progress="50" />
+
+                <TextView
+                    android:id="@+id/zoombarText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/zoombar"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sideButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp" >
+
+              <ImageView
+                  android:id="@+id/imageViewCamera"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentTop="true"
+                  android:layout_centerHorizontal="true"
+                  android:layout_marginTop="10dp"
+                  android:src="@drawable/camera" />
+
+            <ImageView
+                android:id="@+id/imageViewMaps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/zoombar"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:textColor="#FFFFFF" />
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/maps" />
+
+            <ImageView
+                android:id="@+id/imageViewMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/menu" />
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </FrameLayout>
-
-    <TableLayout
-        android:id="@+id/sideButtons"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="right"
-        android:background="#171717" >
-
-        <TableRow
-            android:id="@+id/upButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/captureButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="2dp"
-                android:background="@drawable/capture" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/downButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/gmapsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/gmaps" />
-        </TableRow>
-    </TableLayout>
-
-</RelativeLayout>

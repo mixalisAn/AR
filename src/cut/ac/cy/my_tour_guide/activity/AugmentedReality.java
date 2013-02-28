@@ -93,10 +93,10 @@ public class AugmentedReality extends SensorsActivity implements
 		setContentView(R.layout.home_screen);
 
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
-		captureButton = (Button) findViewById(R.id.captureButton);
-		gMapsButton = (Button) findViewById(R.id.gmapsButton);
+		//captureButton = (Button) findViewById(R.id.captureButton);
+		//gMapsButton = (Button) findViewById(R.id.gmapsButton);
 		// set up listeners
-		buttonListeners();
+		//buttonListeners();
 
 		FrameLayout liveLayout = (FrameLayout) findViewById(R.id.liveImage);
 
