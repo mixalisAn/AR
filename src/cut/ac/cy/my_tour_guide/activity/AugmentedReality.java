@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,7 +80,6 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static RelativeLayout zoomLayout = null;
 	protected static AugmentedView augmentedView = null;
 	private static LocalDataSource localData;
-
 	public static final float MAX_ZOOM = 20; // in KM
 	// ti kanoun auta?
 	public static final float ONE_PERCENT = MAX_ZOOM / 100f;
@@ -93,6 +93,9 @@ public class AugmentedReality extends SensorsActivity implements
 	public static boolean showZoomBar = false;
 	public static boolean showCollisionButton = false;
 
+	//na dw an mporw na to kanw kapws allios
+	private static List<Marker> removedMarkers = new ArrayList<Marker>();
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -308,7 +311,6 @@ public class AugmentedReality extends SensorsActivity implements
 
 	@Override
 	public void onClick(View view) {
-		List<Marker> removedMarkers = new ArrayList<Marker>(); 
 		switch (view.getId()) {
 		case R.id.buttonCamera:
 			// retrieve photonum gia na to steiloume stin camera gia na to
@@ -356,7 +358,12 @@ public class AugmentedReality extends SensorsActivity implements
 			 */
 			List<Marker> collisionMarkers = getCollisionMarkers();
 			int collisionMarkersSize = collisionMarkers.size();
-			removedMarkers = createCollisionDialog(collisionMarkers);
+			removedMarkers = collisionMarkers;
+			Log.i(TAG, "Removed markers before dialog: " + String.valueOf(removedMarkers.size()));
+			
+			//thelei fragment dialog na to dw ligo 
+			//autin tin stigmi exei bug sto remove apo to markerscreateCollisionDialog(collisionMarkers);
+			Log.i(TAG, "Removed markers after dialog: " + String.valueOf(removedMarkers.size()));
 			if(removedMarkers.size() < collisionMarkersSize){
 				Log.i(TAG, "Oi removed markers einai: " + String.valueOf(removedMarkers.size()));
 				ARData.removeSelectedMarkers(removedMarkers);
@@ -408,11 +415,13 @@ public class AugmentedReality extends SensorsActivity implements
 		alert.show();
 	}
 
-	private List<Marker> createCollisionDialog(final List<Marker> markers){
+	
+
+	private void createCollisionDialog(List<Marker> markers){
 		String[] markersNames = new String[markers.size()];
-		final List<Integer> unSelectedItems = new ArrayList<Integer>();
+		final boolean[] checkedItems = new boolean[markers.size()];
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		
+		Log.i(TAG, "Markers Initial size : " + String.valueOf(markers.size()));
 		for(int i=0; i<markers.size(); i++){
 			markersNames[i] = markers.get(i).getName();
 		}
@@ -422,18 +431,17 @@ public class AugmentedReality extends SensorsActivity implements
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-				if(isChecked)
-					unSelectedItems.add(which);
-				else
-					unSelectedItems.remove(which);
+				checkedItems[which] = isChecked;
 			}
 		});
 		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				for(Integer position: unSelectedItems){
-					markers.remove(position);
+				for(int i=0; i < checkedItems.length; i++ ){
+					if(!checkedItems[i]){
+						removedMarkers.remove(i);
+					}
 				}
 			}
 		});
@@ -441,13 +449,15 @@ public class AugmentedReality extends SensorsActivity implements
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				return;
+				dialog.cancel();
 			}
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
-		return markers;
+		
 	}
+
+	
 	
 	
 }

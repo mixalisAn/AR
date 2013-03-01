@@ -64,11 +64,14 @@ public class AugmentedView extends View {
             }
             collection = cache;
 
-            if (AugmentedReality.useCollisionDetection) collisionMarkers = adjustForCollisions(canvas, collection);
-            
-            if(collisionMarkers.size() > 0){
-            	//detector.collisionMarkers(collisionMarkers);
+            if (AugmentedReality.useCollisionDetection) {
+            	collisionMarkers = adjustForCollisions(canvas, collection);
+            	if(collisionMarkers.size() > 0){
+                	detector.collisionMarkers(collisionMarkers);
+                }
             }
+            
+            
             // Draw AR markers in reverse order since the last drawn should be
             // the closest
             ListIterator<Marker> iter = collection.listIterator(collection.size());
