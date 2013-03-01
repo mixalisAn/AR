@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array 
+        name="menu_home_values">
+        <item>Gps settings</item>
+        <item>Hide radar</item>
+        <item>Show zoombar</item>
+        <item>Pois categories</item>
+        <item>Exit</item>
+    </string-array>
+</resources>

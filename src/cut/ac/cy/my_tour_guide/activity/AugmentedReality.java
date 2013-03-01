@@ -6,7 +6,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
@@ -17,6 +19,8 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -66,6 +70,9 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static TextView zoomBarText = null;
 	protected static Button captureButton = null;
 	protected static Button gMapsButton = null;
+	protected static Button menuButton = null;
+	protected static String[] menuItemsValues = { "Pois Categories",
+			"Hide Radar", "Show zoombar", "Gps Settings", "Exit" };
 	// protected static VerticalTextView endLabel = null;
 	protected static RelativeLayout zoomLayout = null;
 	protected static AugmentedView augmentedView = null;
@@ -99,10 +106,12 @@ public class AugmentedReality extends SensorsActivity implements
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
 		captureButton = (Button) findViewById(R.id.buttonCamera);
 		gMapsButton = (Button) findViewById(R.id.buttonMaps);
+		menuButton = (Button) findViewById(R.id.buttonMenu);
 		// set up listeners
 		// buttonListeners();
 		captureButton.setOnClickListener(this);
 		gMapsButton.setOnClickListener(this);
+		menuButton.setOnClickListener(this);
 
 		FrameLayout liveLayout = (FrameLayout) findViewById(R.id.liveImage);
 
@@ -118,6 +127,7 @@ public class AugmentedReality extends SensorsActivity implements
 		zoomBarText.setText(END_TEXT);
 		zoomLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
 		zoomLayout.setVisibility(RelativeLayout.GONE);
+
 		updateDataOnZoom();
 
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -125,6 +135,7 @@ public class AugmentedReality extends SensorsActivity implements
 				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
+
 		ARData.addMarkers(localData.getMarkers()); // edw se perptwsi pou einai
 													// oloi miden epistrefei
 													// tous markers oi opoioi
@@ -132,44 +143,6 @@ public class AugmentedReality extends SensorsActivity implements
 													// null alla einai miden ara
 													// kanei return i
 													// getMarkers()
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.home, menu);
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.v(TAG, "onOptionsItemSelected() item=" + item);
-		switch (item.getItemId()) {
-		case R.id.gpsSettings:
-			startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-			break;
-		case R.id.showRadar:
-			showRadar = !showRadar;
-			item.setTitle(((showRadar) ? "Hide" : "Show") + " Radar");
-			break;
-		case R.id.showZoomBar:
-			showZoomBar = !showZoomBar;
-			item.setTitle(((showZoomBar) ? "Hide" : "Show") + " Zoom Bar");
-			zoomLayout.setVisibility((showZoomBar) ? RelativeLayout.VISIBLE
-					: RelativeLayout.GONE);
-			break;
-		case R.id.categories:
-			Intent intent = new Intent(this, MarkersCategories.class);
-			startActivityForResult(intent, REQUEST_CODE);
-			break;
-		case R.id.exit:
-			finish();
-			break;
-		}
-		return true;
 	}
 
 	/**
@@ -213,25 +186,9 @@ public class AugmentedReality extends SensorsActivity implements
 						.show();
 			}
 		} else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE) {
-			ARData.addCategorizedMarkers(localData.getMarkers()); // otan einai
-																	// ola ta
-																	// categories
-																	// apenergopoimena
-																	// tote
-																	// epistrefei
-																	// markers
-																	// pou den
-																	// einai
-																	// null alla
-																	// size = 0.
-																	// tote stin
-																	// addcategorizedmarkers
-																	// diagrafei
-																	// olous
-																	// tous
-																	// markers
-																	// apo tin
-																	// lista
+			ARData.addCategorizedMarkers(localData.getMarkers()); // otan einai ola ta categories apenergopoimena tote epistrefei
+																	// markers pou den einai null alla size = 0. tote stin addcategorizedmarkers
+																	// diagrafei olous tous markers apo tin lista
 		}
 	}
 
@@ -350,8 +307,9 @@ public class AugmentedReality extends SensorsActivity implements
 			editor.commit();
 			break;
 		case R.id.buttonMaps:
-			//elegxos an yparxoun ta  google play services sto kinito kai einai updated kai stin idia version 
-			//me tis efarmogis
+			// elegxos an yparxoun ta google play services sto kinito kai einai
+			// updated kai stin idia version
+			// me tis efarmogis
 			int result = GooglePlayServicesUtil
 					.isGooglePlayServicesAvailable(getApplicationContext());
 			if (result == ConnectionResult.SUCCESS) {
@@ -362,8 +320,52 @@ public class AugmentedReality extends SensorsActivity implements
 				GooglePlayServicesUtil.getErrorDialog(result, this, 1);
 			}
 			break;
+		case R.id.buttonMenu:
+			createMenuDialog();
+			break;
 		}
 
 	}
 
+	private void createMenuDialog() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		builder.setTitle("Menu options");
+		builder.setItems(menuItemsValues, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+					switch(which){
+					case 0:
+						Intent intent = new Intent(getApplicationContext(), MarkersCategories.class);
+						startActivityForResult(intent, REQUEST_CODE);
+						dialog.dismiss();
+						break;
+					case 1:
+						showRadar = !showRadar;
+						menuItemsValues[which] = (((showRadar) ? "Hide" : "Show") + " Radar");
+						dialog.dismiss();
+					break;
+					case 2:
+						showZoomBar = !showZoomBar;
+						menuItemsValues[which] = (((showZoomBar) ? "Hide" : "Show") + " Zoom Bar");
+						zoomLayout.setVisibility((showZoomBar) ? RelativeLayout.VISIBLE
+								: RelativeLayout.GONE);
+						dialog.dismiss();
+						break;
+					case 3:
+						startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+						dialog.dismiss();
+						break;
+					case 4:
+						finish();
+						break;
+				}
+				
+			}
+						
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
 }
