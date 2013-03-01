@@ -1,16 +1,15 @@
 package cut.ac.cy.my_tour_guide.activity;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -19,11 +18,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,11 +31,16 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.camera.Preview;
 import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.LocalDataSource;
+import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
 import cut.ac.cy.my_tour_guide.maps.MapActivity;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 import cut.ac.cy.my_tour_guide.ui.Marker;
@@ -53,7 +52,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class AugmentedReality extends SensorsActivity implements
-		OnTouchListener, OnClickListener {
+		OnTouchListener, OnClickListener, CollisionDetector {
 	private static final String TAG = "AugmentedReality";
 	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
@@ -62,7 +61,8 @@ public class AugmentedReality extends SensorsActivity implements
 
 	private static final String END_TEXT = FORMAT
 			.format(AugmentedReality.MAX_ZOOM) + " km";
-
+	
+	protected static List<Marker> collisionMarkers = new ArrayList<Marker>();
 	protected static WakeLock wakeLock = null;
 	protected static Preview camPreview = null;
 	protected static Camera camera = null;
@@ -71,6 +71,8 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static Button captureButton = null;
 	protected static Button gMapsButton = null;
 	protected static Button menuButton = null;
+	protected static Button collisionButton = null;
+	
 	protected static String[] menuItemsValues = { "Pois Categories",
 			"Hide Radar", "Show zoombar", "Gps Settings", "Exit" };
 	// protected static VerticalTextView endLabel = null;
@@ -89,6 +91,7 @@ public class AugmentedReality extends SensorsActivity implements
 	public static boolean useCollisionDetection = true;
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
+	public static boolean showCollisionButton = false;
 
 	/**
 	 * {@inheritDoc}
@@ -107,15 +110,19 @@ public class AugmentedReality extends SensorsActivity implements
 		captureButton = (Button) findViewById(R.id.buttonCamera);
 		gMapsButton = (Button) findViewById(R.id.buttonMaps);
 		menuButton = (Button) findViewById(R.id.buttonMenu);
+		collisionButton = (Button) findViewById(R.id.buttonCollision);
 		// set up listeners
 		// buttonListeners();
 		captureButton.setOnClickListener(this);
 		gMapsButton.setOnClickListener(this);
 		menuButton.setOnClickListener(this);
-
+		collisionButton.setOnClickListener(this);
+		
+		collisionButton.setBackgroundColor(Color.argb(180, 00, 00, 00));
 		FrameLayout liveLayout = (FrameLayout) findViewById(R.id.liveImage);
 
 		augmentedView = new AugmentedView(this);
+		augmentedView.setCollisionDetector(this);
 		augmentedView.setOnTouchListener(this);
 		augmentedView.setLayoutParams(new LayoutParams(
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -192,6 +199,25 @@ public class AugmentedReality extends SensorsActivity implements
 		}
 	}
 
+	
+	/**
+	 * On collision detected
+	 */
+	
+	@Override
+	public void collisionMarkers(List<Marker> markers) {
+		showCollisionButton = true;
+		setCollisionMarkers(markers);
+	}
+	
+	private synchronized void setCollisionMarkers(List<Marker> markers){
+		collisionMarkers = markers;
+	}
+	
+	
+	private synchronized List<Marker> getCollisionMarkers(){
+		return collisionMarkers;
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -221,7 +247,7 @@ public class AugmentedReality extends SensorsActivity implements
 			camPreview.invalidate();
 		}
 	};
-
+	
 	private static float calcZoomLevel() {
 		int myZoomLevel = myZoomBar.getProgress();
 		float myout = 0;
@@ -282,7 +308,7 @@ public class AugmentedReality extends SensorsActivity implements
 
 	@Override
 	public void onClick(View view) {
-
+		List<Marker> removedMarkers = new ArrayList<Marker>(); 
 		switch (view.getId()) {
 		case R.id.buttonCamera:
 			// retrieve photonum gia na to steiloume stin camera gia na to
@@ -322,6 +348,19 @@ public class AugmentedReality extends SensorsActivity implements
 			break;
 		case R.id.buttonMenu:
 			createMenuDialog();
+			break;
+		case R.id.buttonCollision:
+			/** 
+			 * Auto to kanw gia na min iparxei periptwsi na allaksei to megethos apo 
+			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
+			 */
+			List<Marker> collisionMarkers = getCollisionMarkers();
+			int collisionMarkersSize = collisionMarkers.size();
+			removedMarkers = createCollisionDialog(collisionMarkers);
+			if(removedMarkers.size() < collisionMarkersSize){
+				Log.i(TAG, "Oi removed markers einai: " + String.valueOf(removedMarkers.size()));
+				ARData.removeSelectedMarkers(removedMarkers);
+			}
 			break;
 		}
 
@@ -368,4 +407,47 @@ public class AugmentedReality extends SensorsActivity implements
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+
+	private List<Marker> createCollisionDialog(final List<Marker> markers){
+		String[] markersNames = new String[markers.size()];
+		final List<Integer> unSelectedItems = new ArrayList<Integer>();
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		
+		for(int i=0; i<markers.size(); i++){
+			markersNames[i] = markers.get(i).getName();
+		}
+		
+		builder.setTitle("Select markers to remain");
+		builder.setMultiChoiceItems(markersNames, null, new DialogInterface.OnMultiChoiceClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+				if(isChecked)
+					unSelectedItems.add(which);
+				else
+					unSelectedItems.remove(which);
+			}
+		});
+		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				for(Integer position: unSelectedItems){
+					markers.remove(position);
+				}
+			}
+		});
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				return;
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+		return markers;
+	}
+	
+	
 }

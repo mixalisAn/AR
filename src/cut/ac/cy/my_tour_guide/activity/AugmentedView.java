@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import cut.ac.cy.my_tour_guide.data.ARData;
+import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 import cut.ac.cy.my_tour_guide.ui.Radar;
 
@@ -25,7 +26,8 @@ import cut.ac.cy.my_tour_guide.ui.Radar;
 public class AugmentedView extends View {
 
     private static final AtomicBoolean drawing = new AtomicBoolean(false);
-
+    
+    private static CollisionDetector detector;
     private static final Radar radar = new Radar();
     private static final float[] locationArray = new float[3];
     private static final List<Marker> cache = new ArrayList<Marker>();
@@ -35,7 +37,11 @@ public class AugmentedView extends View {
     public AugmentedView(Context context) {
         super(context);
     }
-
+    
+    public void setCollisionDetector(CollisionDetector detector){
+    	this.detector = detector;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -61,11 +67,7 @@ public class AugmentedView extends View {
             if (AugmentedReality.useCollisionDetection) collisionMarkers = adjustForCollisions(canvas, collection);
             
             if(collisionMarkers.size() > 0){
-            	markersNames = "";
-            	for(Marker marker : collisionMarkers){
-            		markersNames += marker.getName() + " , ";
-            	}
-            	Toast.makeText(this.getContext(), "The markers with collision are: " + markersNames, Toast.LENGTH_SHORT).show();
+            	//detector.collisionMarkers(collisionMarkers);
             }
             // Draw AR markers in reverse order since the last drawn should be
             // the closest

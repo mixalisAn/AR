@@ -281,6 +281,30 @@ public abstract class ARData {
 		return Collections.unmodifiableList(cache);
 	}
 
+	
+	/**
+	 * Remove the selected collision markers from the list
+	 */
+	
+	public static void removeSelectedMarkers(List<Marker> markers){
+		if (markers == null)
+			throw new NullPointerException();
+
+		Log.d(TAG, "Remove selected collision markers");
+		synchronized (markerListLock) {
+			if (markers.size() > 0) {
+				for (Marker marker : markers) {
+					markerList.remove(marker);
+				}
+
+				if (dirty.compareAndSet(false, true)) {
+					Log.v(TAG, "Setting DIRTY flag!");
+					cache.clear();
+				}
+			}
+		}
+	}
+	
 	private static final Comparator<Marker> comparator = new Comparator<Marker>() {
 
 		/**

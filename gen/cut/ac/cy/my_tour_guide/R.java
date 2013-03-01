@@ -9,9 +9,8 @@ package cut.ac.cy.my_tour_guide;
 
 public final class R {
     public static final class array {
-        public static final int map_displays=0x7f0d0001;
-        public static final int map_displays_values=0x7f0d0002;
-        public static final int menu_home_values=0x7f0d0000;
+        public static final int map_displays=0x7f0d0000;
+        public static final int map_displays_values=0x7f0d0001;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1078,7 +1077,7 @@ containing a value of this type.
         public static final int wikipedia=0x7f020092;
     }
     public static final class id {
-        public static final int FrameLayout=0x7f060067;
+        public static final int FrameLayout=0x7f060069;
         public static final int FrameLayout1=0x7f06003f;
         public static final int FrameLayout2=0x7f06003d;
         public static final int RelativeLayout1=0x7f060038;
@@ -1122,82 +1121,79 @@ containing a value of this type.
         public static final int abs__title=0x7f06001f;
         public static final int abs__titleDivider=0x7f060020;
         public static final int abs__up=0x7f06000f;
-        public static final int address=0x7f060055;
-        public static final int backward=0x7f06006a;
-        public static final int buttonCamera=0x7f06004c;
-        public static final int buttonMaps=0x7f06004d;
-        public static final int buttonMenu=0x7f06004e;
+        public static final int address=0x7f060057;
+        public static final int backward=0x7f06006c;
+        public static final int buttonCamera=0x7f06004e;
+        public static final int buttonCollision=0x7f06004a;
+        public static final int buttonMaps=0x7f06004f;
+        public static final int buttonMenu=0x7f060050;
         public static final int cameraPreview=0x7f060047;
-        public static final int categories=0x7f060071;
         public static final int checkBoxCategory=0x7f06003b;
+        public static final int collisionLayout=0x7f060048;
         public static final int disableHome=0x7f06000d;
         public static final int edit_query=0x7f06002b;
-        public static final int exit=0x7f060072;
-        public static final int forward=0x7f06006d;
-        public static final int gpsSettings=0x7f06006e;
+        public static final int forward=0x7f06006f;
         public static final int gridview=0x7f060045;
         public static final int homeAsUp=0x7f06000a;
         public static final int hybrid=0x7f060004;
-        public static final int imageButton1=0x7f060059;
-        public static final int imageButton2=0x7f06005d;
-        public static final int imageButton3=0x7f060061;
+        public static final int imageButton1=0x7f06005b;
+        public static final int imageButton2=0x7f06005f;
+        public static final int imageButton3=0x7f060063;
         public static final int imageView=0x7f060044;
         public static final int imageViewCategory=0x7f060039;
         public static final int imageViewCompare=0x7f06003e;
-        public static final int info=0x7f060076;
+        public static final int info=0x7f060073;
         public static final int listMode=0x7f060006;
         public static final int liveImage=0x7f060046;
-        public static final int map=0x7f060050;
-        public static final int mapDisplay=0x7f060073;
-        public static final int map_container=0x7f06004f;
-        public static final int markerAddress=0x7f060056;
-        public static final int markerInfo=0x7f060065;
-        public static final int markerInfoTitle=0x7f060064;
-        public static final int markerLink1=0x7f06005b;
-        public static final int markerLink2=0x7f06005f;
-        public static final int markerLink3=0x7f060063;
-        public static final int markerMainImage=0x7f060053;
-        public static final int markerOtherActions=0x7f060057;
-        public static final int markerTitle=0x7f060054;
-        public static final int menu_music=0x7f060077;
-        public static final int musicLayout=0x7f060069;
-        public static final int navigation=0x7f06005e;
-        public static final int navigationLink=0x7f06005c;
-        public static final int network_connection=0x7f060074;
+        public static final int map=0x7f060052;
+        public static final int mapDisplay=0x7f060070;
+        public static final int map_container=0x7f060051;
+        public static final int markerAddress=0x7f060058;
+        public static final int markerInfo=0x7f060067;
+        public static final int markerInfoTitle=0x7f060066;
+        public static final int markerLink1=0x7f06005d;
+        public static final int markerLink2=0x7f060061;
+        public static final int markerLink3=0x7f060065;
+        public static final int markerMainImage=0x7f060055;
+        public static final int markerOtherActions=0x7f060059;
+        public static final int markerTitle=0x7f060056;
+        public static final int menu_music=0x7f060074;
+        public static final int musicLayout=0x7f06006b;
+        public static final int navigation=0x7f060060;
+        public static final int navigationLink=0x7f06005e;
+        public static final int network_connection=0x7f060071;
         public static final int none=0x7f060000;
         public static final int normal=0x7f060001;
         public static final int pager=0x7f060037;
         public static final int pager2=0x7f06003c;
         public static final int past=0x7f060040;
-        public static final int pausePlay=0x7f06006c;
+        public static final int pausePlay=0x7f06006e;
         public static final int present=0x7f060042;
-        public static final int readMoreButton=0x7f060066;
+        public static final int readMoreButton=0x7f060068;
         public static final int satellite=0x7f060002;
-        public static final int scrollView=0x7f060052;
-        public static final int settings=0x7f060075;
-        public static final int share=0x7f060062;
-        public static final int shareLink=0x7f060060;
+        public static final int scrollView=0x7f060054;
+        public static final int settings=0x7f060072;
+        public static final int share=0x7f060064;
+        public static final int shareLink=0x7f060062;
         public static final int showCustom=0x7f06000c;
         public static final int showHome=0x7f060009;
-        public static final int showRadar=0x7f06006f;
         public static final int showTitle=0x7f06000b;
-        public static final int showZoomBar=0x7f060070;
         public static final int sideButtons=0x7f060049;
-        public static final int stop=0x7f06006b;
+        public static final int stop=0x7f06006d;
         public static final int tabMode=0x7f060007;
         public static final int terrain=0x7f060003;
         public static final int textViewCategory=0x7f06003a;
         public static final int textViewPast=0x7f060041;
         public static final int textViewPresent=0x7f060043;
-        public static final int transparentView=0x7f060068;
+        public static final int transparentView=0x7f06006a;
         public static final int useLogo=0x7f060008;
-        public static final int webView=0x7f060051;
-        public static final int wikipedia=0x7f06005a;
-        public static final int wikipediaLink=0x7f060058;
+        public static final int webView=0x7f060053;
+        public static final int wikipedia=0x7f06005c;
+        public static final int wikipediaLink=0x7f06005a;
         public static final int wrap_content=0x7f060005;
-        public static final int zoomLayout=0x7f060048;
-        public static final int zoombar=0x7f06004a;
-        public static final int zoombarText=0x7f06004b;
+        public static final int zoomLayout=0x7f06004b;
+        public static final int zoombar=0x7f06004c;
+        public static final int zoombarText=0x7f06004d;
     }
     public static final class integer {
         public static final int abs__max_action_buttons=0x7f0b0000;
@@ -1243,9 +1239,8 @@ containing a value of this type.
         public static final int sherlock_spinner_item=0x7f030025;
     }
     public static final class menu {
-        public static final int home=0x7f0e0000;
-        public static final int maps=0x7f0e0001;
-        public static final int poi=0x7f0e0002;
+        public static final int maps=0x7f0e0000;
+        public static final int poi=0x7f0e0001;
     }
     public static final class raw {
         public static final int rialto_theater=0x7f050000;
