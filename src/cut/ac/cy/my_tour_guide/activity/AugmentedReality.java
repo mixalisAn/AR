@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,6 +43,9 @@ import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.LocalDataSource;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
+import cut.ac.cy.my_tour_guide.helpers.CollisionDialog;
+import cut.ac.cy.my_tour_guide.helpers.CollisionDialog.ConfirmationListener;
+import cut.ac.cy.my_tour_guide.helpers.MenuDialog;
 import cut.ac.cy.my_tour_guide.maps.MapActivity;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 import cut.ac.cy.my_tour_guide.ui.Marker;
@@ -53,7 +57,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class AugmentedReality extends SensorsActivity implements
-		OnTouchListener, OnClickListener, CollisionDetector {
+		OnTouchListener, OnClickListener, CollisionDetector , ConfirmationListener{
 	private static final String TAG = "AugmentedReality";
 	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
@@ -95,6 +99,7 @@ public class AugmentedReality extends SensorsActivity implements
 
 	//na dw an mporw na to kanw kapws allios
 	private static List<Marker> removedMarkers = new ArrayList<Marker>();
+	private static List<Marker> selectedCollisionMarkers = new ArrayList<Marker>();
 	
 	/**
 	 * {@inheritDoc}
@@ -349,115 +354,62 @@ public class AugmentedReality extends SensorsActivity implements
 			}
 			break;
 		case R.id.buttonMenu:
-			createMenuDialog();
+			FragmentManager fm = getSupportFragmentManager();
+			MenuDialog dialogMenu = new MenuDialog();
+			dialogMenu.show(fm, "Dialog Handler");
 			break;
 		case R.id.buttonCollision:
 			/** 
 			 * Auto to kanw gia na min iparxei periptwsi na allaksei to megethos apo 
 			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
 			 */
-			List<Marker> collisionMarkers = getCollisionMarkers();
-			int collisionMarkersSize = collisionMarkers.size();
-			removedMarkers = collisionMarkers;
-			Log.i(TAG, "Removed markers before dialog: " + String.valueOf(removedMarkers.size()));
 			
-			//thelei fragment dialog na to dw ligo 
-			//autin tin stigmi exei bug sto remove apo to markerscreateCollisionDialog(collisionMarkers);
-			Log.i(TAG, "Removed markers after dialog: " + String.valueOf(removedMarkers.size()));
-			if(removedMarkers.size() < collisionMarkersSize){
-				Log.i(TAG, "Oi removed markers einai: " + String.valueOf(removedMarkers.size()));
-				ARData.removeSelectedMarkers(removedMarkers);
-			}
+			setSelectedCollisionMarkers(getCollisionMarkers());
+			
+			FragmentManager fm2 = getSupportFragmentManager();
+			CollisionDialog dialogCollision = new CollisionDialog();
+			dialogCollision.setConfirmationDialogFragmentListener(this);
+			dialogCollision.show(fm2, "Dialog Collision");
+			
+			
 			break;
 		}
 
 	}
+	
+	//xrisimopoiountai gia tin epikoinwnia me ta dialogs fragments
 
-	private void createMenuDialog() {
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		
-		builder.setTitle("Menu options");
-		builder.setItems(menuItemsValues, new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-					switch(which){
-					case 0:
-						Intent intent = new Intent(getApplicationContext(), MarkersCategories.class);
-						startActivityForResult(intent, REQUEST_CODE);
-						dialog.dismiss();
-						break;
-					case 1:
-						showRadar = !showRadar;
-						menuItemsValues[which] = (((showRadar) ? "Hide" : "Show") + " Radar");
-						dialog.dismiss();
-					break;
-					case 2:
-						showZoomBar = !showZoomBar;
-						menuItemsValues[which] = (((showZoomBar) ? "Hide" : "Show") + " Zoom Bar");
-						zoomLayout.setVisibility((showZoomBar) ? RelativeLayout.VISIBLE
-								: RelativeLayout.GONE);
-						dialog.dismiss();
-						break;
-					case 3:
-						startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-						dialog.dismiss();
-						break;
-					case 4:
-						finish();
-						break;
-				}
-				
-			}
-						
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
+	public void setSelectedCollisionMarkers(List<Marker> markers) {
+		selectedCollisionMarkers = markers;
+	}
+	
+	public List<Marker> getSelectedCollisionMarkers(){
+		return selectedCollisionMarkers;
+	}
+	
+	public void setRemovedCollisionMarkers(List<Marker> markers){
+		removedMarkers = markers;
+	}
+	
+	public List<Marker> getRemovedCollisionMarkers(){
+		return removedMarkers;
+	}
+	
+	public RelativeLayout getZoomLayout(){
+		return zoomLayout;
 	}
 
-	
-
-	private void createCollisionDialog(List<Marker> markers){
-		String[] markersNames = new String[markers.size()];
-		final boolean[] checkedItems = new boolean[markers.size()];
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		Log.i(TAG, "Markers Initial size : " + String.valueOf(markers.size()));
-		for(int i=0; i<markers.size(); i++){
-			markersNames[i] = markers.get(i).getName();
+	@Override
+	public void onOkClick(List<Marker> removedMarkers) {
+		setRemovedCollisionMarkers(removedMarkers);
+		//thelei fragment dialog na to dw ligo 
+		//autin tin stigmi exei bug sto remove apo to markerscreateCollisionDialog(collisionMarkers);
+		Log.i(TAG, "Oi removed collision Markers einai: " + String.valueOf(getRemovedCollisionMarkers().size()));
+		if(getRemovedCollisionMarkers() != null && (getRemovedCollisionMarkers().size() < getSelectedCollisionMarkers().size())){
+			Log.i(TAG, "Oi removed markers einai: " + String.valueOf(removedMarkers.size()));
+			ARData.removeSelectedMarkers(getRemovedCollisionMarkers());
 		}
-		
-		builder.setTitle("Select markers to remain");
-		builder.setMultiChoiceItems(markersNames, null, new DialogInterface.OnMultiChoiceClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-				checkedItems[which] = isChecked;
-			}
-		});
-		builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				for(int i=0; i < checkedItems.length; i++ ){
-					if(!checkedItems[i]){
-						removedMarkers.remove(i);
-					}
-				}
-			}
-		});
-		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
-		
 	}
-
-	
 	
 	
 }

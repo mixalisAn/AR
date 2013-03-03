@@ -291,10 +291,11 @@ public abstract class ARData {
 			throw new NullPointerException();
 
 		Log.d(TAG, "Remove selected collision markers");
+		Log.i(TAG, "To size apo tous markers pou erxontai eiani : " + String.valueOf(markers.size()));
 		synchronized (markerListLock) {
 			if (markers.size() > 0) {
 				for (Marker marker : markers) {
-					markerList.remove(marker);
+					markerList.remove(marker.getName());
 				}
 
 				if (dirty.compareAndSet(false, true)) {

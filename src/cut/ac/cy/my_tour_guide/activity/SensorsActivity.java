@@ -3,12 +3,6 @@ package cut.ac.cy.my_tour_guide.activity;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
-import cut.ac.cy.my_tour_guide.common.LowPassFilter;
-import cut.ac.cy.my_tour_guide.common.Matrix;
-import cut.ac.cy.my_tour_guide.data.ARData;
-
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
@@ -22,12 +16,18 @@ import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import cut.ac.cy.my_tour_guide.common.LowPassFilter;
+import cut.ac.cy.my_tour_guide.common.Matrix;
+import cut.ac.cy.my_tour_guide.data.ARData;
+
 /**
  * This class extends Activity and processes sensor data and location data.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
-public class SensorsActivity extends Activity implements SensorEventListener, LocationListener {
+public class SensorsActivity extends SherlockFragmentActivity implements SensorEventListener, LocationListener {
 
     private static final String TAG = "SensorsActivity";
     private static final AtomicBoolean computing = new AtomicBoolean(false);

@@ -47,7 +47,8 @@
         <activity
             android:name="cut.ac.cy.my_tour_guide.activity.AugmentedReality"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape" 
+            android:theme="@style/Theme.Sherlock.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
