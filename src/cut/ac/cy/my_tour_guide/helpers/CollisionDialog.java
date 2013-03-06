@@ -21,9 +21,6 @@ public class CollisionDialog extends SherlockDialogFragment implements DialogInt
 	private ConfirmationListener listener;
 	
 	public CollisionDialog(){
-	//	System.out.println("Oi collision markers sto framgent eiani " + String.valueOf(((AugmentedReality)getActivity()).getSelectedCollisionMarkers()));
-	//	collisionMarkers = ((AugmentedReality)getActivity()).getSelectedCollisionMarkers();
-	//	markersNames = new String[collisionMarkers.size()];
 	}
 
 	public interface ConfirmationListener{

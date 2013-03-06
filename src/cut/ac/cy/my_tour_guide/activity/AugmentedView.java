@@ -29,10 +29,8 @@ public class AugmentedView extends View {
     
     private static CollisionDetector detector;
     private static final Radar radar = new Radar();
-    private static final float[] locationArray = new float[3];
     private static final List<Marker> cache = new ArrayList<Marker>();
     private static final TreeSet<Marker> updated = new TreeSet<Marker>();
-    private static final int COLLISION_ADJUSTMENT = 100;
 
     public AugmentedView(Context context) {
         super(context);
@@ -48,7 +46,6 @@ public class AugmentedView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
     	List<Marker> collisionMarkers = null;
-    	String markersNames;
         if (canvas == null) return;
 
         if (drawing.compareAndSet(false, true)) {
@@ -66,9 +63,7 @@ public class AugmentedView extends View {
 
             if (AugmentedReality.useCollisionDetection) {
             	collisionMarkers = adjustForCollisions(canvas, collection);
-            	if(collisionMarkers.size() > 0){
-                	detector.collisionMarkers(collisionMarkers);
-                }
+                detector.collisionMarkers(collisionMarkers);
             }
             
             

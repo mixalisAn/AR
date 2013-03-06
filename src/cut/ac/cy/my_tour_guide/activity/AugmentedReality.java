@@ -95,10 +95,8 @@ public class AugmentedReality extends SensorsActivity implements
 	public static boolean useCollisionDetection = true;
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
-	public static boolean showCollisionButton = false;
 
 	//na dw an mporw na to kanw kapws allios
-	private static List<Marker> removedMarkers = new ArrayList<Marker>();
 	private static List<Marker> selectedCollisionMarkers = new ArrayList<Marker>();
 	
 	/**
@@ -214,8 +212,15 @@ public class AugmentedReality extends SensorsActivity implements
 	
 	@Override
 	public void collisionMarkers(List<Marker> markers) {
-		showCollisionButton = true;
+		
 		setCollisionMarkers(markers);
+		if(markers.isEmpty()){
+			collisionButton.setText("Show All Markers");
+		}else{
+			collisionButton.setVisibility(View.VISIBLE);
+			collisionButton.setText("Show Collision");
+		}
+		
 	}
 	
 	private synchronized void setCollisionMarkers(List<Marker> markers){
@@ -363,14 +368,18 @@ public class AugmentedReality extends SensorsActivity implements
 			 * Auto to kanw gia na min iparxei periptwsi na allaksei to megethos apo 
 			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
 			 */
+			if(collisionMarkers.isEmpty()){
+				ARData.addMarkers(localData.getMarkers());
+				collisionButton.setVisibility(View.GONE);
+			}else{
+				setSelectedCollisionMarkers(getCollisionMarkers());
 			
-			setSelectedCollisionMarkers(getCollisionMarkers());
-			
-			FragmentManager fm2 = getSupportFragmentManager();
-			CollisionDialog dialogCollision = new CollisionDialog();
-			dialogCollision.setConfirmationDialogFragmentListener(this);
-			dialogCollision.show(fm2, "Dialog Collision");
-			
+				FragmentManager fm2 = getSupportFragmentManager();
+				CollisionDialog dialogCollision = new CollisionDialog();
+				dialogCollision.setConfirmationDialogFragmentListener(this);
+				dialogCollision.show(fm2, "Dialog Collision");
+				
+			}
 			
 			break;
 		}
@@ -387,27 +396,15 @@ public class AugmentedReality extends SensorsActivity implements
 		return selectedCollisionMarkers;
 	}
 	
-	public void setRemovedCollisionMarkers(List<Marker> markers){
-		removedMarkers = markers;
-	}
-	
-	public List<Marker> getRemovedCollisionMarkers(){
-		return removedMarkers;
-	}
-	
 	public RelativeLayout getZoomLayout(){
 		return zoomLayout;
 	}
-
+	
 	@Override
 	public void onOkClick(List<Marker> removedMarkers) {
-		setRemovedCollisionMarkers(removedMarkers);
-		//thelei fragment dialog na to dw ligo 
-		//autin tin stigmi exei bug sto remove apo to markerscreateCollisionDialog(collisionMarkers);
-		Log.i(TAG, "Oi removed collision Markers einai: " + String.valueOf(getRemovedCollisionMarkers().size()));
-		if(getRemovedCollisionMarkers() != null && (getRemovedCollisionMarkers().size() < getSelectedCollisionMarkers().size())){
+		if(removedMarkers != null && (removedMarkers.size() < getSelectedCollisionMarkers().size())){
 			Log.i(TAG, "Oi removed markers einai: " + String.valueOf(removedMarkers.size()));
-			ARData.removeSelectedMarkers(getRemovedCollisionMarkers());
+			ARData.removeSelectedMarkers(removedMarkers);
 		}
 	}
 	
