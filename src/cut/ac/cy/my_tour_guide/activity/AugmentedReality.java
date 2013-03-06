@@ -4,20 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -31,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,9 +69,9 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static Camera camera = null;
 	protected static SeekBar myZoomBar = null;
 	protected static TextView zoomBarText = null;
-	protected static Button captureButton = null;
-	protected static Button gMapsButton = null;
-	protected static Button menuButton = null;
+	protected static TableRow captureButton = null;
+	protected static TableRow gMapsButton = null;
+	protected static TableRow menuButton = null;
 	protected static Button collisionButton = null;
 	
 	protected static String[] menuItemsValues = { "Pois Categories",
@@ -113,9 +109,9 @@ public class AugmentedReality extends SensorsActivity implements
 		setContentView(R.layout.home_screen);
 
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
-		captureButton = (Button) findViewById(R.id.buttonCamera);
-		gMapsButton = (Button) findViewById(R.id.buttonMaps);
-		menuButton = (Button) findViewById(R.id.buttonMenu);
+		captureButton = (TableRow) findViewById(R.id.buttonCamera);
+		gMapsButton = (TableRow) findViewById(R.id.buttonMaps);
+		menuButton = (TableRow) findViewById(R.id.buttonMenu);
 		collisionButton = (Button) findViewById(R.id.buttonCollision);
 		// set up listeners
 		// buttonListeners();
@@ -124,7 +120,6 @@ public class AugmentedReality extends SensorsActivity implements
 		menuButton.setOnClickListener(this);
 		collisionButton.setOnClickListener(this);
 		
-		collisionButton.setBackgroundColor(Color.argb(180, 00, 00, 00));
 		FrameLayout liveLayout = (FrameLayout) findViewById(R.id.liveImage);
 
 		augmentedView = new AugmentedView(this);

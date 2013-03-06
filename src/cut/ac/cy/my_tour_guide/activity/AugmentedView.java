@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.view.View;
-import android.widget.Toast;
 
 
 import cut.ac.cy.my_tour_guide.data.ARData;
@@ -27,7 +26,7 @@ public class AugmentedView extends View {
 
     private static final AtomicBoolean drawing = new AtomicBoolean(false);
     
-    private static CollisionDetector detector;
+    private CollisionDetector detector;
     private static final Radar radar = new Radar();
     private static final List<Marker> cache = new ArrayList<Marker>();
     private static final TreeSet<Marker> updated = new TreeSet<Marker>();
@@ -95,12 +94,6 @@ public class AugmentedView extends View {
                     continue;
 
                 if (marker1.isMarkerOnMarker(marker2)) {
-                   /* marker2.getLocation().get(locationArray);
-                    float y = locationArray[1];
-                    float h = collisions * COLLISION_ADJUSTMENT;
-                    locationArray[1] = y + h;
-                    marker2.getLocation().set(locationArray);
-                    marker2.update(canvas, 0, 0);*/
                     collisions++;
                     updated.add(marker2);
                     collisionMarkers.add(marker2);

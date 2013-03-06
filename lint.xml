@@ -4,4 +4,7 @@
         <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesAdapter.java" />
         <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesRowDetails.java" />
     </issue>
+    <issue id="SelectableText">
+        <ignore path="res\layout\home_screen.xml" />
+    </issue>
 </lint>
