@@ -130,11 +130,12 @@ public class AugmentedReality extends SensorsActivity implements
 		liveLayout.addView(augmentedView);
 
 		myZoomBar = (SeekBar) findViewById(R.id.zoombar);
+		
 		zoomBarText = (TextView) findViewById(R.id.zoombarText);
 		myZoomBar.setOnSeekBarChangeListener(myZoomBarOnSeekBarChangeListener);
 		zoomBarText.setText(END_TEXT);
 		zoomLayout = (RelativeLayout) findViewById(R.id.zoomLayout);
-		zoomLayout.setVisibility(RelativeLayout.GONE);
+		zoomLayout.setVisibility((showZoomBar) ? RelativeLayout.VISIBLE : RelativeLayout.GONE);
 
 		updateDataOnZoom();
 

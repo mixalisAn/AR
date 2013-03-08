@@ -60,6 +60,7 @@ public abstract class ARData {
 			throw new NullPointerException();
 
 		synchronized (ARData.zoomLevel) {
+			Log.i(TAG, "ZoomLevel = " + ARData.zoomLevel);
 			ARData.zoomLevel = zoomLevel;
 		}
 	}
@@ -84,6 +85,7 @@ public abstract class ARData {
 	public static void setZoomProgress(int zoomProgress) {
 		synchronized (ARData.zoomProgressLock) {
 			if (ARData.zoomProgress != zoomProgress) {
+				Log.i(TAG, "ZoomProgress = " + String.valueOf(ARData.zoomProgress));
 				ARData.zoomProgress = zoomProgress;
 				if (dirty.compareAndSet(false, true)) {
 					Log.v(TAG, "Setting DIRTY flag!");
@@ -112,6 +114,7 @@ public abstract class ARData {
 	 */
 	public static void setRadius(float radius) {
 		synchronized (ARData.radiusLock) {
+			Log.i(TAG, "Radius = " + String.valueOf(ARData.radius));
 			ARData.radius = radius;
 		}
 	}
