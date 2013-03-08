@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
+import android.util.Log;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Vector;
@@ -326,11 +327,13 @@ public class Marker implements Comparable<Marker> {
 
         // Update the markers distance based on the new location.
         updateDistance(location);
-
+        Log.i("Altitude debugging", "Gps altitude = " + String.valueOf(location.getAltitude()));
         // An elevation of 0.0 probably means that the elevation of the
         // POI is not known and should be set to the users GPS height
+        Log.i("Altitude debugging", "POI altitude before = " + String.valueOf(physicalLocation.getAltitude()));
         if (physicalLocation.getAltitude() == 0.0) physicalLocation.setAltitude(location.getAltitude());
-
+        Log.i("Altitude debugging", "POI altitude after = " + String.valueOf(physicalLocation.getAltitude()));
+        
         // Compute the relative position vector from user position to POI
         // location
         PhysicalLocation.convLocationToVector(location, physicalLocation, locationXyzRelativeToPhysicalLocation);
