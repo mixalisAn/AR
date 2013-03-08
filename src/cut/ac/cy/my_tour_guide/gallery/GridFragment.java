@@ -2,32 +2,41 @@ package cut.ac.cy.my_tour_guide.gallery;
 
 import java.sql.SQLException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.util.LruCache;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
+import cut.ac.cy.my_tour_guide.BuildConfig;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
+import cut.ac.cy.my_tour_guide.gallery.ImageCache.ImageCacheParams;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 
 public class GridFragment extends SherlockFragment {
 	private static final String TAG = "GridFragment";
-	public LruCache<String, Bitmap> mRetainedCache;
+	private static final String IMAGE_CACHE_DIR = "images";
+
+	
+	 private int imageThumbSize;
+	 private int imageThumbSpacing;
+
 	// ---the images to display---
 	private String[] mStrings;
-	private ImageDownloader imageDownloader;
+	private ImageFetcher imageFetcher;
 	GridView gridView;
 	ImageAdapter adapter;
 	ImageView imageview;
@@ -40,13 +49,28 @@ public class GridFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
+		//setHasOptionsMenu(true);
 		Log.i(TAG, "Fagmented created");
-	}
+		imageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+	    imageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
+	    ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
+
+	    cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
+
+	    // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+	    imageFetcher = new ImageFetcher(getActivity(), imageThumbSize);
+	    imageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
+	}
+	
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		Log.i(TAG, "fragment view changed");
+		final View v = inflater.inflate(R.layout.fragment_grid, container,
+				false);
+	
+		
 		markerId = ((PoiActivity) getActivity()).getMarkerId();
 		DBHandler db = new DBHandler(getActivity());
 		try {
@@ -67,9 +91,11 @@ public class GridFragment extends SherlockFragment {
 			Log.e(TAG, "error while in database");
 			e.printStackTrace();
 		}
+		
 		Log.i(TAG, "The number of urls is: " + mStrings.length);
 		// o adapter enwnei to kathe stoixeio apo to mstrings sto gridview
-		adapter = new ImageAdapter(getActivity(), mStrings, imageDownloader);
+		adapter = new ImageAdapter(getActivity());
+		gridView = (GridView) v.findViewById(R.id.gridview);
 		gridView.setAdapter(adapter);
 
 		gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -82,40 +108,28 @@ public class GridFragment extends SherlockFragment {
 				startActivity(intent);
 			}
 		});
-
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		Log.i(TAG, "fragment view changed");
-		final View v = inflater.inflate(R.layout.fragment_grid, container,
-				false);
-		gridView = (GridView) v.findViewById(R.id.gridview);
-		// me to getActivity exei prosvasi stin activity to fragment
-		imageDownloader = new ImageDownloader(getActivity(), getActivity()
-				.getSupportFragmentManager());
-
+		gridView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (adapter.getNumColumns() == 0) {
+                            final int numColumns = (int) Math.floor(
+                                    gridView.getWidth() / (imageThumbSize + imageThumbSpacing));
+                            if (numColumns > 0) {
+                                final int columnWidth =
+                                        (gridView.getWidth() / numColumns) - imageThumbSpacing;
+                                adapter.setNumColumns(numColumns);
+                                adapter.setItemHeight(columnWidth);
+                                if (BuildConfig.DEBUG) {
+                                    Log.d(TAG, "onCreateView - numColumns set to " + numColumns);
+                                }
+                            }
+                        }
+                    }
+                });
 		return v;
 	}
-
-	/*
-	 * @Override public void onCreateOptionsMenu(Menu menu, MenuInflater
-	 * inflater) { // TODO Auto-generated method stub
-	 * inflater.inflate(R.menu.fragment_menu, menu); }
-	 * 
-	 * @Override public boolean onOptionsItemSelected(MenuItem item) {
-	 * ImagesSave imSave;
-	 * 
-	 * switch(item.getItemId()){ case R.id.save_images: imSave = new
-	 * ImagesSave(getActivity().getApplicationContext(), getFragmentManager(),
-	 * mStrings, "Test"); imSave.saveImages(); getActivity().sendBroadcast(new
-	 * Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" +
-	 * Environment.getExternalStorageDirectory()))); break; case
-	 * R.id.redownload: imageDownloader.clearCache(); break; }
-	 * 
-	 * return super.onOptionsItemSelected(item); }
-	 */
+	
 	@Override
 	public void onPause() {
 		super.onPause();
@@ -133,4 +147,82 @@ public class GridFragment extends SherlockFragment {
 	 * (ImageView) adapter.getItem(position); view.setImageDrawable(draw);
 	 * adapter.notifyDataSetChanged(); }
 	 */
+	
+	private class ImageAdapter extends BaseAdapter {
+
+        private final Context mContext;
+        private int mItemHeight = 0;
+        private int mNumColumns = 0;
+        private GridView.LayoutParams mImageViewLayoutParams;
+
+        public ImageAdapter(Context context) {
+            super();
+            mContext = context;
+            mImageViewLayoutParams = new GridView.LayoutParams(
+                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+           
+        }
+
+        @Override
+        public int getCount() {
+            return mStrings.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mStrings[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup container) {
+            // Now handle the main ImageView thumbnails
+            ImageView imageView = (ImageView) convertView;
+            if (imageView == null) { // if it's not recycled, instantiate and initialize
+                imageView = new ImageView(mContext);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setLayoutParams(mImageViewLayoutParams);
+            } 
+
+            // Check the height matches our calculated column width
+            if (imageView.getLayoutParams().height != mItemHeight) {
+                imageView.setLayoutParams(mImageViewLayoutParams);
+            }
+
+            // Finally load the image asynchronously into the ImageView, this also takes care of
+            // setting a placeholder image while the background thread runs
+            imageFetcher.loadImage(mStrings[position], imageView);
+            return imageView;
+        }
+
+        /**
+         * Sets the item height. Useful for when we know the column width so the height can be set
+         * to match.
+         *
+         * @param height
+         */
+        public void setItemHeight(int height) {
+            if (height == mItemHeight) {
+                return;
+            }
+            mItemHeight = height;
+            mImageViewLayoutParams =
+                    new GridView.LayoutParams(LayoutParams.MATCH_PARENT, mItemHeight);
+            imageFetcher.setImageSize(height);
+            notifyDataSetChanged();
+        }
+
+        public void setNumColumns(int numColumns) {
+            mNumColumns = numColumns;
+        }
+
+        public int getNumColumns() {
+            return mNumColumns;
+        }
+    }
+	
 }

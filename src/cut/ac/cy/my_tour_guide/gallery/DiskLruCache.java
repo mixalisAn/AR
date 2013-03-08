@@ -270,7 +270,7 @@ public final class DiskLruCache implements Closeable {
     private final ExecutorService executorService = new ThreadPoolExecutor(0, 1,
             60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
     private final Callable<Void> cleanupCallable = new Callable<Void>() {
-      public Void call() throws Exception {
+        @Override public Void call() throws Exception {
             synchronized (DiskLruCache.this) {
                 if (journalWriter == null) {
                     return null; // closed
@@ -761,7 +761,7 @@ public final class DiskLruCache implements Closeable {
             return inputStreamToString(getInputStream(index));
         }
 
-       public void close() {
+        @Override public void close() {
             for (InputStream in : ins) {
                 closeQuietly(in);
             }

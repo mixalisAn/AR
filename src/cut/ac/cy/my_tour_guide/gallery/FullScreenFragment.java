@@ -15,7 +15,7 @@ public class FullScreenFragment extends SherlockFragment{
 	private static final String IMAGE_DATA_EXTRA = "resId";
 	private String mImageUrl;
 	private ImageView mImageView;
-	private ImageDownloader imageDownloader;
+	private ImageFetcher imageFetcher;
 	
 	static FullScreenFragment newInstance(String imageUrl) {
         final FullScreenFragment f = new FullScreenFragment();
@@ -47,9 +47,21 @@ public class FullScreenFragment extends SherlockFragment{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (FullScreenActivity.class.isInstance(getActivity())) {
-            imageDownloader = ((FullScreenActivity) getActivity()).getImageDownloader();
-            imageDownloader.download(mImageUrl, mImageView);
+            imageFetcher = ((FullScreenActivity) getActivity()).getImageFethcer();
+            imageFetcher.loadImage(mImageUrl, mImageView);
         }
         // Load image into ImageView
     }
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mImageView != null) {
+            // Cancel any pending image work
+            ImageWorker.cancelWork(mImageView);
+            mImageView.setImageDrawable(null);
+        }
+	}
+    
+    
 }
