@@ -14,6 +14,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -108,6 +109,23 @@ public class GridFragment extends SherlockFragment {
 				startActivity(intent);
 			}
 		});
+		gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                // Pause fetcher to ensure smoother scrolling when flinging
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    imageFetcher.setPauseWork(true);
+                } else {
+                    imageFetcher.setPauseWork(false);
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem,
+                    int visibleItemCount, int totalItemCount) {
+            }
+        });
+		
 		gridView.getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
@@ -117,7 +135,7 @@ public class GridFragment extends SherlockFragment {
                                     gridView.getWidth() / (imageThumbSize + imageThumbSpacing));
                             if (numColumns > 0) {
                                 final int columnWidth =
-                                        (gridView.getWidth() / numColumns) - imageThumbSpacing;
+                                        (gridView.getWidth() / numColumns) -   imageThumbSpacing;
                                 adapter.setNumColumns(numColumns);
                                 adapter.setItemHeight(columnWidth);
                                 if (BuildConfig.DEBUG) {
@@ -130,18 +148,6 @@ public class GridFragment extends SherlockFragment {
 		return v;
 	}
 	
-	@Override
-	public void onPause() {
-		super.onPause();
-		Log.i(TAG,"onPause has been called");
-
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		Log.i(TAG, "onResume has been called");
-	}
 	/*
 	 * public void update(Drawable draw, int position) { ImageView view =
 	 * (ImageView) adapter.getItem(position); view.setImageDrawable(draw);
@@ -225,4 +231,9 @@ public class GridFragment extends SherlockFragment {
         }
     }
 	
+	public void PauseImageFetcher(){
+		if(imageFetcher != null){
+			imageFetcher.setPauseWork(true);
+		}
+	}
 }

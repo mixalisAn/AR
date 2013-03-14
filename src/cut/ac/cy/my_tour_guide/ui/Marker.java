@@ -105,7 +105,9 @@ public class Marker implements Comparable<Marker> {
         this.resName = resName;
         this.categotyId = categoryId;
         this.bitmap = bitmap;
+        Log.i("Altitude debugging", "Pois Altitude before set:" + String.valueOf(physicalLocation.getAltitude()));
         this.physicalLocation.set(latitude, longitude, altitude);
+        Log.i("Altitude debugging", "Pois Altitude after set:" + String.valueOf(physicalLocation.getAltitude()));
         this.color = color;
         this.isOnRadar = false;
         this.isInView = false;
@@ -303,6 +305,7 @@ public class Marker implements Comparable<Marker> {
             isInView = true;
         } else if (lrX >= -1 && ulX <= cam.getWidth() && lrY >= -1 && ulY <= cam.getHeight()) {
             isInView = true;
+            
         }
         /*
          * Log.w("updateView", "name "+this.name); Log.w("updateView",

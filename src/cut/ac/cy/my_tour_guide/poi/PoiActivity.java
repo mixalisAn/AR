@@ -311,7 +311,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		private final ActionBar mActionBar;
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-
+		private Object gridTag;
+		
 		static final class TabInfo {
 			private final Class<?> clss;
 			private final Bundle args;
@@ -335,6 +336,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
 			TabInfo info = new TabInfo(clss, args);
 			tab.setTag(info);
+			if(clss.equals(GridFragment.class))
+				gridTag = tab.getTag();
 			tab.setTabListener(this);
 			mTabs.add(info);
 			mActionBar.addTab(tab);
@@ -366,6 +369,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
 			Object tag = tab.getTag();
+			Log.i(TAG, "onTabSelected has been called");
+			if(tag.equals(gridTag))
+				Log.i(TAG, "gridtab has been called");
 			for (int i = 0; i < mTabs.size(); i++) {
 				if (mTabs.get(i) == tag) {
 					mViewPager.setCurrentItem(i);
@@ -374,6 +380,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			Log.i(TAG, "onTabUnSelected has been called");
 		}
 
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {

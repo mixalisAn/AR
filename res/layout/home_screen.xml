@@ -21,11 +21,11 @@
 			    android:layout_height="wrap_content"
 			    android:layout_alignParentTop="true"
 			    android:layout_toLeftOf="@+id/sideButtons"
-			    >
+			    android:layout_toRightOf="@+id/providerLayout">
 
 			    <Button
 			        android:id="@+id/buttonCollision"
-			        android:visibility="gone"
+			        android:visibility="visible"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
@@ -41,6 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@+id/sideButtons"
+                android:layout_toRightOf="@+id/providerLayout"
                 android:orientation="horizontal"
                 android:paddingBottom="20dp"
                 android:paddingLeft="30dp"
@@ -131,6 +132,42 @@
                 android:background="@drawable/menu" />
 			</TableRow>
             </RelativeLayout>
-
+			<RelativeLayout
+			    android:id="@+id/providerLayout"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_alignParentLeft="true">
+			    
+			    <TextView 
+			        android:id="@+id/mylocationTestTextView"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_above="@+id/providerTextView"
+			    	android:layout_centerHorizontal="true"
+			        />
+			    
+			    <TextView
+			        android:id="@+id/markerLocationTestTextView"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerInParent="true"
+			        android:layout_centerHorizontal="true"
+			        />
+			    <TextView 
+			        android:id="@+id/providerTextView"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_above="@+id/providerAccuracyTextView"
+			        android:layout_centerHorizontal="true"/>
+			    <TextView
+			        android:id="@+id/providerAccuracyTextView"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentBottom="true"
+			        android:layout_centerHorizontal="true"
+			        android:paddingBottom="15dp"
+			        android:paddingLeft="12dp"
+			        android:paddingRight="10dp"/>
+			</RelativeLayout>
         </RelativeLayout>
     </FrameLayout>

@@ -15,9 +15,11 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.common.LowPassFilter;
 import cut.ac.cy.my_tour_guide.common.Matrix;
 import cut.ac.cy.my_tour_guide.data.ARData;
@@ -300,7 +302,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // Ignore
+        
     }
 
     /**
@@ -308,6 +310,13 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onLocationChanged(Location location) {
+    	TextView provider = (TextView)findViewById(R.id.providerTextView);
+    	TextView accuracy = (TextView)findViewById(R.id.providerAccuracyTextView);
+    	TextView gpsAltitude = (TextView)findViewById(R.id.mylocationTestTextView);
+    	gpsAltitude.setText(String.valueOf(location.getAltitude()));
+    	provider.setText(location.getProvider());
+    	accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
+    	
         ARData.setCurrentLocation(location);
         gmf = new GeomagneticField((float) ARData.getCurrentLocation().getLatitude(), 
                                    (float) ARData.getCurrentLocation().getLongitude(), 
