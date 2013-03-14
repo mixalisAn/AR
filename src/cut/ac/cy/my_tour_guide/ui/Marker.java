@@ -2,11 +2,13 @@ package cut.ac.cy.my_tour_guide.ui;
 
 import java.text.DecimalFormat;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
-import android.util.Log;
+import android.widget.TextView;
+import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Vector;
@@ -60,7 +62,7 @@ public class Marker implements Comparable<Marker> {
     //Category id for markers
     private long categotyId;
     // Marker's physical location (Lat, Lon, Alt)
-    private final PhysicalLocation physicalLocation = new PhysicalLocation();
+    private final PhysicalLocation physicalLocation;
     // Distance from camera to PhysicalLocation in meters
     private double distance = 0.0;
     // Is within the radar
@@ -74,7 +76,7 @@ public class Marker implements Comparable<Marker> {
     //Marker's icon
     private Bitmap bitmap = null;
     
-    
+    private static Activity activity;
     // Used to show exact GPS position
     private static boolean debugGpsPosition = false;
     private PaintablePoint positionPoint = null;
@@ -86,7 +88,8 @@ public class Marker implements Comparable<Marker> {
     private volatile PaintablePosition touchPosition = null;
 
     public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color, Bitmap bitmap) {
-		set(id, name, latitude, longitude, altitude, resName, categoryId, color , bitmap);
+		physicalLocation = new PhysicalLocation(altitude);
+    	set(id, name, latitude, longitude, altitude, resName, categoryId, color , bitmap);
 	}
 
     /**
@@ -105,9 +108,7 @@ public class Marker implements Comparable<Marker> {
         this.resName = resName;
         this.categotyId = categoryId;
         this.bitmap = bitmap;
-        Log.i("Altitude debugging", "Pois Altitude before set:" + String.valueOf(physicalLocation.getAltitude()));
         this.physicalLocation.set(latitude, longitude, altitude);
-        Log.i("Altitude debugging", "Pois Altitude after set:" + String.valueOf(physicalLocation.getAltitude()));
         this.color = color;
         this.isOnRadar = false;
         this.isInView = false;
@@ -330,13 +331,13 @@ public class Marker implements Comparable<Marker> {
 
         // Update the markers distance based on the new location.
         updateDistance(location);
-        Log.i("Altitude debugging", "Gps altitude = " + String.valueOf(location.getAltitude()));
+        
         // An elevation of 0.0 probably means that the elevation of the
         // POI is not known and should be set to the users GPS height
-        Log.i("Altitude debugging", "POI altitude before = " + String.valueOf(physicalLocation.getAltitude()));
-        if (physicalLocation.getAltitude() == 0.0) physicalLocation.setAltitude(location.getAltitude());
-        Log.i("Altitude debugging", "POI altitude after = " + String.valueOf(physicalLocation.getAltitude()));
-        
+        // If it is 0.0 then make it equal to Gps altitude else do nothing
+        if ((physicalLocation.getInitAltitude() == 0.0) && (physicalLocation.getAltitude() != location.getAltitude())) physicalLocation.setAltitude(location.getAltitude());
+        TextView markerAltitude = (TextView)activity.findViewById(R.id.markerLocationTestTextView);
+        markerAltitude.setText("Poi:" + String.valueOf(physicalLocation.getAltitude()));
         // Compute the relative position vector from user position to POI
         // location
         PhysicalLocation.convLocationToVector(location, physicalLocation, locationXyzRelativeToPhysicalLocation);
@@ -669,5 +670,9 @@ public class Marker implements Comparable<Marker> {
         if (marker == null || name == null) throw new NullPointerException();
 
         return name.equals(((Marker) marker).getName());
+    }
+    
+    public static void setActivity(Activity act){
+    	activity = act;
     }
 }

@@ -375,7 +375,7 @@ int id markerInfoTitle 0x7f06006b
 int id markerLink1 0x7f060062
 int id markerLink2 0x7f060066
 int id markerLink3 0x7f06006a
-int id markerLocationTestTextView 0x7f060053
+int id markerLocationTestTextView 0x7f060054
 int id markerMainImage 0x7f06005a
 int id markerOtherActions 0x7f06005e
 int id markerTitle 0x7f06005b
@@ -394,7 +394,7 @@ int id pausePlay 0x7f060073
 int id present 0x7f060042
 int id providerAccuracyTextView 0x7f060055
 int id providerLayout 0x7f06004a
-int id providerTextView 0x7f060054
+int id providerTextView 0x7f060053
 int id readMoreButton 0x7f06006d
 int id satellite 0x7f060002
 int id scrollView 0x7f060059

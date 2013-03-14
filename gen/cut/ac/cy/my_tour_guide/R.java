@@ -1158,7 +1158,7 @@ containing a value of this type.
         public static final int markerLink1=0x7f060062;
         public static final int markerLink2=0x7f060066;
         public static final int markerLink3=0x7f06006a;
-        public static final int markerLocationTestTextView=0x7f060053;
+        public static final int markerLocationTestTextView=0x7f060054;
         public static final int markerMainImage=0x7f06005a;
         public static final int markerOtherActions=0x7f06005e;
         public static final int markerTitle=0x7f06005b;
@@ -1177,7 +1177,7 @@ containing a value of this type.
         public static final int present=0x7f060042;
         public static final int providerAccuracyTextView=0x7f060055;
         public static final int providerLayout=0x7f06004a;
-        public static final int providerTextView=0x7f060054;
+        public static final int providerTextView=0x7f060053;
         public static final int readMoreButton=0x7f06006d;
         public static final int satellite=0x7f060002;
         public static final int scrollView=0x7f060059;

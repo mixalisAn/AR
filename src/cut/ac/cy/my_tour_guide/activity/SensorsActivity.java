@@ -313,10 +313,10 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
     	TextView provider = (TextView)findViewById(R.id.providerTextView);
     	TextView accuracy = (TextView)findViewById(R.id.providerAccuracyTextView);
     	TextView gpsAltitude = (TextView)findViewById(R.id.mylocationTestTextView);
-    	gpsAltitude.setText(String.valueOf(location.getAltitude()));
+    	gpsAltitude.setText("Gps: " + String.valueOf(location.getAltitude()));
     	provider.setText(location.getProvider());
     	accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
-    	
+    
         ARData.setCurrentLocation(location);
         gmf = new GeomagneticField((float) ARData.getCurrentLocation().getLatitude(), 
                                    (float) ARData.getCurrentLocation().getLongitude(), 

@@ -105,9 +105,9 @@ public class AugmentedReality extends SensorsActivity implements
 
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+		
 		setContentView(R.layout.home_screen);
-
+		Marker.setActivity(this);
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
 		captureButton = (TableRow) findViewById(R.id.buttonCamera);
 		gMapsButton = (TableRow) findViewById(R.id.buttonMaps);

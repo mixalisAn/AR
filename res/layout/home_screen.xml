@@ -142,23 +142,23 @@
 			        android:id="@+id/mylocationTestTextView"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_above="@+id/providerTextView"
+			        android:layout_above="@+id/markerLocationTestTextView"
 			    	android:layout_centerHorizontal="true"
 			        />
-			    
-			    <TextView
+			    <TextView 
 			        android:id="@+id/markerLocationTestTextView"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_centerInParent="true"
-			        android:layout_centerHorizontal="true"
-			        />
-			    <TextView 
+			        android:layout_above="@+id/providerTextView"
+			        android:layout_centerHorizontal="true"/>
+			      <TextView
 			        android:id="@+id/providerTextView"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_above="@+id/providerAccuracyTextView"
-			        android:layout_centerHorizontal="true"/>
+			        
+			        android:layout_centerHorizontal="true"
+			        />
 			    <TextView
 			        android:id="@+id/providerAccuracyTextView"
 			        android:layout_width="wrap_content"
