@@ -1,6 +1,12 @@
 package cut.ac.cy.my_tour_guide.helpers;
 
-public class MapMarker {
+import java.io.Serializable;
+
+public class MapMarker implements Serializable{
+	/**
+	 * Default number gia tis seriazable classes
+	 */
+	private static final long serialVersionUID = 1L;
 	private long id;
 	private String resName;
 	

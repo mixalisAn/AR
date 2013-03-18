@@ -31,9 +31,9 @@ public abstract class ARData {
 	/* defaulting to our place */
 	public static final Location hardFix = new Location("ATL");
 	static {
-		hardFix.setLatitude(39.931261);
-		hardFix.setLongitude(-75.051267);
-		hardFix.setAltitude(1);
+		hardFix.setLatitude(34.677178);
+		hardFix.setLongitude(33.045097);
+		hardFix.setAltitude(0);
 	}
 
 	private static final Object radiusLock = new Object();

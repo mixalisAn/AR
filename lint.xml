@@ -7,4 +7,7 @@
     <issue id="SelectableText">
         <ignore path="res\layout\home_screen.xml" />
     </issue>
+    <issue id="UseValueOf">
+        <ignore path="src\cut\ac\cy\my_tour_guide\data\ARData.java" />
+    </issue>
 </lint>

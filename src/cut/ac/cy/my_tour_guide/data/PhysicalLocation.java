@@ -15,23 +15,21 @@ public class PhysicalLocation {
     private double latitude = 0.0;
     private double longitude = 0.0;
     private double altitude = 0.0;
-    private final double initAltitude;
     
     private static float[] x = new float[1];
     private static double y = 0.0d;
     private static float[] z = new float[1];
 
-    public PhysicalLocation(double altitude) {
-    	this.initAltitude = altitude;
+    public PhysicalLocation() {
     }
     
-    /*
+    
     public PhysicalLocation(PhysicalLocation pl) {
         if (pl == null) throw new NullPointerException();
 
         set(pl.latitude, pl.longitude, pl.altitude);
     }
-*/
+
     /**
      * Set this objects parameters. This should be used instead of creating new
      * objects.
@@ -111,14 +109,6 @@ public class PhysicalLocation {
      */
     public double getAltitude() {
         return altitude;
-    }
-    
-    /**
-     * This gets the initAltitude to check if != 0.0 in order not to change it in gps changes
-     *
-     */
-    public double getInitAltitude(){
-    	return initAltitude;
     }
     
     /**

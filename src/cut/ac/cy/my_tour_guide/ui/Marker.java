@@ -62,7 +62,7 @@ public class Marker implements Comparable<Marker> {
     //Category id for markers
     private long categotyId;
     // Marker's physical location (Lat, Lon, Alt)
-    private final PhysicalLocation physicalLocation;
+    private final PhysicalLocation physicalLocation = new PhysicalLocation();
     // Distance from camera to PhysicalLocation in meters
     private double distance = 0.0;
     // Is within the radar
@@ -73,6 +73,8 @@ public class Marker implements Comparable<Marker> {
     private final Vector locationXyzRelativeToPhysicalLocation = new Vector();
     // Marker's default color
     private int color = Color.WHITE;
+    // For tracking Markers which have no altitude
+    private boolean noAltitude = false;
     //Marker's icon
     private Bitmap bitmap = null;
     
@@ -88,7 +90,6 @@ public class Marker implements Comparable<Marker> {
     private volatile PaintablePosition touchPosition = null;
 
     public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color, Bitmap bitmap) {
-		physicalLocation = new PhysicalLocation(altitude);
     	set(id, name, latitude, longitude, altitude, resName, categoryId, color , bitmap);
 	}
 
@@ -114,6 +115,10 @@ public class Marker implements Comparable<Marker> {
         this.isInView = false;
         this.locationXyzRelativeToPhysicalLocation.set(0, 0, 0);
         this.initialY = 0.0f;
+        if(altitude == 0.0)
+        	this.noAltitude = true;
+        else
+        	this.noAltitude = false;
     }
 
     /**
@@ -335,7 +340,8 @@ public class Marker implements Comparable<Marker> {
         // An elevation of 0.0 probably means that the elevation of the
         // POI is not known and should be set to the users GPS height
         // If it is 0.0 then make it equal to Gps altitude else do nothing
-        if ((physicalLocation.getInitAltitude() == 0.0) && (physicalLocation.getAltitude() != location.getAltitude())) physicalLocation.setAltitude(location.getAltitude());
+        if (noAltitude)
+        	physicalLocation.setAltitude(location.getAltitude());
         TextView markerAltitude = (TextView)activity.findViewById(R.id.markerLocationTestTextView);
         markerAltitude.setText("Poi:" + String.valueOf(physicalLocation.getAltitude()));
         // Compute the relative position vector from user position to POI

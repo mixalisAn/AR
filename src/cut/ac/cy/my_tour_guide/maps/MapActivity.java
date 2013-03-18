@@ -1,7 +1,6 @@
 package cut.ac.cy.my_tour_guide.maps;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -34,6 +33,7 @@ import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
 import cut.ac.cy.my_tour_guide.helpers.MapMarker;
+import cut.ac.cy.my_tour_guide.helpers.MapParcelableHashMap;
 import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 /**
@@ -56,7 +56,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	 * Xrisimopoiountai mono primatives giauto kai Integer. I java kanei autoboxing giauto eite valw
 	 * map("kati", 3) eite map("kati", new Integer(3)) einai to idio
 	 */
-	private HashMap<String, MapMarker> mapMarkersData = new HashMap<String, MapMarker>();
+	private MapParcelableHashMap mapMarkers;
 
 	private int mapDisplayOpt = 0;
 
@@ -82,6 +82,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 			mapFragment.setRetainInstance(true);
 		} else {
 			map = mapFragment.getMap();
+			mapMarkers = savedInstanceState.getParcelable("Markers Data");
 		}
 		//na figoun auta logika den xreiazontai
 		setMapIfNeeded();
@@ -99,9 +100,9 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 
 		mapDisplayOpt = Integer.parseInt(mapDisplay.getString(
 				"map_display_preference", "0"));
-		setMapIfNeeded();
+		//setMapIfNeeded();
 		setMapType(mapDisplayOpt);
-		setMapSettings();
+		//setMapSettings();
 		boolean isConnected = checkNetworkConnection();
 		if (!isConnected) {
 			connectionAlert();
@@ -115,10 +116,17 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 		unregisterBroadcastReceiver();
 
 	}
+	
+	
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putParcelable("Markers Data", mapMarkers);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
 		CreateMenu(menu);
 		return true;
 	}
@@ -142,7 +150,6 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case 1:
 			mapDisplay();
@@ -177,7 +184,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 		if (map == null) {
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
-
+			mapMarkers = new MapParcelableHashMap();
 			if (map != null) {
 				Log.i(TAG, "Map initialization!");
 				// my current location
@@ -186,7 +193,6 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 				myCurrentLocation = new LatLng(lat, lng);
 				// map.addMarker(new
 				// MarkerOptions().position(myCurrentLocation));
-
 				// other markers location
 				try {
 					db.open();
@@ -203,20 +209,21 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 							//pernei to id apo ton mapMarker diaforetiko tou marker pou vazei ekeini tin wra kai to pernaei sto hashmap
 							mapMarkerId = map.addMarker(new MarkerOptions().position(markerCoords)
 									.title(title).snippet("Click to see more info!")).getId();
-							mapMarkersData.put(mapMarkerId, new MapMarker(markerId, markerRes));
+							mapMarkers.put(mapMarkerId, new MapMarker(markerId, markerRes));
 						} while (cursor.moveToNext());
 					}
 
 					db.close();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(
 						myCurrentLocation, 15));
 				// Zoom in, animating the camera.
 				map.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
 				map.setMyLocationEnabled(true);
+				
 			}
 		}
 
@@ -312,7 +319,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 		builder.setNegativeButton("Cancel",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						// User cancelled the dialog
+						dialog.cancel();
 					}
 				});
 		builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -356,8 +363,8 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 		long markerId;
 		String markerResName;
 		
-		markerId = mapMarkersData.get(marker.getId()).getId();
-		markerResName = mapMarkersData.get(marker.getId()).getResName();
+		markerId = mapMarkers.get(marker.getId()).getId();
+		markerResName = mapMarkers.get(marker.getId()).getResName();
 		
 		Intent intent = new Intent(this, PoiActivity.class);
 		intent.putExtra("Id", markerId);
