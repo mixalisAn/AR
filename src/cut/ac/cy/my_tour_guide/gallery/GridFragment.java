@@ -88,6 +88,7 @@ public class GridFragment extends SherlockFragment {
 				}
 			}
 			db.close();
+			cursor.close();
 		} catch (SQLException e) {
 			Log.e(TAG, "error while in database");
 			e.printStackTrace();

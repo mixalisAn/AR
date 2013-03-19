@@ -4,14 +4,12 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -38,6 +36,7 @@ import cut.ac.cy.my_tour_guide.camera.Preview;
 import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.LocalDataSource;
+import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDialog;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDialog.ConfirmationListener;
@@ -101,12 +100,14 @@ public class AugmentedReality extends SensorsActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// eginan allages kai mpike dikos mou kwdikas
 
+		Utils.enableStrictMode();
+		
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.home_screen);
+		
 		Marker.setActivity(this);
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
 		captureButton = (TableRow) findViewById(R.id.buttonCamera);
@@ -139,9 +140,12 @@ public class AugmentedReality extends SensorsActivity implements
 
 		updateDataOnZoom();
 
+		/*Mallon den xreiazetai o kwdikas tha xrisimopoiithei to keep screen on
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wakeLock = pm
 				.newWakeLock(PowerManager.FULL_WAKE_LOCK, "DoNotDimScreen");
+				*/
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
 
@@ -166,7 +170,7 @@ public class AugmentedReality extends SensorsActivity implements
 		// Camera.CameraInfo.CAMERA_FACING_BACK, camera);
 
 		camPreview.setCamera(camera);
-		wakeLock.acquire();
+		//wakeLock.acquire();
 	}
 
 	/**
@@ -180,7 +184,7 @@ public class AugmentedReality extends SensorsActivity implements
 			camera.release();
 			camera = null;
 		}
-		wakeLock.release();
+		//wakeLock.release();
 	}
 
 	@Override

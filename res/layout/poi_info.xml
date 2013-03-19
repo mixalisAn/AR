@@ -35,7 +35,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/markerMainImage"
                 android:gravity="center_vertical"
-                android:paddingLeft="30dp"
+                android:paddingLeft="25dp"
                 android:paddingTop="10dp"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/markerAddress"
                 android:layout_toRightOf="@+id/markerMainImage"
-                android:paddingLeft="30dp"
+                android:paddingLeft="25dp"
                 android:text="@string/marker_address"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -62,7 +62,7 @@
                 android:layout_toRightOf="@+id/markerMainImage"
                 android:gravity="center_vertical"
                 android:paddingBottom="10dp"
-                android:paddingLeft="30dp"
+                android:paddingLeft="25dp"
                 android:textColor="#000000"
                 android:textStyle="italic"
                 android:typeface="serif" />
@@ -95,6 +95,7 @@
                 android:id="@+id/imageButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/wikipedia" />
 
             <TextView
@@ -108,17 +109,26 @@
                 android:text="@string/wikipedia"
                 android:textColor="#000000" />
             
-
             <TextView
                 android:id="@+id/markerLink1"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
-                android:paddingLeft="5dp"
-                android:textColor="#524DF0"
                 android:maxLines="1"
+                android:paddingLeft="5dp"
                 android:scrollbars="horizontal"
+                android:textColor="#5A5A5C"
                 android:textStyle="italic" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/separetor" >
+
         </TableRow>
 
         <TableRow
@@ -127,12 +137,14 @@
             android:layout_height="wrap_content"
             android:onClick="startNavigation"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp" >
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp" >
 
             <ImageView
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/navigation" />
 
             <TextView
@@ -151,25 +163,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
-                android:paddingLeft="5dp"
-                android:textColor="#000000"
                 android:maxLines="1"
+                android:paddingLeft="5dp"
                 android:scrollbars="horizontal"
+                android:textColor="#5A5A5C"
                 android:textStyle="italic" />
-        </TableRow>
 
+        </TableRow>
+		
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/separetor" >
+
+        </TableRow>
+        
         <TableRow
             android:id="@+id/shareLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="shareInfo"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp" >
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp" >
 
             <ImageView
                 android:id="@+id/imageButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/share" />
 
             <TextView
@@ -188,11 +212,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
-                android:paddingLeft="5dp"
-                android:textColor="#000000"
                 android:maxLines="1"
+                android:paddingLeft="5dp"
                 android:scrollbars="horizontal"
+                android:textColor="#5A5A5C"
                 android:textStyle="italic" />
+
         </TableRow>
 
         <TextView

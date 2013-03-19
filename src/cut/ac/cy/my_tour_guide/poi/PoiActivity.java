@@ -32,6 +32,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.gallery.GridFragment;
+import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.MusicResources;
 import cut.ac.cy.my_tour_guide.poi.MusicService.LocalBinder;
 
@@ -68,6 +69,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "on Create has been called");
+		Utils.enableStrictMode();
 		setContentView(R.layout.poi_info_main);
 		// setup action bar for tabs
 		ActionBar actionBar = getSupportActionBar();

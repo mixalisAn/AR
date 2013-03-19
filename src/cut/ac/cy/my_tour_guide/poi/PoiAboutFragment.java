@@ -191,6 +191,7 @@ public class PoiAboutFragment extends SherlockFragment implements
 				setMarkerVariables(cursor);
 
 			db.close();
+			cursor.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

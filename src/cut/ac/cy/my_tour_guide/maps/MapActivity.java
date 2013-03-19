@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
+import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.MapMarker;
 import cut.ac.cy.my_tour_guide.helpers.MapParcelableHashMap;
 import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
@@ -63,6 +64,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Utils.enableStrictMode();
 		setContentView(R.layout.maps);
 
 		connManager = (ConnectivityManager) getApplicationContext()
@@ -214,6 +216,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 					}
 
 					db.close();
+					cursor.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

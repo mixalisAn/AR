@@ -72,6 +72,7 @@ public class LocalDataSource extends DataSource {
 			}
 
 			db.close();
+			//cursor.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
