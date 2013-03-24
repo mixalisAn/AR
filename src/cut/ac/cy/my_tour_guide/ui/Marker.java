@@ -248,7 +248,7 @@ public class Marker implements Comparable<Marker> {
         cam.setViewAngle(CameraModel.DEFAULT_VIEW_ANGLE);
         populateMatrices(cam, addX, addY);
         updateRadar();
-        if (isOnRadar)
+       // if (isOnRadar)
             updateView();
     }
 
@@ -268,7 +268,8 @@ public class Marker implements Comparable<Marker> {
 
         float range = ARData.getRadius() * 1000;
         float scale = range / Radar.RADIUS;
-        getLocation().get(locationArray);
+        //getLocation().get(locationArray);
+        locationXyzRelativeToPhysicalLocation.get(locationArray);
         float x = locationArray[0] / scale;
         float y = locationArray[2] / scale; // z==y Switched on purpose
         if ((x * x + y * y) < (Radar.RADIUS * Radar.RADIUS)) {
@@ -279,6 +280,14 @@ public class Marker implements Comparable<Marker> {
     private synchronized void updateView() {
         isInView = false;
 
+
+        // If it's not on the radar, can't be in view3
+        if (!isOnRadar) return;
+
+        // If it's not in the same side as our viewing angle
+        locationXyzRelativeToCameraView.get(locationArray);
+        if (locationArray[2] >= -1f) return;
+        
         locationXyzRelativeToCameraView.get(locationArray);
         float x = locationArray[0];
         float y = locationArray[1];
