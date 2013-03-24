@@ -37,8 +37,7 @@
        >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCWghFRqZFatDk-pdy4F4j19xeuP8mIs4Q" />
-
+            android:value="AIzaSyDVPSUNnDfy_TH5z3t1rSwmKRWNweDmsUk" />
         <service android:name="cut.ac.cy.my_tour_guide.poi.MusicService" >
         </service>
 
