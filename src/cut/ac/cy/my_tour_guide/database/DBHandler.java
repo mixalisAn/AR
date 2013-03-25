@@ -150,17 +150,18 @@ public class DBHandler extends DBSchemaVariables{
 		Cursor mCursor = db.query(POI_TABLE, projection, null, null, null, null, null);
 		*/
 		String sql = "SELECT " + POI_TABLE + "." + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
-				POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + 
-				" FROM " + POI_TABLE + " INNER JOIN " + CATEGORIES_TABLE + " ON " + POI_TABLE + "." + POI_COLUMN_CATEGORY_ID + 
+				POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + " , " +
+				CATEGORIES_COLUMN_CATEGORY + " FROM " + POI_TABLE + " INNER JOIN " + CATEGORIES_TABLE + " ON " + POI_TABLE + "." + POI_COLUMN_CATEGORY_ID + 
 				" = " + CATEGORIES_TABLE + "." + CATEGORIES_COLUMN_ENTRY_ID + " WHERE " +  CATEGORIES_COLUMN_SELECTED + " = 1";
 		Cursor mCursor = db.rawQuery(sql, null);
 		return mCursor;
 	}
 	
 	public Cursor getSpecificCategoriesMarkers(long[] categories){
-		String sql = "SELECT " + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
+		String sql = "SELECT " + POI_TABLE + "." + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
 					POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + 
-					" FROM " + POI_TABLE;
+					" , " + CATEGORIES_COLUMN_CATEGORY + " FROM " + POI_TABLE + " INNER JOIN " + CATEGORIES_TABLE + " ON " + POI_TABLE + "." + POI_COLUMN_CATEGORY_ID + 
+					" = " + CATEGORIES_TABLE + "." + CATEGORIES_COLUMN_ENTRY_ID ;
 		String whereClause = " WHERE " + POI_COLUMN_CATEGORY_ID + " = ";
 		for(int i = 0; i < categories.length; i++){
 			whereClause += String.valueOf(categories[i]);

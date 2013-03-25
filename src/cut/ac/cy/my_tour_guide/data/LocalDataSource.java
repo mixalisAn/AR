@@ -24,26 +24,22 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  */
 public class LocalDataSource extends DataSource {
 	private List<Marker> cachedMarkers = new ArrayList<Marker>();
-	private static Bitmap monument = null;
 	private DBHandler db;
-
-	// dikia mou gia na xrisimopoiithei apo tin Maps
+	private Context context;
+	private Resources res;
+	
+	//den prepei na xrisimopoieitai pleon
+	/*// dikia mou gia na xrisimopoiithei apo tin Maps
 	public LocalDataSource() {
 
 	}
-
+*/
 	public LocalDataSource(Resources res, Context cx) {
 		if (res == null)
 			throw new NullPointerException();
-		db = new DBHandler(cx);
-		createIcon(res);
-	}
-
-	protected void createIcon(Resources res) {
-		if (res == null)
-			throw new NullPointerException();
-
-		monument = BitmapFactory.decodeResource(res, R.drawable.marker_icon);
+		context = cx;
+		db = new DBHandler(context);
+		this.res = res; 
 	}
 
 	public List<Marker> getMarkers() {
@@ -66,18 +62,34 @@ public class LocalDataSource extends DataSource {
 								.getString(1), cursor.getDouble(2), cursor
 								.getDouble(3), cursor.getDouble(4), cursor
 								.getString(5), cursor.getLong(6), Color.GREEN,
-								monument));
+								getBitmap(cursor.getString(7))));
 					} while (cursor.moveToNext());
 				}
 			}
 
 			db.close();
-			//cursor.close();
+			cursor.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return cachedMarkers;
+	}
+
+	
+
+	private Bitmap getBitmap(String name) {
+		if(name == null){
+			return BitmapFactory.decodeResource(res, R.drawable.info);
+		}else{
+			name = name.toLowerCase();
+			name = name.replace(" ", "_");
+			int resResult = context.getResources().getIdentifier(name, "drawable",
+					"cut.ac.cy.my_tour_guide");
+			return BitmapFactory.decodeResource(res, resResult);
+		}
+			
+		
 	}
 
 	public List<Marker> getCategorizedMarkers(long[] categoriesId) {
@@ -92,11 +104,12 @@ public class LocalDataSource extends DataSource {
 								.getString(1), cursor.getDouble(2), cursor
 								.getDouble(3), cursor.getDouble(4), cursor
 								.getString(5), cursor.getLong(6), Color.GREEN,
-								monument));
+								getBitmap(cursor.getString(7))));
 					} while (cursor.moveToNext());
 				}
 			}
 			db.close();
+			cursor.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

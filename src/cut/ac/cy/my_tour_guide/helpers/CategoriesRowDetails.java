@@ -34,6 +34,7 @@ public class CategoriesRowDetails {
 		
 		 name = name.toLowerCase();
 		 name = name.replace(" ", "_");
+		 name = "menu_" + name;
 		 this.resName = name;
 	}
 	
