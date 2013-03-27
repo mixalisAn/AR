@@ -2,13 +2,12 @@ package cut.ac.cy.my_tour_guide.poi;
 
 import java.sql.SQLException;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,13 @@ import android.widget.ScrollView;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
+import cut.ac.cy.my_tour_guide.dialogs.ErrorDialog;
 
 public class PoiAboutFragment extends SherlockFragment implements
 		OnClickListener {
@@ -261,6 +264,7 @@ public class PoiAboutFragment extends SherlockFragment implements
 			}
 			break;
 		case R.id.shareLink:
+			try{
 			String shareBody = getShareBody();
 
 			Intent sharingIntent = new Intent(
@@ -271,6 +275,11 @@ public class PoiAboutFragment extends SherlockFragment implements
 			sharingIntent
 					.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 			startActivity(Intent.createChooser(sharingIntent, "Share via"));
+			}catch(Exception e){
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				ErrorDialog dialog = new ErrorDialog();
+				dialog.show(fm, "Error Dialog");
+			}
 			break;
 		case R.id.readMoreButton:
 			changeTextSize(textHeight);

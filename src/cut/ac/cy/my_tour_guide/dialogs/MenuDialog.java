@@ -1,4 +1,4 @@
-package cut.ac.cy.my_tour_guide.helpers;
+package cut.ac.cy.my_tour_guide.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
