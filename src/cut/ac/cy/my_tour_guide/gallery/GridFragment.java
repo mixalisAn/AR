@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,12 +56,25 @@ public class GridFragment extends SherlockFragment {
 		imageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
 	    imageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
+		// Fetch screen height and width, to use as our max size when loading images as this
+        // activity runs full screen
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int height = displayMetrics.heightPixels;
+        final int width = displayMetrics.widthPixels;
+
+        // For this sample we'll use half of the longest width to resize our images. As the
+        // image scaling ensures the image is larger than this, we should be left with a
+        // resolution that is appropriate for both portrait and landscape. For best image quality
+        // we shouldn't divide by 2, but this will use more memory and require a larger memory
+        // cache.
+        final int longest = (height > width ? height : width) / 2;
 	    ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
 
 	    cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
 
 	    // The ImageFetcher takes care of loading images into our ImageView children asynchronously
-	    imageFetcher = new ImageFetcher(getActivity(), imageThumbSize);
+	    imageFetcher = new ImageFetcher(getActivity(), longest);
 	    imageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
 	}
 	
@@ -71,6 +85,9 @@ public class GridFragment extends SherlockFragment {
 		final View v = inflater.inflate(R.layout.fragment_grid, container,
 				false);
 	
+		//edw pername ton elegxo toy fragment stin poiActivity
+		//to getTag einai methodos poy xrisimopoieitai apo to fragment
+		((PoiActivity)getActivity()).setGridFragmentTag(getTag());
 		
 		markerId = ((PoiActivity) getActivity()).getMarkerId();
 		DBHandler db = new DBHandler(getActivity());
@@ -148,6 +165,27 @@ public class GridFragment extends SherlockFragment {
                 });
 		return v;
 	}
+	
+	@Override
+    public void onResume() {
+        super.onResume();
+        imageFetcher.setExitTasksEarly(false);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        imageFetcher.setPauseWork(false);
+        imageFetcher.setExitTasksEarly(true);
+        imageFetcher.flushCache();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        imageFetcher.closeCache();
+    }
 	
 	/*
 	 * public void update(Drawable draw, int position) { ImageView view =
@@ -235,6 +273,12 @@ public class GridFragment extends SherlockFragment {
 	public void PauseImageFetcher(){
 		if(imageFetcher != null){
 			imageFetcher.setPauseWork(true);
+		}
+	}
+	
+	public void clearCachesWhenExit(){
+		if(imageFetcher != null){
+			imageFetcher.clearCache();
 		}
 	}
 }

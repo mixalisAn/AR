@@ -64,7 +64,17 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 	private long markerId;
 	private String markerResName;
-
+	
+	private String gridFragmentTag;
+	
+	public void setGridFragmentTag(String tag){
+		gridFragmentTag = tag;
+	}
+	
+	public String getGridFragmentTag(){
+		return gridFragmentTag;
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -158,6 +168,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		if (audioExists) {
 			// stop service
 			if (isNotTopActivity()) {
+				
 				Log.i(TAG, "is Not top Activity executed");
 				audioPosition = mService.getAudioPosition();
 				audioWasPlaying = mService.isAudioPlaying();
@@ -166,6 +177,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				mBound = false;
 			} else if (isFinishing()) {
 				Log.i(TAG, "isFinishing executed");
+				if(getGridFragmentTag() != null)
+					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if (mBound) {
 					unbindService(mConnection);
 					mBound = false;
@@ -313,7 +326,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		private final ActionBar mActionBar;
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-		private Object gridTag;
+		//private Object gridTag;
 		
 		static final class TabInfo {
 			private final Class<?> clss;
@@ -338,8 +351,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
 			TabInfo info = new TabInfo(clss, args);
 			tab.setTag(info);
-			if(clss.equals(GridFragment.class))
-				gridTag = tab.getTag();
+	//		if(clss.equals(GridFragment.class))
+	//			gridTag = tab.getTag();
 			tab.setTabListener(this);
 			mTabs.add(info);
 			mActionBar.addTab(tab);
@@ -371,9 +384,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
 			Object tag = tab.getTag();
-			Log.i(TAG, "onTabSelected has been called");
-			if(tag.equals(gridTag))
-				Log.i(TAG, "gridtab has been called");
+		//	Log.i(TAG, "onTabSelected has been called");
+		//	if(tag.equals(gridTag))
+		//		Log.i(TAG, "gridtab has been called");
 			for (int i = 0; i < mTabs.size(); i++) {
 				if (mTabs.get(i) == tag) {
 					mViewPager.setCurrentItem(i);
