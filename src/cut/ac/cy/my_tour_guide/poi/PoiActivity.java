@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -69,6 +70,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	
 	public void setGridFragmentTag(String tag){
 		gridFragmentTag = tag;
+		if(tabsAdapter != null)
+			tabsAdapter.setGridTag(gridFragmentTag);
 	}
 	
 	public String getGridFragmentTag(){
@@ -322,11 +325,11 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	 */
 	public static class TabsAdapter extends FragmentPagerAdapter implements
 			ActionBar.TabListener, ViewPager.OnPageChangeListener {
-		private final Context mContext;
+		private final FragmentActivity mContext;
 		private final ActionBar mActionBar;
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
-		//private Object gridTag;
+		private String gridTag;
 		
 		static final class TabInfo {
 			private final Class<?> clss;
@@ -337,7 +340,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				args = _args;
 			}
 		}
-
+		
 		public TabsAdapter(SherlockFragmentActivity activity, ViewPager pager,
 				ActionBar actionBar) {
 			super(activity.getSupportFragmentManager());
@@ -351,8 +354,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
 			TabInfo info = new TabInfo(clss, args);
 			tab.setTag(info);
-	//		if(clss.equals(GridFragment.class))
-	//			gridTag = tab.getTag();
 			tab.setTabListener(this);
 			mTabs.add(info);
 			mActionBar.addTab(tab);
@@ -367,6 +368,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		@Override
 		public Fragment getItem(int position) {
 			TabInfo info = mTabs.get(position);
+			Log.i(TAG, "Get item has been called");
 			return Fragment.instantiate(mContext, info.clss.getName(),
 					info.args);
 		}
@@ -384,9 +386,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
 			Object tag = tab.getTag();
-		//	Log.i(TAG, "onTabSelected has been called");
-		//	if(tag.equals(gridTag))
-		//		Log.i(TAG, "gridtab has been called");
+			Log.i(TAG, "onTabSelected has been called");
+			if(gridTag != null)
+				((GridFragment)mContext.getSupportFragmentManager().findFragmentByTag(gridTag)).ResumeImageFetcher();
 			for (int i = 0; i < mTabs.size(); i++) {
 				if (mTabs.get(i) == tag) {
 					mViewPager.setCurrentItem(i);
@@ -396,9 +398,15 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 			Log.i(TAG, "onTabUnSelected has been called");
+			if(gridTag != null)
+				((GridFragment)mContext.getSupportFragmentManager().findFragmentByTag(gridTag)).PauseImageFetcher();
 		}
 
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		}
+		
+		public void setGridTag(String tag){
+			gridTag = tag;
 		}
 	}
 

@@ -42,8 +42,16 @@ public class DBHandler extends DBSchemaVariables{
 			for(PoiData poi : initialPois){
 				poiValue = insertInitialPOIS(poi.getName() , poi.getLatitude() , poi.getLongtitude() , poi.getAltitude() , poi.getLink() , poi.getAddress() , poi.getDescription() , poi.getResName() , poi.getCategoryId());
 				id = db.insert(POI_TABLE, null, poiValue);
-				for(String url : ImagesUrls.urls[i]){
-					urlValue = insertInitialUrls(id , url);
+				int j;
+				int numOfUrls;
+				if(ImagesUrls.fullScreenUrls[i].length < ImagesUrls.gridUrls[i].length)
+					numOfUrls = ImagesUrls.fullScreenUrls[i].length;
+				else if (ImagesUrls.fullScreenUrls[i].length > ImagesUrls.gridUrls[i].length)
+					numOfUrls = ImagesUrls.gridUrls[i].length;
+				else
+					numOfUrls = ImagesUrls.fullScreenUrls[i].length;
+				for(j=0 ; j< numOfUrls; j++){
+					urlValue = insertInitialUrls(id , ImagesUrls.fullScreenUrls[i][j], ImagesUrls.gridUrls[i][j]);
 					db.insert(IMAGES_URLS_TABLE, null, urlValue);
 				}
 				i++;
@@ -107,18 +115,20 @@ public class DBHandler extends DBSchemaVariables{
 		return values;
 	}
 	
-	public static long insertURL(long poiId, String url){
+	public static long insertURL(long poiId, String fullscreen_url, String grid_url){
 		ContentValues values = new ContentValues();
 		values.put(IMAGES_URLS_COLUMN_ENTRY_ID, poiId);
-		values.put(IMAGES_URLS_COLUMN_URL, url);
+		values.put(IMAGES_FULLSCREEN_URLS_COLUMN_URL, fullscreen_url);
+		values.put(IMAGES_GRID_URLS_COLUMN_URL, grid_url);
 		return db.insert(IMAGES_URLS_TABLE, null, values);
 	}
 	
 	
-	public static ContentValues insertInitialUrls(long poiId, String url){
+	public static ContentValues insertInitialUrls(long poiId, String fullscreen_url, String grid_url){
 		ContentValues values = new ContentValues();
 		values.put(IMAGES_URLS_COLUMN_ENTRY_ID, poiId);
-		values.put(IMAGES_URLS_COLUMN_URL, url);
+		values.put(IMAGES_FULLSCREEN_URLS_COLUMN_URL, fullscreen_url);
+		values.put(IMAGES_GRID_URLS_COLUMN_URL, grid_url);
 		return values;
 	}
 	
@@ -208,7 +218,8 @@ public class DBHandler extends DBSchemaVariables{
 	
 	public Cursor getPoiImagesUrls(long id){
 		String[] projection = {
-				IMAGES_URLS_COLUMN_URL
+				IMAGES_FULLSCREEN_URLS_COLUMN_URL,
+				IMAGES_GRID_URLS_COLUMN_URL
 		};
 		
 		Cursor mCursor = db.query(IMAGES_URLS_TABLE, projection, IMAGES_URLS_COLUMN_ENTRY_ID + "=" + id, null, null, null, null);

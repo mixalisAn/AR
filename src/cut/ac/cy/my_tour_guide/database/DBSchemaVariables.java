@@ -6,7 +6,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 22;
+	static final int DATABASE_VERSION = 23;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";
@@ -24,7 +24,9 @@ public class DBSchemaVariables {
 	//TABLE IMAGES URLS
 	static final String IMAGES_URLS_TABLE = "images_urls";
 	static final String IMAGES_URLS_COLUMN_ENTRY_ID = "_id";
-	static final String IMAGES_URLS_COLUMN_URL = "url";
+	static final String IMAGES_FULLSCREEN_URLS_COLUMN_URL = "fullscreen_url";
+	static final String IMAGES_GRID_URLS_COLUMN_URL = "grid_url";
+	
 	
 	//TABLE CATEGORIES
 	static final String CATEGORIES_TABLE = "categories";
@@ -46,8 +48,8 @@ public class DBSchemaVariables {
 			
 	static final String CREATE_TABLE_IMAGES_URLS = 
 			"CREATE TABLE " + IMAGES_URLS_TABLE + " (" + IMAGES_URLS_COLUMN_ENTRY_ID + " INTEGER REFERENCES " + POI_TABLE + "(" +
-			POI_COLUMN_ENTRY_ID + ") ON DELETE CASCADE, " +	IMAGES_URLS_COLUMN_URL + " TEXT NOT NULL, " + 
-			"PRIMARY KEY( " + IMAGES_URLS_COLUMN_ENTRY_ID + ", " + IMAGES_URLS_COLUMN_URL + "));";
+			POI_COLUMN_ENTRY_ID + ") ON DELETE CASCADE, " +	IMAGES_FULLSCREEN_URLS_COLUMN_URL + " TEXT NOT NULL, " + IMAGES_GRID_URLS_COLUMN_URL +
+			" TEXT NOT NULL, " + "PRIMARY KEY( " + IMAGES_URLS_COLUMN_ENTRY_ID + ", " + IMAGES_FULLSCREEN_URLS_COLUMN_URL + "));";
 	
 	
 	

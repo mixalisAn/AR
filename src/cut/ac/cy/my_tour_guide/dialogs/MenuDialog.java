@@ -10,13 +10,14 @@ import android.widget.RelativeLayout;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
+import cut.ac.cy.my_tour_guide.activity.About;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
-import cut.ac.cy.my_tour_guide.activity.MarkersCategories;
+import cut.ac.cy.my_tour_guide.helpers.MarkersCategories;
 
 public class MenuDialog extends SherlockDialogFragment{
 	private static final int REQUEST_CODE = 1;
 	protected static String[] menuItemsValues = { "Pois Categories",
-		"Hide Radar", "Show zoombar", "Gps Settings", "Exit" };
+		"Hide Radar", "Show zoombar", "Gps Settings", "About", "Exit" };
 	
 	public MenuDialog(){
 	}
@@ -31,8 +32,8 @@ public class MenuDialog extends SherlockDialogFragment{
 			public void onClick(DialogInterface dialog, int which) {
 					switch(which){
 					case 0:
-						Intent intent = new Intent(getActivity(), MarkersCategories.class);
-						getActivity().startActivityForResult(intent, REQUEST_CODE);
+						Intent intent1 = new Intent(getActivity(), MarkersCategories.class);
+						getActivity().startActivityForResult(intent1, REQUEST_CODE);
 						dialog.dismiss();
 						break;
 					case 1:
@@ -53,6 +54,10 @@ public class MenuDialog extends SherlockDialogFragment{
 						dialog.dismiss();
 						break;
 					case 4:
+						Intent intent2 = new Intent(getActivity(), About.class);
+						startActivity(intent2);
+						break;
+					case 5:
 						getActivity().finish();
 						break;
 				}

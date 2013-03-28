@@ -24,4 +24,6 @@
 	<string name="present">Present</string>
 	<string name="past">Past</string>
 	<string name="categories">Pois Categories</string>
+	<string name="about">"This project is using Android Augmented Reality Framework.  "</string>
+	<string name="title_about">About!</string>
 </resources>

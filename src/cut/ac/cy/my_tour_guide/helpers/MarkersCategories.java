@@ -1,4 +1,4 @@
-package cut.ac.cy.my_tour_guide.activity;
+package cut.ac.cy.my_tour_guide.helpers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +15,6 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListActivity;
 
 import cut.ac.cy.my_tour_guide.database.DBHandler;
-import cut.ac.cy.my_tour_guide.helpers.CategoriesAdapter;
-import cut.ac.cy.my_tour_guide.helpers.CategoriesRowDetails;
 
 public class MarkersCategories extends SherlockListActivity {
 	private DBHandler db;
