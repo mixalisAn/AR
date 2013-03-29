@@ -149,7 +149,7 @@ public class AugmentedReality extends SensorsActivity implements
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
 
-		ARData.addMarkers(localData.getMarkers()); // edw se perptwsi pou einai
+		ARData.initilizeMarkers(localData.getMarkers()); // edw se perptwsi pou einai
 													// oloi miden epistrefei
 													// tous markers oi opoioi
 													// den einai
@@ -190,16 +190,16 @@ public class AugmentedReality extends SensorsActivity implements
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-			if (data.hasExtra("selectedCategories")) {
-				long[] categoriesId = data.getExtras().getLongArray(
-						"selectedCategories");
-				ARData.addCategorizedMarkers(localData
-						.getCategorizedMarkers(categoriesId));
+			//if (data.hasExtra("selectedCategories")) {
+				/*long[] categoriesId = data.getExtras().getLongArray(
+						"selectedCategories");*/
+				ARData.initilizeMarkers(localData.getMarkers());
 				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG)
 						.show();
-			}
+			//}
 		} else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE) {
-			ARData.addCategorizedMarkers(localData.getMarkers()); // otan einai ola ta categories apenergopoimena tote epistrefei
+			ARData.initilizeMarkers(localData.getMarkers());
+			//addCategorizedMarkers(localData.getMarkers()); // otan einai ola ta categories apenergopoimena tote epistrefei
 																	// markers pou den einai null alla size = 0. tote stin addcategorizedmarkers
 																	// diagrafei olous tous markers apo tin lista
 		}
@@ -369,7 +369,7 @@ public class AugmentedReality extends SensorsActivity implements
 			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
 			 */
 			if(collisionMarkers.isEmpty()){
-				ARData.addMarkers(localData.getMarkers());
+				ARData.initilizeMarkers(localData.getMarkers());
 				collisionButton.setVisibility(View.GONE);
 			}else{
 				setSelectedCollisionMarkers(getCollisionMarkers());

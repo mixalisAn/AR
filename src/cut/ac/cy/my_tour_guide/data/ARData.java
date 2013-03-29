@@ -205,7 +205,7 @@ public abstract class ARData {
 	 * @param markers
 	 *            List of Markers to add.
 	 */
-	public static void addMarkers(Collection<Marker> markers) {
+/*	public static void addMarkers(Collection<Marker> markers) {
 		if (markers == null)
 			throw new NullPointerException();
 
@@ -229,12 +229,36 @@ public abstract class ARData {
 			}
 		}
 	}
+	*/
+	public static void initilizeMarkers(Collection<Marker> markers){
+		if (markers == null)
+			throw new NullPointerException();
+		
+		if (markers.size() <= 0)
+			return;
+		
+		Log.d(TAG, "Delete existing markers and add new");
+		synchronized (markerListLock) {
+			markerList.clear();
+			if (markers.size() > 0) {
+				for (Marker marker : markers) {
+					marker.calcRelativePosition(ARData.getCurrentLocation());
+					markerList.put(marker.getName(), marker);
+				}
 
+				if (dirty.compareAndSet(false, true)) {
+					Log.v(TAG, "Setting DIRTY flag!");
+					cache.clear();
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Add delete existed markers and update with categorized markers
 	 * if categorized markers are null then it just clears the marker list
 	 */
-
+	/*
 	public static void addCategorizedMarkers(Collection<Marker> markers) {
 		if (markers == null)
 			throw new NullPointerException();
@@ -255,7 +279,7 @@ public abstract class ARData {
 			}
 		}
 	}
-
+	*/
 	/**
 	 * Get the Markers collection.
 	 * 

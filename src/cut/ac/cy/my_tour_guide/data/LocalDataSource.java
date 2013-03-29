@@ -46,7 +46,7 @@ public class LocalDataSource extends DataSource {
 		try {
 			db.open();
 			Cursor cursor = db.getMarkers();
-
+			cachedMarkers.clear();
 			if (cursor != null) {
 				//to cursor.moveToFirst() xrisimopooieitai giati an paei sto 1o kai den iparxei tote
 				//tha crasharei
@@ -91,7 +91,7 @@ public class LocalDataSource extends DataSource {
 			
 		
 	}
-
+	/*
 	public List<Marker> getCategorizedMarkers(long[] categoriesId) {
 		List<Marker> cachedMarkers = new ArrayList<Marker>();
 		try {
@@ -117,4 +117,5 @@ public class LocalDataSource extends DataSource {
 
 		return cachedMarkers;
 	}
+	*/
 }

@@ -166,7 +166,7 @@ public class DBHandler extends DBSchemaVariables{
 		Cursor mCursor = db.rawQuery(sql, null);
 		return mCursor;
 	}
-	
+	/*
 	public Cursor getSpecificCategoriesMarkers(long[] categories){
 		String sql = "SELECT " + POI_TABLE + "." + POI_COLUMN_ENTRY_ID + ", " + POI_COLUMN_NAME + " , " +	POI_COLUMN_LAT + " , " + 
 					POI_COLUMN_LNG + " , " + POI_COLUMN_ALT + " , " + POI_COLUMN_RES_NAME + " , " + POI_COLUMN_CATEGORY_ID + 
@@ -186,7 +186,7 @@ public class DBHandler extends DBSchemaVariables{
 		
 		return mCursor;
 	}
-	
+	*/
 	public Cursor getPins(){
 		String[] projection = {
 				POI_COLUMN_ENTRY_ID,

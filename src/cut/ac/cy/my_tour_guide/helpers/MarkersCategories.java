@@ -19,7 +19,8 @@ import cut.ac.cy.my_tour_guide.database.DBHandler;
 public class MarkersCategories extends SherlockListActivity {
 	private DBHandler db;
 	private ArrayAdapter<CategoriesRowDetails> listAdapter;
-	private long[] selectedCategories;
+	//private long[] selectedCategories;
+	private int numOfSelectedCategories = 0;
 	List<CategoriesRowDetails> categories;
 
 	@Override
@@ -42,15 +43,16 @@ public class MarkersCategories extends SherlockListActivity {
 				db.updateCategory(categories.get(i).getCategoryId(), categories
 						.get(i).isSelected());
 				if (categories.get(i).isSelected()) {
-					selectedCategories[i] = categories.get(i).getCategoryId();
+					numOfSelectedCategories++;
+					/*selectedCategories[i] = categories.get(i).getCategoryId();
 					Log.i("MarkersCategories",
-							String.valueOf(selectedCategories[i]));
+							String.valueOf(selectedCategories[i]));*/
 				}
 			}
-			if (selectedCategories.length > 0) {
-				Intent data = new Intent();
-				data.putExtra("selectedCategories", selectedCategories);
-				setResult(RESULT_OK, data);
+			if (numOfSelectedCategories > 0) {
+				//Intent data = new Intent();
+				//data.putExtra("selectedCategories", selectedCategories);
+				setResult(RESULT_OK);
 			}else{
 				setResult(RESULT_CANCELED);
 			}
@@ -70,7 +72,7 @@ public class MarkersCategories extends SherlockListActivity {
 			Cursor cursor = db.getCategories();
 			if (cursor != null) {
 				if (cursor.moveToFirst()) {
-					selectedCategories = new long[cursor.getCount()];
+					//selectedCategories = new long[cursor.getCount()];
 					do {
 						if (cursor.getInt(2) == 1)
 							isSelected = true;
@@ -83,6 +85,7 @@ public class MarkersCategories extends SherlockListActivity {
 				}
 			}
 			db.close();
+			cursor.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
