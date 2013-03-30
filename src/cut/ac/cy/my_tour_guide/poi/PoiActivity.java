@@ -115,6 +115,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 					.getBoolean("Music Player Visibility");
 			if (showMusicPlayer) {
 				musicLayout.setVisibility(LinearLayout.VISIBLE);
+				transparentView.setVisibility(View.VISIBLE);
 			}
 			audioWasPlaying = savedInstanceState
 					.getBoolean("Music Player State");
@@ -252,6 +253,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 								: LinearLayout.GONE);
 				if (showMusicPlayer) {
 					transparentView.setVisibility(View.VISIBLE);
+				}else{
+					transparentView.setVisibility(View.GONE);
 				}
 			} else {
 				Toast.makeText(this, "No Audio Available!", Toast.LENGTH_LONG)

@@ -34,8 +34,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
     private static final String TAG = "SensorsActivity";
     private static final AtomicBoolean computing = new AtomicBoolean(false);
 
-    private static final int MIN_TIME = 30 * 1000;
-    private static final int MIN_DISTANCE = 10;
+    private static final int MIN_TIME = 20 * 1000;
+    private static final int MIN_DISTANCE = 5;
 
     private static final float temp[] = new float[9]; // Temporary rotation
                                                       // matrix in Android

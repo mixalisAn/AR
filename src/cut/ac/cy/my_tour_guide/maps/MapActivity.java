@@ -134,7 +134,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	}
 
 	private void CreateMenu(Menu menu) {
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+		//if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			MenuItem item1 = menu.add(0, 1, 0, R.string.mapDisplay);
 
 			item1.setIcon(R.drawable.ic_menu_map_display);
@@ -144,10 +144,10 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 			item3.setIcon(R.drawable.ic_menu_settings);
 			MenuItem item4 = menu.add(0, 4, 1, R.string.info);
 			item4.setIcon(R.drawable.ic_menu_info);
-		} else {
+		//} else {
 			// edw tha mpei o kwdikas gia na mporei na pernei ta action_bar
 			// eikonidia
-		}
+		//}
 	}
 
 	@Override
