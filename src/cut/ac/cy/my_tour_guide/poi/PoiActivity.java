@@ -82,7 +82,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "on Create has been called");
-		//Utils.enableStrictMode();
+		Utils.enableStrictMode();
 		setContentView(R.layout.poi_info_main);
 		// setup action bar for tabs
 		ActionBar actionBar = getSupportActionBar();
