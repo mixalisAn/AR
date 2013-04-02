@@ -5,6 +5,8 @@
 *.pydevproject
 .project
 .metadata
+*.png
+*.ucls
 bin/
 tmp/
 *.tmp

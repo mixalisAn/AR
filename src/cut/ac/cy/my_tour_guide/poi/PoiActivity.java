@@ -82,7 +82,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "on Create has been called");
-		Utils.enableStrictMode();
+		//Utils.enableStrictMode();
 		setContentView(R.layout.poi_info_main);
 		// setup action bar for tabs
 		ActionBar actionBar = getSupportActionBar();
@@ -171,7 +171,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Log.i(TAG, "On Pause executed");
 		if (audioExists) {
 			// stop service
-			if (isNotTopActivity()) {
+			if (isTopActivityFromDiffPackage()) {
 				
 				Log.i(TAG, "is Not top Activity executed");
 				audioPosition = mService.getAudioPosition();
@@ -189,6 +189,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				}
 				stopService(intentService);
 			} else {
+				Log.i(TAG, "O TRITOS ELEGXOS KALEITAI");
 				if (mBound) {
 					if (audioPausedFromFragment) {
 						audioPausedFromFragment = false;
@@ -204,7 +205,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	}
 
 	// elegxei an kapoia alli activity exei anoiksei
-	private boolean isNotTopActivity() {
+	private boolean isTopActivityFromDiffPackage() {
 		Context context = getApplicationContext();
 		ActivityManager am = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);

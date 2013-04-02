@@ -43,6 +43,14 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
     
+    public void setGonePreview(){
+    	mSurfaceView.setVisibility(View.GONE);
+    }
+    
+    public void setVisiblePreview(){
+    	mSurfaceView.setVisibility(View.VISIBLE);
+    }
+    
     public void setCamera(Camera camera) {
         mCamera = camera;
         if (mCamera != null) {
@@ -123,6 +131,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         // The Surface has been created, acquire the camera and tell it where
         // to draw.
+    
         try {
             if (mCamera != null) {
                 mCamera.setPreviewDisplay(holder);

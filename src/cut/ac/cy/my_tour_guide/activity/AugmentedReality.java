@@ -100,7 +100,7 @@ public class AugmentedReality extends SensorsActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		Log.i(TAG, "onCreateHasBeenCalled");
 		Utils.enableStrictMode();
 		
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -164,12 +164,13 @@ public class AugmentedReality extends SensorsActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		
 		camera = Camera.open();
-
 		// CameraDisplay.setCameraDisplayOrientation(this,
 		// Camera.CameraInfo.CAMERA_FACING_BACK, camera);
-
 		camPreview.setCamera(camera);
+		//auto prostethike argotera gia to problima poy eixe i epanafora meta to about
+		camPreview.setVisiblePreview();
 		//wakeLock.acquire();
 	}
 
@@ -180,8 +181,13 @@ public class AugmentedReality extends SensorsActivity implements
 	public void onPause() {
 		super.onPause();
 		if (camera != null) {
+			//auto prostethike argotera gia to problima poy eixe i epanafora meta to about
+			if(!isFinishing())
+				camPreview.setGonePreview();
 			camPreview.setCamera(null);
+			
 			camera.release();
+			
 			camera = null;
 		}
 		//wakeLock.release();
@@ -323,6 +329,7 @@ public class AugmentedReality extends SensorsActivity implements
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.buttonCamera:
+			if (camera != null) {
 			// retrieve photonum gia na to steiloume stin camera gia na to
 			// apothikeusei stin photo afou to auksisei kata 1
 			SharedPreferences appPrefs = getSharedPreferences(PREFS_NAME,
@@ -330,9 +337,9 @@ public class AugmentedReality extends SensorsActivity implements
 			// getapplicationcontext() gia metepeita xrisi apo to scanfile
 			CaptureImage image = new CaptureImage(getApplicationContext());
 			photoNumInc = appPrefs.getInt("photoIncrement", 1);
-			if (camera != null) {
+			
 				image.takePicture(camera, photoNumInc);
-			}
+			
 			// save photo number to preffile gia na diatirithei to noumero
 			// meta apo kill
 			SharedPreferences appPrefsEdit = getSharedPreferences(PREFS_NAME,
@@ -343,6 +350,7 @@ public class AugmentedReality extends SensorsActivity implements
 
 			// Commit the edits!
 			editor.commit();
+			}
 			break;
 		case R.id.buttonMaps:
 			// elegxos an yparxoun ta google play services sto kinito kai einai

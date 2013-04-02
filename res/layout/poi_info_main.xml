@@ -25,38 +25,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:focusable="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp"
-        android:focusable="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:visibility="gone" >
 
         <ImageView
             android:id="@+id/backward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:src="@drawable/backward" />
 
         <ImageView
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:padding="10dp"
             android:src="@drawable/stop" />
 
         <ImageView
             android:id="@+id/pausePlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
+            android:padding="10dp"
             android:src="@drawable/play" />
 
         <ImageView
             android:id="@+id/forward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingRight="10dp"
+            android:padding="10dp"
             android:src="@drawable/forward" />
 
     </LinearLayout>

@@ -95,7 +95,7 @@ public class MusicService extends Service{
     }
     
     public void seekBackward(){
-    	if(getAudioPosition() - backwardTime >= mPlayer.getDuration()){
+    	if(getAudioPosition() - backwardTime >= 0){
     		mPlayer.seekTo(getAudioPosition() - backwardTime);
     	}else{
     		mPlayer.seekTo(0);

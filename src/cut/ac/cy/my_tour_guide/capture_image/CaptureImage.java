@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -18,9 +19,9 @@ import android.widget.Toast;
 
 public class CaptureImage {
 	private static final String TAG = "CaptureImageActivity";
-	private String album = "My Tour Guide";
-	private String folder = "Camera pictures";
-	private String photoName = "DSC_1000";
+	private String album = "MyTourGuide";
+	private int initialPhotoNum = 1000;
+	private String photoName = "DSC_";
 	private int photoNum;
 	Context context;
 	Camera mCamera;
@@ -35,6 +36,7 @@ public class CaptureImage {
 		mCamera = camera;
 		this.photoNum = photoNum;
 		this.photoNum++;
+		photoNum = initialPhotoNum + photoNum;
 		photoName += Integer.toString(photoNum);
 		mCamera.takePicture(shutterCallback, rawCallback, jpegCallback);
 	}
@@ -60,40 +62,21 @@ public class CaptureImage {
 			
 				File path = new File(
 						Environment
-								.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-								+ File.separator + album);
+								.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),album);
 
 				try {
 					// make sure the picture directory exists
 					if (!path.exists()) {
 						path.mkdirs();
 					} 
-						path = new File(path + File.separator + folder);
-						if (!path.exists()) {
-							path.mkdirs();
-						}
 					
 					File file = new File(path, photoName + ".jpg");
 
 					OutputStream outStream = new FileOutputStream(file);
 					outStream.write(data);
 					outStream.close();
-					// Tell the media scanner about the new file so that it is
-					// immediately available to the user.
-					MediaScannerConnection
-							.scanFile(
-									context,
-									new String[] { file.toString() },
-									null,
-									new MediaScannerConnection.OnScanCompletedListener() {
-										public void onScanCompleted(
-												String path, Uri uri) {
-											Log.i("ExternalStorage", "Scanned "
-													+ path + ":");
-											Log.i("ExternalStorage", "-> uri="
-													+ uri);
-										}
-									});
+					galleryAddPicture(file.getAbsolutePath());
+					
 				} catch (FileNotFoundException e) {
 					Log.e(TAG, "File Note Found", e);
 				} catch (IOException e) {
@@ -106,6 +89,14 @@ public class CaptureImage {
 				mCamera.startPreview();
 				e1.printStackTrace();
 			}
+		}
+		
+		
+		private void galleryAddPicture(String absolutePath) {
+		    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		    Uri contentUri = Uri.fromFile(new File(absolutePath));
+		    mediaScanIntent.setData(contentUri);
+		    context.sendBroadcast(mediaScanIntent);
 		}
 	};
 
