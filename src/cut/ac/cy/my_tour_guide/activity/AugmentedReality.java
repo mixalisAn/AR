@@ -317,9 +317,11 @@ public class AugmentedReality extends SensorsActivity implements
 	};
 
 	protected void markerTouched(Marker marker) {
+		String[] compareUrls = {marker.getPastUrl(), marker.getPresentUrl()};
 		Intent intent = new Intent(this, PoiActivity.class);
 		intent.putExtra("Id", marker.getId());
 		intent.putExtra("Res Name", marker.getResName());
+		intent.putExtra("Compare Urls", compareUrls);
 
 		startActivity(intent);
 		Log.w(TAG, "markerTouched() not implemented.");

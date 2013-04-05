@@ -137,20 +137,34 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="match_parent"
 			    android:layout_alignParentLeft="true">
-			    
 			    <TextView 
-			        android:id="@+id/mylocationTestTextView"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_above="@+id/markerLocationTestTextView"
-			    	android:layout_centerHorizontal="true"
-			        />
+			    	android:id="@+id/testProviderEnabled"
+			    	android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"  
+			        android:layout_above="@+id/testProviderDisabled"  
+			        android:layout_centerHorizontal="true"
+			    />
 			    <TextView 
-			        android:id="@+id/markerLocationTestTextView"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_above="@+id/providerTextView"
-			        android:layout_centerHorizontal="true"/>
+			    	android:id="@+id/testProviderDisabled"
+			    	android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"    
+			        android:layout_centerHorizontal="true"
+			        android:layout_above="@+id/testProviderStatusChanged"  
+			    />
+			    <TextView 
+			    	android:id="@+id/testProviderStatusChanged"
+			    	android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"    
+			        android:layout_centerHorizontal="true"
+			        android:layout_above="@+id/testProviderTimeElapsed"  
+			    />
+			    <TextView 
+			    	android:id="@+id/testProviderTimeElapsed"
+			    	android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"    
+			        android:layout_centerHorizontal="true"
+			        android:layout_above="@+id/providerTextView"  
+			    />
 			      <TextView
 			        android:id="@+id/providerTextView"
 			        android:layout_width="wrap_content"

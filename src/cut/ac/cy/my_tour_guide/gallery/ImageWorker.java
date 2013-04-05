@@ -60,6 +60,7 @@ public abstract class ImageWorker {
 
     protected ImageWorker(Context context) {
         mResources = context.getResources();
+        Log.i(TAG, "ImageWorker created");
     }
 
     /**

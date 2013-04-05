@@ -135,7 +135,7 @@ public class ImageCache {
             if (Utils.hasHoneycomb()) {
                 mReusableBitmaps = new HashSet<SoftReference<Bitmap>>();
             }
-
+            Log.i(TAG, "New cache have been created");
             mMemoryCache = new LruCache<String, BitmapDrawable>(mCacheParams.memCacheSize) {
 
                 /**

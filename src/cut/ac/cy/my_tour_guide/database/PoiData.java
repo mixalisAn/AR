@@ -10,9 +10,11 @@ public class PoiData {
 	private String description;
 	private String resName;
 	private long categoryId;
+	private String pastUrl;
+	private String presentUrl;
 	
 	
-	public PoiData(String name, double d, double e, double f , String link , String address , String desc, String resName, long categoryId){
+	public PoiData(String name, double d, double e, double f , String link , String address , String desc, String resName, long categoryId, String pastUrl, String presentUrl){
 		this.name = name;
 		this.latitude = d;
 		this.longtitude = e;
@@ -22,6 +24,8 @@ public class PoiData {
 		this.description = desc;
 		this.resName = resName;
 		this.categoryId = categoryId;
+		this.pastUrl = pastUrl;
+		this.presentUrl = presentUrl;
 	}
 	
 	public String getName(){
@@ -59,4 +63,13 @@ public class PoiData {
 	public long getCategoryId(){
 		return categoryId;
 	}
+	
+	public String getPastUrl(){
+		return pastUrl;
+	}
+	
+	public String getPresentUrl(){
+		return presentUrl;
+	}
+	
 }

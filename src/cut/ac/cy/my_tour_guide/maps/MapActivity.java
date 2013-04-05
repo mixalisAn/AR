@@ -180,7 +180,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	private void setMapIfNeeded() {
 		long markerId;
 		double lat, lng;
-		String title, markerRes, mapMarkerId;
+		String title, markerRes, mapMarkerId, pastUrl, presentUrl;
 		LatLng markerCoords;
 		
 		if (map == null) {
@@ -207,11 +207,13 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 							lat = cursor.getDouble(2);
 							lng = cursor.getDouble(3);
 							markerRes = cursor.getString(4);
+							pastUrl = cursor.getString(5);
+							presentUrl = cursor.getString(6);
 							markerCoords = new LatLng(lat, lng);
 							//pernei to id apo ton mapMarker diaforetiko tou marker pou vazei ekeini tin wra kai to pernaei sto hashmap
 							mapMarkerId = map.addMarker(new MarkerOptions().position(markerCoords)
 									.title(title).snippet("Click to see more info!")).getId();
-							mapMarkers.put(mapMarkerId, new MapMarker(markerId, markerRes));
+							mapMarkers.put(mapMarkerId, new MapMarker(markerId, markerRes, pastUrl, presentUrl));
 						} while (cursor.moveToNext());
 					}
 
@@ -363,15 +365,11 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		long markerId;
-		String markerResName;
-		
-		markerId = mapMarkers.get(marker.getId()).getId();
-		markerResName = mapMarkers.get(marker.getId()).getResName();
 		
 		Intent intent = new Intent(this, PoiActivity.class);
-		intent.putExtra("Id", markerId);
-		intent.putExtra("Res Name", markerResName);
+		intent.putExtra("Id", mapMarkers.get(marker.getId()).getId());
+		intent.putExtra("Res Name", mapMarkers.get(marker.getId()).getResName());
+		intent.putExtra("Compare Urls", mapMarkers.get(marker.getId()).getCompareUrls());
 		
 		startActivity(intent);
 	}

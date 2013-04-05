@@ -61,6 +61,10 @@ public class Marker implements Comparable<Marker> {
     private String resName = null;
     //Category id for markers
     private long categotyId;
+    // Past url for markers
+    private String pastUrl;
+    // Present url for markers
+    private String presentUrl;
     // Marker's physical location (Lat, Lon, Alt)
     private final PhysicalLocation physicalLocation = new PhysicalLocation();
     // Distance from camera to PhysicalLocation in meters
@@ -89,8 +93,8 @@ public class Marker implements Comparable<Marker> {
     private PaintableBox touchBox = null;
     private volatile PaintablePosition touchPosition = null;
 
-    public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color, Bitmap bitmap) {
-    	set(id, name, latitude, longitude, altitude, resName, categoryId, color , bitmap);
+    public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, String pastUrl, String presentUrl, int color, Bitmap bitmap) {
+    	set(id, name, latitude, longitude, altitude, resName, categoryId, pastUrl, presentUrl, color , bitmap);
 	}
 
     /**
@@ -101,13 +105,15 @@ public class Marker implements Comparable<Marker> {
 	 * @param altitude Altitude of the Marker in meters (>0 is above sea level). 
 	 * @param color Color of the Marker.
 	 */
-    public synchronized void set(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, int color , Bitmap bitmap) {
+    public synchronized void set(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, String pastUrl, String presentUrl, int color , Bitmap bitmap) {
         if (name == null) throw new NullPointerException();
         
         this.id = id;
         this.name = name;
         this.resName = resName;
         this.categotyId = categoryId;
+        this.pastUrl = pastUrl;
+        this.presentUrl = presentUrl;
         this.bitmap = bitmap;
         this.physicalLocation.set(latitude, longitude, altitude);
         this.color = color;
@@ -151,6 +157,21 @@ public class Marker implements Comparable<Marker> {
     public synchronized long getCategoryId(){
     	return this.categotyId;
     }
+    
+    /**
+     * Get the pastUrl of the marker
+     */
+    public synchronized String getPastUrl(){
+    	return this.pastUrl;
+    }
+    
+    /**
+     * Get the presentUrl of the marker
+     */
+    public synchronized String getPresentUrl(){
+    	return this.presentUrl;
+    }
+    
     /**
      * Get the color of this Marker.
      * 
@@ -351,8 +372,8 @@ public class Marker implements Comparable<Marker> {
         // If it is 0.0 then make it equal to Gps altitude else do nothing
         if (noAltitude)
         	physicalLocation.setAltitude(location.getAltitude());
-        TextView markerAltitude = (TextView)activity.findViewById(R.id.markerLocationTestTextView);
-        markerAltitude.setText("Poi:" + String.valueOf(physicalLocation.getAltitude()));
+        //TextView markerAltitude = (TextView)activity.findViewById(R.id.markerLocationTestTextView);
+        //markerAltitude.setText("Poi:" + String.valueOf(physicalLocation.getAltitude()));
         // Compute the relative position vector from user position to POI
         // location
         PhysicalLocation.convLocationToVector(location, physicalLocation, locationXyzRelativeToPhysicalLocation);

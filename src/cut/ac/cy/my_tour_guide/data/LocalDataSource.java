@@ -61,7 +61,7 @@ public class LocalDataSource extends DataSource {
 						cachedMarkers.add(new Marker(cursor.getLong(0), cursor
 								.getString(1), cursor.getDouble(2), cursor
 								.getDouble(3), cursor.getDouble(4), cursor
-								.getString(5), cursor.getLong(6), Color.GREEN,
+								.getString(5), cursor.getLong(6), cursor.getString(8), cursor.getString(9), Color.GREEN,
 								getBitmap(cursor.getString(7))));
 					} while (cursor.moveToNext());
 				}

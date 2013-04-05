@@ -34,8 +34,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
     private static final String TAG = "SensorsActivity";
     private static final AtomicBoolean computing = new AtomicBoolean(false);
 
-    private static final int MIN_TIME = 20 * 1000;
-    private static final int MIN_DISTANCE = 5;
+    private static final int MIN_TIME = 30 * 1000;
+    private static final int MIN_DISTANCE = 0;
 
     private static final float temp[] = new float[9]; // Temporary rotation
                                                       // matrix in Android
@@ -64,7 +64,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
     private static Sensor sensorGrav = null;
     private static Sensor sensorMag = null;
     private static LocationManager locationMgr = null;
-
+    
     /**
      * {@inheritDoc}
      */
@@ -114,7 +114,18 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
 
             locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+            locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+            //na valw edw ena elegxo opws fainetai parakatw se periptwsi poy den einai energopoimeno 
+            //na leei ston cristi oti xreiazetai accuracy thes na energoiiseis to Gps?
+            /**
+             * final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
+    			if (!gpsEnabled) {
+        		// Build an alert dialog here that requests that the user enable
+        		// the location services, then when the user clicks the "OK" button,
+        		// call enableLocationSettings()
+    			}
+             */
             try {
 
                 try {
@@ -286,7 +297,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onProviderDisabled(String provider) {
-        // Ignore
+    	TextView providerDisabled = (TextView)findViewById(R.id.testProviderDisabled);
+    	providerDisabled.setText(provider + " Disabled");
+    	
     }
 
     /**
@@ -294,7 +307,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onProviderEnabled(String provider) {
-        // Ignore
+    	TextView providerEnabled = (TextView)findViewById(R.id.testProviderEnabled);
+    	providerEnabled.setText(provider + " Enabled");
+
     }
 
     /**
@@ -302,7 +317,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        
+    	TextView providerStatus = (TextView)findViewById(R.id.testProviderEnabled);
+    	providerStatus.setText(provider + " Status Changed : " + status); 
     }
 
     /**
@@ -310,10 +326,13 @@ public class SensorsActivity extends SherlockFragmentActivity implements SensorE
      */
     @Override
     public void onLocationChanged(Location location) {
+    	
+    	TextView time = (TextView)findViewById(R.id.testProviderTimeElapsed);
     	TextView provider = (TextView)findViewById(R.id.providerTextView);
     	TextView accuracy = (TextView)findViewById(R.id.providerAccuracyTextView);
-    	TextView gpsAltitude = (TextView)findViewById(R.id.mylocationTestTextView);
-    	gpsAltitude.setText("Gps: " + String.valueOf(location.getAltitude()));
+    	/*TextView gpsAltitude = (TextView)findViewById(R.id.mylocationTestTextView);
+    	gpsAltitude.setText("Gps: " + String.valueOf(location.getAltitude()));*/
+    	time.setText("Time :" + location.getTime() / 1000);
     	provider.setText(location.getProvider());
     	accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
     

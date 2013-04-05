@@ -65,13 +65,23 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 	private long markerId;
 	private String markerResName;
+	private String[] markerCompareUrls;
 	
 	private String gridFragmentTag;
+	private String compareFragmentTag;
 	
 	public void setGridFragmentTag(String tag){
 		gridFragmentTag = tag;
 		if(tabsAdapter != null)
 			tabsAdapter.setGridTag(gridFragmentTag);
+	}
+	
+	public void setCompareFragmentTag(String tag){
+		compareFragmentTag = tag;
+	}
+	
+	public String getCompareFragmentTag(){
+		return compareFragmentTag;
 	}
 	
 	public String getGridFragmentTag(){
@@ -82,7 +92,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "on Create has been called");
-		Utils.enableStrictMode();
+		//Utils.enableStrictMode();
 		setContentView(R.layout.poi_info_main);
 		// setup action bar for tabs
 		ActionBar actionBar = getSupportActionBar();
@@ -93,6 +103,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Intent intent = getIntent();
 		markerId = intent.getLongExtra("Id", 0);
 		markerResName = intent.getStringExtra("Res Name");
+		markerCompareUrls = intent.getStringArrayExtra("Compare Urls");
 
 		if (isAudioResourceExist()) {
 			MusicResources.setMusicResources(markerResName);
@@ -183,6 +194,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				Log.i(TAG, "isFinishing executed");
 				if(getGridFragmentTag() != null)
 					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
+				if(getCompareFragmentTag() != null)
+					((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
 				if (mBound) {
 					unbindService(mConnection);
 					mBound = false;
@@ -200,6 +213,14 @@ public class PoiActivity extends SherlockFragmentActivity implements
 					unbindService(mConnection);
 					mBound = false;
 				}
+			}
+		}else{
+			if (isFinishing()) {
+				Log.i(TAG, "isFinishing executed");
+				if(getGridFragmentTag() != null)
+					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
+				if(getCompareFragmentTag() != null)
+					((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
 			}
 		}
 	}
@@ -287,7 +308,10 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public String getMarkerResName() {
 		return markerResName;
 	}
-
+	
+	public String[] getCompareUrls(){
+		return markerCompareUrls;
+	}
 	/**
 	 * Defines callbacks for service binding, passed to bindService() i iBinder
 	 * einai ousiastika i localBinder pou exei tin methodo pou kaleiitai
