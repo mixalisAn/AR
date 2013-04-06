@@ -156,6 +156,7 @@ public class AugmentedReality extends SensorsActivity implements
 													// null alla einai miden ara
 													// kanei return i
 													// getMarkers()
+		
 	}
 
 	/**

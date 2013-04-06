@@ -19,7 +19,7 @@ public class ErrorDialog extends SherlockDialogFragment implements DialogInterfa
 		builder.setTitle("Application Incompatible");
 		builder.setMessage("Cannot share content with this app.Please select another one");
 		builder.setPositiveButton("Ok", this);
-		return super.onCreateDialog(savedInstanceState);
+		return builder.create();
 	}
 
 	@Override
