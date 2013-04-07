@@ -12,6 +12,13 @@
         android:name="cut.ac.cy.my_tour_guide.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
+    <supports-screens 
+        android:smallScreens="false"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        />
+    
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -95,7 +102,7 @@
                     <activity
             android:name="cut.ac.cy.my_tour_guide.activity.About"
             android:label="@string/title_about"
-            android:theme="@android:style/Theme.Dialog">
+            android:theme="@style/Theme.Sherlock">
                     </activity>
                      <intent-filter>
             <action android:name="android.intent.action.MEDIA_MOUNTED" />

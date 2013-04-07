@@ -1,10 +1,12 @@
 package cut.ac.cy.my_tour_guide.activity;
 
-import cut.ac.cy.my_tour_guide.R;
-import android.app.Activity;
 import android.os.Bundle;
 
-public class About extends Activity{
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import cut.ac.cy.my_tour_guide.R;
+
+public class About extends SherlockFragmentActivity{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {  

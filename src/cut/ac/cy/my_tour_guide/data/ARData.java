@@ -28,11 +28,11 @@ public abstract class ARData {
 	private static final List<Marker> cache = new CopyOnWriteArrayList<Marker>();
 	private static final AtomicBoolean dirty = new AtomicBoolean(false);
 	private static final float[] locationArray = new float[3];
-	/* defaulting to our place */
-	public static final Location hardFix = new Location("ATL");
+	/* defaulting to our nowhere  26.588527,-42.099609*/
+	public static final Location hardFix = new Location("INIT");
 	static {
-		hardFix.setLatitude(34.677178);
-		hardFix.setLongitude(33.045097);
+		hardFix.setLatitude(26.588527);
+		hardFix.setLongitude(-42.099609);
 		hardFix.setAltitude(0);
 	}
 

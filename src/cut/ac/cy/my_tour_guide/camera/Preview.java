@@ -43,14 +43,6 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
         mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
     }
     
-    public void setGonePreview(){
-    	mSurfaceView.setVisibility(View.GONE);
-    }
-    
-    public void setVisiblePreview(){
-    	mSurfaceView.setVisibility(View.VISIBLE);
-    }
-    
     public void setCamera(Camera camera) {
         mCamera = camera;
         if (mCamera != null) {

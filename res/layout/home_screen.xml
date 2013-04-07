@@ -25,14 +25,17 @@
 
 			    <Button
 			        android:id="@+id/buttonCollision"
-			        android:visibility="visible"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
 			        android:layout_marginTop="5dp"
 			        android:background="@drawable/collisio_button_shape"
-			        android:padding="5dp"
-			        android:textColor="#FFFFFF" />
+			        android:minHeight="0dp"
+			        android:minWidth="0dp"
+			        android:padding="8dp"
+			        android:textColor="#FFFFFF"
+			        android:textSize="14sp"
+			        android:visibility="gone" />
 
 			</RelativeLayout>
             <RelativeLayout

@@ -170,8 +170,7 @@ public class AugmentedReality extends SensorsActivity implements
 		// CameraDisplay.setCameraDisplayOrientation(this,
 		// Camera.CameraInfo.CAMERA_FACING_BACK, camera);
 		camPreview.setCamera(camera);
-		//auto prostethike argotera gia to problima poy eixe i epanafora meta to about
-		camPreview.setVisiblePreview();
+	
 		//wakeLock.acquire();
 	}
 
@@ -182,9 +181,7 @@ public class AugmentedReality extends SensorsActivity implements
 	public void onPause() {
 		super.onPause();
 		if (camera != null) {
-			//auto prostethike argotera gia to problima poy eixe i epanafora meta to about
-			if(!isFinishing())
-				camPreview.setGonePreview();
+			
 			camPreview.setCamera(null);
 			
 			camera.release();

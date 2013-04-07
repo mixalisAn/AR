@@ -190,9 +190,15 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 			if (map != null) {
 				Log.i(TAG, "Map initialization!");
 				// my current location
-				lat = ARData.getCurrentLocation().getLatitude();
-				lng = ARData.getCurrentLocation().getLongitude();
+				if(ARData.getCurrentLocation() == ARData.hardFix){
+					lat = 34.677178;
+					lng = 33.045097;
+				}else{
+					lat = ARData.getCurrentLocation().getLatitude();
+					lng = ARData.getCurrentLocation().getLongitude();
+				}
 				myCurrentLocation = new LatLng(lat, lng);
+				
 				// map.addMarker(new
 				// MarkerOptions().position(myCurrentLocation));
 				// other markers location
@@ -226,7 +232,7 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(
 						myCurrentLocation, 15));
 				// Zoom in, animating the camera.
-				map.animateCamera(CameraUpdateFactory.zoomTo(17), 2000, null);
+				//map.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, null);
 				map.setMyLocationEnabled(true);
 				
 			}
