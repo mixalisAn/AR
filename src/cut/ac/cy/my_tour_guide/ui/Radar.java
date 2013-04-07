@@ -1,14 +1,14 @@
 package cut.ac.cy.my_tour_guide.ui;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-
-
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Calculator;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.ScreenPosition;
+import cut.ac.cy.my_tour_guide.helpers.PixelsConverter;
 import cut.ac.cy.my_tour_guide.objects.PaintableCircle;
 import cut.ac.cy.my_tour_guide.objects.PaintableLine;
 import cut.ac.cy.my_tour_guide.objects.PaintablePosition;
@@ -23,14 +23,14 @@ import cut.ac.cy.my_tour_guide.objects.PaintableText;
  */
 public class Radar {
 
-    public static final float RADIUS = 48;
+    public static float RADIUS = 36;
 
     private static final int LINE_COLOR = Color.argb(150, 0, 0, 220);
-    private static final float PAD_X = 10;
-    private static final float PAD_Y = 20;
+    private static float PAD_X = 10;
+    private static float PAD_Y = 20;
     private static final int RADAR_COLOR = Color.argb(100, 0, 0, 200);
     private static final int TEXT_COLOR = Color.rgb(255, 255, 255);
-    private static final int TEXT_SIZE = 12;
+    private static int TEXT_SIZE = 18;
 
     private static ScreenPosition leftRadarLine = null;
     private static ScreenPosition rightRadarLine = null;
@@ -44,9 +44,14 @@ public class Radar {
     private static PaintableText paintableText = null;
     private static PaintablePosition paintedContainer = null;
 
-    public Radar() {
+    public Radar(Context context) {
+    	PixelsConverter pixelsConverter = new PixelsConverter(context);
         if (leftRadarLine == null) leftRadarLine = new ScreenPosition();
         if (rightRadarLine == null) rightRadarLine = new ScreenPosition();
+        RADIUS = pixelsConverter.pixelsToDips(RADIUS);
+        PAD_X = pixelsConverter.pixelsToDips(PAD_X);
+        PAD_Y = pixelsConverter.pixelsToDips(PAD_Y);
+        TEXT_SIZE = (int)pixelsConverter.pixelsToSp(TEXT_SIZE);
     }
 
     /**

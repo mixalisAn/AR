@@ -27,12 +27,13 @@ public class AugmentedView extends View {
     private static final AtomicBoolean drawing = new AtomicBoolean(false);
     
     private CollisionDetector detector;
-    private static final Radar radar = new Radar();
+    private static Radar radar ;
     private static final List<Marker> cache = new ArrayList<Marker>();
     private static final TreeSet<Marker> updated = new TreeSet<Marker>();
-
+    
     public AugmentedView(Context context) {
         super(context);
+        radar = new Radar(context);
     }
     
     public void setCollisionDetector(CollisionDetector detector){
