@@ -58,7 +58,7 @@ public class LocalDataSource extends DataSource {
 										+ cursor.getString(5)
 										+ String.valueOf(cursor.getLong(6)));
 
-						cachedMarkers.add(new Marker(cursor.getLong(0), cursor
+						cachedMarkers.add(new Marker(context, cursor.getLong(0), cursor
 								.getString(1), cursor.getDouble(2), cursor
 								.getDouble(3), cursor.getDouble(4), cursor
 								.getString(5), cursor.getLong(6), cursor.getString(8), cursor.getString(9), Color.GREEN,
@@ -80,7 +80,7 @@ public class LocalDataSource extends DataSource {
 
 	private Bitmap getBitmap(String name) {
 		if(name == null){
-			return BitmapFactory.decodeResource(res, R.drawable.info);
+			return BitmapFactory.decodeResource(res, R.drawable.general);
 		}else{
 			name = name.toLowerCase();
 			name = name.replace(" ", "_");

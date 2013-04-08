@@ -427,34 +427,34 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 	    // Check whether the new location fix is more or less accurate
 	    int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
-	    boolean isLessAccurate = accuracyDelta > 0;
+	    //boolean isLessAccurate = accuracyDelta > 0;
 	    boolean isMoreAccurate = accuracyDelta < 0;
-	    boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+	    boolean isSignificantlyLessAccurate = accuracyDelta > 90;
 
 	    // Check if the old and new location are from the same provider
-	    boolean isFromSameProvider = isSameProvider(location.getProvider(),
-	            currentBestLocation.getProvider());
+	    //boolean isFromSameProvider = isSameProvider(location.getProvider(),
+	      //      currentBestLocation.getProvider());
 
 	    // Determine location quality using a combination of timeliness and accuracy
 	    if (isMoreAccurate) {
 	        return true;
-	    } else if (isNewer && !isLessAccurate) {
+	    } else if (isNewer && !isSignificantlyLessAccurate) {
 	        return true;
-	    } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
-	        return true;
-	    }
+	    } //else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+	        //return true;
+	    //}
 	    return false;
 
 	}
-	
-	/** Checks whether two providers are the same */
+	/*
+	/** Checks whether two providers are the same 
 	private boolean isSameProvider(String provider1, String provider2) {
 	    if (provider1 == null) {
 	      return provider2 == null;
 	    }
 	    return provider1.equals(provider2);
 	}
-	
+	*/
 	private void checkGpsIfEnabled(){
 		final boolean gpsEnabled =
 				 locationMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);

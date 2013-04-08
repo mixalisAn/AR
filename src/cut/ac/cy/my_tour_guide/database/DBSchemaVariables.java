@@ -6,7 +6,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 25;
+	static final int DATABASE_VERSION = 27;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";
@@ -79,11 +79,11 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				,"rialto_theater", 1, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				,"rialto_theater", 9, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 		initialPois.add(new PoiData("Boho Chic", 34.679521, 33.046065 , 0 , "https://www.facebook.com/BohoChicTapasBar" , "24 andrea drousioti Street, 3040 Limassol, Cyprus",
 				"The Boho Chic photo "
-				, "boho_chic", 2, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "boho_chic", 1, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 		initialPois.add(new PoiData("Plateia Irown", 34.679192, 33.045794 , 0 , null , null , 
 				"The Platia Irown is located at the west end of the sea-front behind the old port, within the old town of Limassol. Originally, the castle stood on the seashore beside the river Garyllis; but the river altered its course in the 16th century and is now 100 yards further west." + 
@@ -96,7 +96,7 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				, "platia_irown", 3, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "platia_irown", 2, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 
 		initialPois.add(new PoiData("Estia", 34.67902, 33.046151 , 0 , "http://www.estianet.gr/" , "pavlou mela 53" , 
@@ -110,7 +110,7 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				, "estia" , 4, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "estia" , 3, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 		
 		initialPois.add(new PoiData("Zappeio", 34.678976, 33.04544 , 0 , "https://www.facebook.com/pages/Zappeio/298666980161503" , "irown 36" , 
@@ -124,7 +124,7 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				, "zappeio", 3, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "zappeio", 4, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 		initialPois.add(new PoiData("Town Hall", 34.6749, 33.044193 , 0 , "http://en.wikipedia.org/wiki/Limassol" , "Arxiepiskopou kiprianou 36" , 
 				"The Town Hall is located at the west end of the sea-front behind the old port, within the old town of Limassol. Originally, the castle stood on the seashore beside the river Garyllis; but the river altered its course in the 16th century and is now 100 yards further west." + 
@@ -137,18 +137,22 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				, "town_hall" , 1, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "town_hall" , 7, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 	}
 	
-	//5 rows initialization
+	//9 rows initialization
 	//check names because they are used as drawable resource with
 	//lowercase and spaces replaced by _
 	private void initializeCategories() {
-		initialCategories.add(new CategoriesData("Ancient monuments", true));
+		initialCategories.add(new CategoriesData("Carnival", true));
 		initialCategories.add(new CategoriesData("Churches", true));
+		initialCategories.add(new CategoriesData("Cinemas", true));
+		initialCategories.add(new CategoriesData("General", true));
+		initialCategories.add(new CategoriesData("Hotels", true));
 		initialCategories.add(new CategoriesData("Important Buildings", true));
-		initialCategories.add(new CategoriesData("Other", true));
+		initialCategories.add(new CategoriesData("Molos", true));
 		initialCategories.add(new CategoriesData("Roads", true));
+		initialCategories.add(new CategoriesData("Theaters", true));
 	}
 
 }

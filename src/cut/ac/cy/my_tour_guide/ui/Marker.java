@@ -3,17 +3,17 @@ package cut.ac.cy.my_tour_guide.ui;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.location.Location;
-import android.widget.TextView;
-import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Vector;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.PhysicalLocation;
+import cut.ac.cy.my_tour_guide.helpers.PixelsConverter;
 import cut.ac.cy.my_tour_guide.objects.PaintableBox;
 import cut.ac.cy.my_tour_guide.objects.PaintableBoxedText;
 import cut.ac.cy.my_tour_guide.objects.PaintableIcon;
@@ -92,8 +92,11 @@ public class Marker implements Comparable<Marker> {
     private static boolean debugTouchZone = false;
     private PaintableBox touchBox = null;
     private volatile PaintablePosition touchPosition = null;
-
-    public Marker(long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, String pastUrl, String presentUrl, int color, Bitmap bitmap) {
+    private static final float TEXT_SIZE = 18; //einai se pixels argotera metatrepetai se sp
+    private static PixelsConverter pixelsConverter = null;
+    
+    public Marker(Context context, long id, String name, double latitude, double longitude, double altitude, String resName, long categoryId, String pastUrl, String presentUrl, int color, Bitmap bitmap) {
+    	pixelsConverter = new PixelsConverter(context);
     	set(id, name, latitude, longitude, altitude, resName, categoryId, pastUrl, presentUrl, color , bitmap);
 	}
 
@@ -633,8 +636,18 @@ public class Marker implements Comparable<Marker> {
 
     protected synchronized void drawIcon(Canvas canvas) {
         if (canvas == null) throw new NullPointerException();
-
-        if (gpsSymbol==null) gpsSymbol = new PaintableIcon(bitmap,96,96);
+        
+        float scale = pixelsConverter.getDensity();
+        if(scale == 0.75){
+        	if (gpsSymbol==null) gpsSymbol = new PaintableIcon(bitmap,48,48);
+        }else if(scale == 1.5){//diko mou
+        	if (gpsSymbol==null) gpsSymbol = new PaintableIcon(bitmap,96,96);
+        }else if(scale == 2.0){
+        	if (gpsSymbol==null) gpsSymbol = new PaintableIcon(bitmap,128,128);
+        }else{//edw einai gia to default mdpi poy einai 1.0
+        	if (gpsSymbol==null) gpsSymbol = new PaintableIcon(bitmap,64,64);
+        }
+        
 
         getScreenPosition().get(locationArray);
         float x = locationArray[0];
@@ -666,8 +679,8 @@ public class Marker implements Comparable<Marker> {
         }
         float maxHeight = Math.round(canvas.getHeight() / 10f) + 1;
 
-        if (textBox == null) textBox = new PaintableBoxedText(textStr, Math.round(maxHeight / 2f) + 1, 300);
-        else textBox.set(textStr, Math.round(maxHeight / 2f) + 1, 300);
+        if (textBox == null) textBox = new PaintableBoxedText(textStr, pixelsConverter.pixelsToSp(TEXT_SIZE), pixelsConverter.pixelsToDips(250));
+        else textBox.set(textStr, pixelsConverter.pixelsToSp(TEXT_SIZE), pixelsConverter.pixelsToDips(250));
 
         getScreenPosition().get(locationArray);
         float x = locationArray[0];
