@@ -1055,43 +1055,41 @@ containing a value of this type.
         public static final int general=0x7f020079;
         public static final int gmaps=0x7f02007a;
         public static final int hotels=0x7f02007b;
-        public static final int ic_menu_info=0x7f02007c;
-        public static final int ic_menu_map_display=0x7f02007d;
-        public static final int ic_menu_network_settings=0x7f02007e;
-        public static final int ic_menu_settings=0x7f02007f;
-        public static final int important_buildings=0x7f020080;
-        public static final int maps=0x7f020081;
-        public static final int marker_icon=0x7f020082;
-        public static final int marker_pin=0x7f020083;
-        public static final int menu=0x7f020084;
-        public static final int menu_carnival=0x7f020085;
-        public static final int menu_churches=0x7f020086;
-        public static final int menu_cinemas=0x7f020087;
-        public static final int menu_general=0x7f020088;
-        public static final int menu_hotels=0x7f020089;
-        public static final int menu_important_buildings=0x7f02008a;
-        public static final int menu_molos=0x7f02008b;
-        public static final int menu_roads=0x7f02008c;
-        public static final int menu_theaters=0x7f02008d;
-        public static final int molos=0x7f02008e;
-        public static final int music=0x7f02008f;
-        public static final int mylocation_pin=0x7f020090;
-        public static final int navigation=0x7f020091;
-        public static final int pause=0x7f020092;
-        public static final int play=0x7f020093;
-        public static final int rialto_thater=0x7f020094;
-        public static final int rialto_theater=0x7f020095;
-        public static final int rialto_theater_past=0x7f020096;
-        public static final int rialto_theater_present=0x7f020097;
-        public static final int roads=0x7f020098;
-        public static final int separetor=0x7f020099;
-        public static final int share=0x7f02009a;
-        public static final int stop=0x7f02009b;
-        public static final int style_button_read=0x7f02009c;
-        public static final int test=0x7f02009d;
-        public static final int textlines=0x7f02009e;
-        public static final int theaters=0x7f02009f;
-        public static final int wikipedia=0x7f0200a0;
+        public static final int ic_action_map_display=0x7f02007c;
+        public static final int ic_action_overflow=0x7f02007d;
+        public static final int important_buildings=0x7f02007e;
+        public static final int maps=0x7f02007f;
+        public static final int marker_icon=0x7f020080;
+        public static final int marker_pin=0x7f020081;
+        public static final int menu=0x7f020082;
+        public static final int menu_carnival=0x7f020083;
+        public static final int menu_churches=0x7f020084;
+        public static final int menu_cinemas=0x7f020085;
+        public static final int menu_general=0x7f020086;
+        public static final int menu_hotels=0x7f020087;
+        public static final int menu_important_buildings=0x7f020088;
+        public static final int menu_molos=0x7f020089;
+        public static final int menu_roads=0x7f02008a;
+        public static final int menu_theaters=0x7f02008b;
+        public static final int molos=0x7f02008c;
+        public static final int music=0x7f02008d;
+        public static final int mylocation_pin=0x7f02008e;
+        public static final int navigation=0x7f02008f;
+        public static final int pause=0x7f020090;
+        public static final int play=0x7f020091;
+        public static final int rialto_thater=0x7f020092;
+        public static final int rialto_theater=0x7f020093;
+        public static final int rialto_theater_past=0x7f020094;
+        public static final int rialto_theater_present=0x7f020095;
+        public static final int roads=0x7f020096;
+        public static final int separetor=0x7f020097;
+        public static final int share=0x7f020098;
+        public static final int stop=0x7f020099;
+        public static final int style_button_read=0x7f02009a;
+        public static final int test=0x7f02009b;
+        public static final int textlines=0x7f02009c;
+        public static final int theaters=0x7f02009d;
+        public static final int wikipedia=0x7f02009e;
     }
     public static final class id {
         public static final int FrameLayout=0x7f060070;
@@ -1160,7 +1158,7 @@ containing a value of this type.
         public static final int imageView=0x7f060045;
         public static final int imageViewCategory=0x7f06003a;
         public static final int imageViewCompare=0x7f06003f;
-        public static final int info=0x7f06007a;
+        public static final int info=0x7f06007b;
         public static final int listMode=0x7f060002;
         public static final int liveImage=0x7f060047;
         public static final int map=0x7f060059;
@@ -1174,13 +1172,14 @@ containing a value of this type.
         public static final int markerMainImage=0x7f06005c;
         public static final int markerOtherActions=0x7f060060;
         public static final int markerTitle=0x7f06005d;
-        public static final int menu_music=0x7f06007b;
+        public static final int menu_music=0x7f06007c;
         public static final int musicLayout=0x7f060072;
         public static final int navigation=0x7f060067;
         public static final int navigationLink=0x7f060065;
-        public static final int network_connection=0x7f060078;
+        public static final int network_connection=0x7f060079;
         public static final int none=0x7f060010;
         public static final int normal=0x7f060001;
+        public static final int overflow=0x7f060078;
         public static final int pager=0x7f060038;
         public static final int pager2=0x7f06003d;
         public static final int past=0x7f060041;
@@ -1192,7 +1191,7 @@ containing a value of this type.
         public static final int readMoreButton=0x7f06006f;
         public static final int satellite=0x7f060011;
         public static final int scrollView=0x7f06005b;
-        public static final int settings=0x7f060079;
+        public static final int settings=0x7f06007a;
         public static final int share=0x7f06006b;
         public static final int shareLink=0x7f060069;
         public static final int showCustom=0x7f060008;
@@ -1271,7 +1270,7 @@ containing a value of this type.
         public static final int rialto_theater=0x7f050000;
     }
     public static final class string {
-        public static final int about=0x7f0b0036;
+        public static final int about=0x7f0b0033;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0b0000;
@@ -1327,7 +1326,7 @@ containing a value of this type.
         /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
          */
         public static final int auth_client_requested_by_msg=0x7f0b001f;
-        public static final int categories=0x7f0b0035;
+        public static final int categories=0x7f0b0032;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -1381,27 +1380,28 @@ containing a value of this type.
         find the service-side assets. [CHAR LIMIT=25] 
          */
         public static final int common_signin_button_text_long=0x7f0b001c;
-        public static final int gallery=0x7f0b0024;
-        public static final int info=0x7f0b002c;
-        public static final int mapDisplay=0x7f0b0023;
-        public static final int map_about=0x7f0b002e;
-        public static final int map_settings=0x7f0b002b;
-        public static final int marker_address=0x7f0b002f;
-        public static final int menu_settings=0x7f0b0021;
-        public static final int music=0x7f0b0032;
-        public static final int navigation=0x7f0b0028;
-        public static final int network_settings=0x7f0b002a;
-        public static final int past=0x7f0b0034;
-        public static final int poi_actions=0x7f0b0030;
-        public static final int present=0x7f0b0033;
-        public static final int share=0x7f0b0029;
-        public static final int title_about=0x7f0b0037;
-        public static final int title_activity_fullscreen=0x7f0b0031;
-        public static final int title_activity_map_about=0x7f0b002d;
-        public static final int title_activity_maps=0x7f0b0022;
-        public static final int title_activity_poi_browser=0x7f0b0026;
-        public static final int title_activity_poi_info=0x7f0b0025;
-        public static final int wikipedia=0x7f0b0027;
+        public static final int gallery=0x7f0b0023;
+        public static final int info=0x7f0b0038;
+        public static final int mapDisplay=0x7f0b0022;
+        public static final int map_about=0x7f0b002b;
+        public static final int map_settings=0x7f0b0029;
+        public static final int marker_address=0x7f0b002c;
+        public static final int menu_settings=0x7f0b0036;
+        public static final int music=0x7f0b002f;
+        public static final int navigation=0x7f0b0027;
+        public static final int network_settings=0x7f0b0037;
+        public static final int overflow=0x7f0b0035;
+        public static final int past=0x7f0b0031;
+        public static final int poi_actions=0x7f0b002d;
+        public static final int present=0x7f0b0030;
+        public static final int share=0x7f0b0028;
+        public static final int title_about=0x7f0b0034;
+        public static final int title_activity_fullscreen=0x7f0b002e;
+        public static final int title_activity_map_about=0x7f0b002a;
+        public static final int title_activity_maps=0x7f0b0021;
+        public static final int title_activity_poi_browser=0x7f0b0025;
+        public static final int title_activity_poi_info=0x7f0b0024;
+        public static final int wikipedia=0x7f0b0026;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0c0036;

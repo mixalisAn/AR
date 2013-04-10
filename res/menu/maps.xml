@@ -3,26 +3,33 @@
     <item
         android:id="@+id/mapDisplay"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        android:title="@string/mapDisplay" android:icon="@drawable/ic_menu_map_display">
+        android:showAsAction="always|withText"
+        android:title="@string/mapDisplay" android:icon="@drawable/ic_action_map_display">
     </item>
     <item
-        android:id="@+id/network_connection"
+        android:id="@+id/overflow"
         android:orderInCategory="2"
-        android:showAsAction="ifRoom"
-        android:title="@string/network_settings" android:icon="@drawable/ic_menu_network_settings">
+        android:showAsAction="always"
+        android:title="@string/overflow"
+        android:icon="@drawable/ic_action_overflow"
+        >
+    <menu>
+        <item
+        android:id="@+id/network_connection"
+        android:orderInCategory="1"
+        android:title="@string/network_settings" >
     </item>
     <item
         android:id="@+id/settings"
-        android:orderInCategory="3"
-        android:showAsAction="never"
-        android:title="@string/map_settings" android:icon="@drawable/ic_menu_settings">
+        android:orderInCategory="2"
+        android:title="@string/map_settings" >
     </item>
     <item
         android:id="@+id/info"
-        android:orderInCategory="4"
-        android:showAsAction="never"
-        android:title="@string/info" android:icon="@drawable/ic_menu_info">
+        android:orderInCategory="3"
+        android:title="@string/info" >
+    </item>
+    </menu>
     </item>
 
 </menu>

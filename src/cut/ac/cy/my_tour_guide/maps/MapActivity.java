@@ -11,15 +11,15 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.WindowManager;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
@@ -39,11 +39,11 @@ import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 /**
  * 
- * @author Tsiou
+ * @author Michail Anastasiou
  * na katharisw ligo tin classi kai na koitaksw ligo ta onomata sta strings genika
  *
  */
-public class MapActivity extends FragmentActivity implements OnInfoWindowClickListener{
+public class MapActivity extends SherlockFragmentActivity implements OnInfoWindowClickListener{
 	private static final String TAG = "MapActivity";
 	private ConnectivityManager connManager = null;
 	private ConnectionStatusReceiver connectionReceiver = null;
@@ -64,7 +64,11 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		Utils.enableStrictMode();
+		
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.maps);
 
 		connManager = (ConnectivityManager) getApplicationContext()
@@ -128,43 +132,27 @@ public class MapActivity extends FragmentActivity implements OnInfoWindowClickLi
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		CreateMenu(menu);
+	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.maps, menu);
 		return true;
-	}
-
-	private void CreateMenu(Menu menu) {
-		//if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			MenuItem item1 = menu.add(0, 1, 0, R.string.mapDisplay);
-
-			item1.setIcon(R.drawable.ic_menu_map_display);
-			MenuItem item2 = menu.add(0, 2, 1, R.string.network_settings);
-			item2.setIcon(R.drawable.ic_menu_network_settings);
-			MenuItem item3 = menu.add(0, 3, 1, R.string.menu_settings);
-			item3.setIcon(R.drawable.ic_menu_settings);
-			MenuItem item4 = menu.add(0, 4, 1, R.string.info);
-			item4.setIcon(R.drawable.ic_menu_info);
-		//} else {
-			// edw tha mpei o kwdikas gia na mporei na pernei ta action_bar
-			// eikonidia
-		//}
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case 1:
+		case R.id.mapDisplay:
 			mapDisplay();
 
 			return true;
-		case 2:
+		case R.id.network_connection:
 			startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
 			return true;
-		case 3:
+		case R.id.settings:
 			Intent intent = new Intent(this, MapSettings.class);
 			startActivity(intent);
 			return true;
-		case 4:
+		case R.id.info:
 			Intent intent2 = new Intent(this, MapAbout.class);
 			startActivity(intent2);
 			return true;
