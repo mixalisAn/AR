@@ -34,7 +34,7 @@ import cut.ac.cy.my_tour_guide.dialogs.GpsSettingsDialog;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class SensorsActivity extends SherlockFragmentActivity implements
-		SensorEventListener, LocationListener {
+		SensorEventListener {
 
 	private static final String TAG = "SensorsActivity";
 	private static final AtomicBoolean computing = new AtomicBoolean(false);
@@ -72,6 +72,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	private static Sensor sensorGrav = null;
 	private static Sensor sensorMag = null;
 	private static LocationManager locationMgr = null;
+	private static GpsLocationListener gpsListener;
+	private static NetworkLocationListener networkListener;
 
 	/**
 	 * {@inheritDoc}
@@ -79,6 +81,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		gpsListener = new GpsLocationListener();
+		networkListener = new NetworkLocationListener();
 	}
 
 	/**
@@ -124,13 +128,20 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 			locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-					MIN_TIME, MIN_DISTANCE, this);
-			/*auto den prosferei idiaiteri veltiwsei kai xrisimopoiei arketi battery
-			 * locationMgr.requestLocationUpdates(
-					LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE,
-					this);*/
+					MIN_TIME, MIN_DISTANCE, gpsListener);
 			
-			checkGpsIfEnabled();
+			
+			if(isGpsEnabled()){
+				try{
+					locationMgr.removeUpdates(networkListener);
+				}catch(Exception e){
+					//nothing here
+				}
+			}else{
+				locationMgr.requestLocationUpdates(
+						LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE,
+						networkListener);
+			}
 			try {
 
 				try {
@@ -139,13 +150,17 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 					Location network = locationMgr
 							.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 					if (gps != null)
-						onLocationChanged(gps);
+						//onLocationChanged(gps);
+						updateLocation(gps);
 					else if (network != null)
-						onLocationChanged(network);
+						//onLocationChanged(network);
+						updateLocation(network);
 					else
-						onLocationChanged(ARData.hardFix);
+						//onLocationChanged(ARData.hardFix);
+						updateLocation(ARData.hardFix);
 				} catch (Exception ex2) {
-					onLocationChanged(ARData.hardFix);
+					//onLocationChanged(ARData.hardFix);
+					updateLocation(ARData.hardFix);
 				}
 				
 				gmf = new GeomagneticField((float) ARData.getCurrentLocation()
@@ -189,7 +204,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 					sensorMgr = null;
 				}
 				if (locationMgr != null) {
-					locationMgr.removeUpdates(this);
+					locationMgr.removeUpdates(gpsListener);
+					locationMgr.removeUpdates(networkListener);
 					locationMgr = null;
 				}
 			} catch (Exception ex2) {
@@ -219,7 +235,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			sensorMgr = null;
 
 			try {
-				locationMgr.removeUpdates(this);
+				locationMgr.removeUpdates(gpsListener);
+				locationMgr.removeUpdates(networkListener);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -311,9 +328,57 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		computing.set(false);
 	}
 
+	private class GpsLocationListener implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location location) {
+			updateLocation(location);
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+		
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			
+		}
+		
+	}
+	
+	private class NetworkLocationListener implements LocationListener{
+
+		@Override
+		public void onLocationChanged(Location location) {
+			updateLocation(location);
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			
+		}
+		
+	}
+	/*
 	/**
 	 * {@inheritDoc}
-	 */
+	 
 	@Override
 	public void onProviderDisabled(String provider) {
 		TextView providerDisabled = (TextView) findViewById(R.id.testProviderDisabled);
@@ -323,7 +388,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 
 	@Override
 	public void onProviderEnabled(String provider) {
 		TextView providerEnabled = (TextView) findViewById(R.id.testProviderEnabled);
@@ -333,7 +398,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		TextView providerStatus = (TextView) findViewById(R.id.testProviderEnabled);
@@ -356,7 +421,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 
 	@Override
 	public void onLocationChanged(Location location) {
 		if (checkBestLocationUpdate(location)) {
@@ -369,7 +434,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			 * (TextView)findViewById(R.id.mylocationTestTextView);
 			 * gpsAltitude.setText("Gps: " +
 			 * String.valueOf(location.getAltitude()));
-			 */
+			 
 			time.setText("Time :" + location.getTime() / 1000);
 			provider.setText(location.getProvider());
 			accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
@@ -391,7 +456,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			}
 		}
 	}
-	
+	*/
 	/**
 	 * {@inheritDoc}
 	 */
@@ -406,6 +471,41 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		}
 	}
 	
+	public void updateLocation(Location location) {
+		if (checkBestLocationUpdate(location)) {
+			currentBestLocation = location;
+			TextView time = (TextView) findViewById(R.id.testProviderTimeElapsed);
+			TextView provider = (TextView) findViewById(R.id.providerTextView);
+			TextView accuracy = (TextView) findViewById(R.id.providerAccuracyTextView);
+			/*
+			 * TextView gpsAltitude =
+			 * (TextView)findViewById(R.id.mylocationTestTextView);
+			 * gpsAltitude.setText("Gps: " +
+			 * String.valueOf(location.getAltitude()));*/
+			 
+			time.setText("Time :" + location.getTime() / 1000);
+			provider.setText(location.getProvider());
+			accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
+
+			ARData.setCurrentLocation(location);
+			gmf = new GeomagneticField((float) ARData.getCurrentLocation()
+					.getLatitude(), (float) ARData.getCurrentLocation()
+					.getLongitude(), (float) ARData.getCurrentLocation()
+					.getAltitude(), System.currentTimeMillis());
+
+			float dec = (float) Math.toRadians(-gmf.getDeclination());
+
+			synchronized (mageticNorthCompensation) {
+				mageticNorthCompensation.toIdentity();
+
+				mageticNorthCompensation.set(FloatMath.cos(dec), 0f,
+						FloatMath.sin(dec), 0f, 1f, 0f, -FloatMath.sin(dec),
+						0f, FloatMath.cos(dec));
+			}
+		}
+		
+	}
+
 	private boolean checkBestLocationUpdate(Location location) {
 		if (currentBestLocation == null)
 			return true;
@@ -455,13 +555,14 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	    return provider1.equals(provider2);
 	}
 	*/
-	private void checkGpsIfEnabled(){
-		final boolean gpsEnabled =
+	private boolean isGpsEnabled(){
+		/*final boolean gpsEnabled =
 				 locationMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		if(!gpsEnabled){
 			GpsSettingsDialog dialog = new GpsSettingsDialog();
 			dialog.show(getSupportFragmentManager(), "GpsSettings Dialog");
-		}
+		}*/
+		return locationMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 	
 	
