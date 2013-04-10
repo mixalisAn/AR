@@ -234,11 +234,12 @@ public abstract class ARData {
 		if (markers == null)
 			throw new NullPointerException();
 		
-		if (markers.size() <= 0)
+		if (markers.size() < 0)
 			return;
 		
 		Log.d(TAG, "Delete existing markers and add new");
 		synchronized (markerListLock) {
+			cache.clear();
 			markerList.clear();
 			if (markers.size() > 0) {
 				for (Marker marker : markers) {

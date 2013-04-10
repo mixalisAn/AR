@@ -193,35 +193,34 @@ public class GridFragment extends SherlockFragment {
 	            mImageViewLayoutParams = new GridView.LayoutParams(
 	                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	            // Calculate ActionBar height
-	            TypedValue tv = new TypedValue();
+	           /* TypedValue tv = new TypedValue();
 	            if (context.getTheme().resolveAttribute(
 	                    android.R.attr.actionBarSize, tv, true)) {
 	                mActionBarHeight = TypedValue.complexToDimensionPixelSize(
 	                        tv.data, context.getResources().getDisplayMetrics());
-	            }
+	            }*/
 	        }
 
 	        @Override
 	        public int getCount() {
 	            // Size + number of columns for top empty row
-	            return mGridStrings.length + mNumColumns;
+	            return mGridStrings.length;
 	        }
 
 	        @Override
 	        public Object getItem(int position) {
-	            return position < mNumColumns ?
-	                    null : mGridStrings[position - mNumColumns];
+	            return mGridStrings[position];
 	        }
 
 	        @Override
 	        public long getItemId(int position) {
-	            return position < mNumColumns ? 0 : position - mNumColumns;
+	            return position ;
 	        }
-
+/*
 	        @Override
 	        public int getViewTypeCount() {
 	            // Two types of views, the normal ImageView and the top row of empty views
-	            return 2;
+	            return ;
 	        }
 
 	        @Override
@@ -233,11 +232,11 @@ public class GridFragment extends SherlockFragment {
 	        public boolean hasStableIds() {
 	            return true;
 	        }
-
+*/
 	        @Override
 	        public View getView(int position, View convertView, ViewGroup container) {
 	            // First check if this is the top row
-	            if (position < mNumColumns) {
+	            /*if (position < mNumColumns) {
 	                if (convertView == null) {
 	                    convertView = new View(mContext);
 	                }
@@ -245,7 +244,7 @@ public class GridFragment extends SherlockFragment {
 	                convertView.setLayoutParams(new AbsListView.LayoutParams(
 	                        ViewGroup.LayoutParams.MATCH_PARENT, mActionBarHeight));
 	                return convertView;
-	            }
+	            }*/
 
 	            // Now handle the main ImageView thumbnails
 	            ImageView imageView;
@@ -264,7 +263,7 @@ public class GridFragment extends SherlockFragment {
 
 	            // Finally load the image asynchronously into the ImageView, this also takes care of
 	            // setting a placeholder image while the background thread runs
-	            mImageFetcher.loadImage(mGridStrings[position - mNumColumns], imageView);
+	            mImageFetcher.loadImage(mGridStrings[position], imageView);
 	            return imageView;
 	        }
 
