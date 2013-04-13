@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -136,6 +138,10 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			}
 		}
 		
+		Bundle b = new Bundle();
+		b.putBoolean("download", checkNetworkConnectionAndType());
+	
+		
 		Tab tab1 = actionBar.newTab().setText("ABOUT");
 
 		Tab tab2 = actionBar.newTab().setText("PHOTO");
@@ -143,8 +149,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Tab tab3 = actionBar.newTab().setText("COMPARE");
 
 		tabsAdapter.addTab(tab1, PoiAboutFragment.class, null);
-		tabsAdapter.addTab(tab2, GridFragment.class, null);
-		tabsAdapter.addTab(tab3, CompareNowAndThen.class, null);
+		tabsAdapter.addTab(tab2, GridFragment.class, b);
+		tabsAdapter.addTab(tab3, CompareNowAndThen.class, b);
 
 		backwardView.setOnClickListener(this);
 		stopView.setOnClickListener(this);
@@ -478,5 +484,23 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				break;
 			}
 		}
+	}
+	
+
+	private boolean checkNetworkConnectionAndType() {
+		final ConnectivityManager connManager =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+		if (networkInfo == null || !networkInfo.isConnectedOrConnecting()) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "checkConnection - no connection found");
+            return false;
+        }else if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
+        	Toast.makeText(this, "Mobile internet connection", Toast.LENGTH_LONG).show();
+            Log.e(TAG, "checkConnection - mobile connection found");
+            return false;
+        }
+		return true;
 	}
 }

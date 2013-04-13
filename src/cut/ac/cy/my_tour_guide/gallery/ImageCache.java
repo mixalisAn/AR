@@ -187,7 +187,9 @@ public class ImageCache {
      */
     public void initDiskCache() {
         // Set up disk cache
+    	Log.i(TAG, "Init diskcachecalled");
         synchronized (mDiskCacheLock) {
+        	Log.i(TAG, "init disk cache executed");
             if (mDiskLruCache == null || mDiskLruCache.isClosed()) {
                 File diskCacheDir = mCacheParams.diskCacheDir;
                 if (mCacheParams.diskCacheEnabled && diskCacheDir != null) {

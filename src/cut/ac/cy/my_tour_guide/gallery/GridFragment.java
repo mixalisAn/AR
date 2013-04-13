@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +38,8 @@ public class GridFragment extends SherlockFragment {
 	    private String[] mFullScreenUrls;
 	    private String[] mGridStrings;
 	    private long markerId;
+	    
+	    private boolean download;
 
 	    /**
 	     * Empty constructor as per the Fragment documentation
@@ -48,7 +49,9 @@ public class GridFragment extends SherlockFragment {
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-
+	        Bundle bundle = getArguments();
+	        download = bundle.getBoolean("download");
+	        Log.d(TAG, "Download " + String.valueOf(download));
 	        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
 	        mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
@@ -62,6 +65,7 @@ public class GridFragment extends SherlockFragment {
 	        mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
 	       
 	        mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
+	        //PauseImageFetcher();
 	    }
 
 	    @Override
@@ -70,6 +74,7 @@ public class GridFragment extends SherlockFragment {
 	    	Log.i(TAG, "On Create view has been called");
 	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
 	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
+	        
 	        //edw pername ton elegxo toy fragment stin poiActivity
 			//to getTag einai methodos poy xrisimopoieitai apo to fragment
 			((PoiActivity)getActivity()).setGridFragmentTag(getTag());
@@ -184,7 +189,6 @@ public class GridFragment extends SherlockFragment {
 	        private final Context mContext;
 	        private int mItemHeight = 0;
 	        private int mNumColumns = 0;
-	        private int mActionBarHeight = 0;
 	        private GridView.LayoutParams mImageViewLayoutParams;
 
 	        public ImageAdapter(Context context) {
@@ -192,13 +196,6 @@ public class GridFragment extends SherlockFragment {
 	            mContext = context;
 	            mImageViewLayoutParams = new GridView.LayoutParams(
 	                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-	            // Calculate ActionBar height
-	           /* TypedValue tv = new TypedValue();
-	            if (context.getTheme().resolveAttribute(
-	                    android.R.attr.actionBarSize, tv, true)) {
-	                mActionBarHeight = TypedValue.complexToDimensionPixelSize(
-	                        tv.data, context.getResources().getDisplayMetrics());
-	            }*/
 	        }
 
 	        @Override
@@ -216,36 +213,10 @@ public class GridFragment extends SherlockFragment {
 	        public long getItemId(int position) {
 	            return position ;
 	        }
-/*
-	        @Override
-	        public int getViewTypeCount() {
-	            // Two types of views, the normal ImageView and the top row of empty views
-	            return ;
-	        }
 
-	        @Override
-	        public int getItemViewType(int position) {
-	            return (position < mNumColumns) ? 1 : 0;
-	        }
-
-	        @Override
-	        public boolean hasStableIds() {
-	            return true;
-	        }
-*/
 	        @Override
 	        public View getView(int position, View convertView, ViewGroup container) {
-	            // First check if this is the top row
-	            /*if (position < mNumColumns) {
-	                if (convertView == null) {
-	                    convertView = new View(mContext);
-	                }
-	                // Set empty view with height of ActionBar
-	                convertView.setLayoutParams(new AbsListView.LayoutParams(
-	                        ViewGroup.LayoutParams.MATCH_PARENT, mActionBarHeight));
-	                return convertView;
-	            }*/
-
+	        
 	            // Now handle the main ImageView thumbnails
 	            ImageView imageView;
 	            if (convertView == null) { // if it's not recycled, instantiate and initialize
@@ -260,11 +231,16 @@ public class GridFragment extends SherlockFragment {
 	            if (imageView.getLayoutParams().height != mItemHeight) {
 	                imageView.setLayoutParams(mImageViewLayoutParams);
 	            }
-
+	            
 	            // Finally load the image asynchronously into the ImageView, this also takes care of
 	            // setting a placeholder image while the background thread runs
-	            mImageFetcher.loadImage(mGridStrings[position], imageView);
-	            return imageView;
+	            if(download){
+	            	mImageFetcher.loadImage(mGridStrings[position], imageView);
+
+	            }else{
+	            	mImageFetcher.loadImage(null, null);
+	            }
+            	return imageView;
 	        }
 
 	        /**

@@ -87,6 +87,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 		if (savedInstanceState == null) {
 			mapFragment.setRetainInstance(true);
 		} else {
+			Log.d(TAG, "SavedInstance Map got");
 			map = mapFragment.getMap();
 			mapMarkers = savedInstanceState.getParcelable("Markers Data");
 		}
@@ -100,15 +101,16 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 	@Override
 	protected void onResume() {
 		super.onResume();
+		Log.i(TAG, "Resume has been called");
 		// set default map display
 		SharedPreferences mapDisplay = PreferenceManager
 				.getDefaultSharedPreferences(this);
 
 		mapDisplayOpt = Integer.parseInt(mapDisplay.getString(
 				"map_display_preference", "0"));
-		//setMapIfNeeded();
+		setMapIfNeeded();
 		setMapType(mapDisplayOpt);
-		//setMapSettings();
+		setMapSettings();
 		boolean isConnected = checkNetworkConnection();
 		if (!isConnected) {
 			connectionAlert();
@@ -119,6 +121,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.i(TAG, "Pause has been called");
 		unregisterBroadcastReceiver();
 
 	}
@@ -170,8 +173,9 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 		double lat, lng;
 		String title, markerRes, mapMarkerId, pastUrl, presentUrl;
 		LatLng markerCoords;
-		
+		Log.d(TAG, "SetMapIfNeeded called");
 		if (map == null) {
+			Log.d(TAG, "Null map called");
 			map = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
 			mapMarkers = new MapParcelableHashMap();
