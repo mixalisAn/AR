@@ -175,6 +175,7 @@ public class GridFragment extends SherlockFragment {
 	    @Override
 	    public void onDestroy() {
 	        super.onDestroy();
+	        mImageFetcher.clearCache();
 	        mImageFetcher.closeCache();
 	    }
 

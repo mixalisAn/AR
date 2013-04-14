@@ -447,7 +447,9 @@ public abstract class ImageWorker {
     }
 
     protected void clearCacheInternal() {
+    	Log.i(TAG, "Clear cache called");
         if (mImageCache != null) {
+        	Log.i(TAG, "Clear cache not null");
             mImageCache.clearCache();
         }
     }

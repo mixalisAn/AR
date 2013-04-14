@@ -375,7 +375,9 @@ public class ImageCache {
      * this includes disk access so this should not be executed on the main/UI thread.
      */
     public void clearCache() {
+    	Log.i(TAG, "Clear cache called");
         if (mMemoryCache != null) {
+        	Log.i(TAG, "Clear cache called");
             mMemoryCache.evictAll();
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "Memory cache cleared");
@@ -387,6 +389,7 @@ public class ImageCache {
             if (mDiskLruCache != null && !mDiskLruCache.isClosed()) {
                 try {
                     mDiskLruCache.delete();
+                    Log.i(TAG, "Disk cache cleared");
                     if (BuildConfig.DEBUG) {
                         Log.d(TAG, "Disk cache cleared");
                     }

@@ -10,8 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -21,7 +19,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -68,6 +65,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	private long markerId;
 	private String markerResName;
 	private String[] markerCompareUrls;
+	private boolean download;
 	
 	private String gridFragmentTag;
 	private String compareFragmentTag;
@@ -107,7 +105,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		markerId = intent.getLongExtra("Id", 0);
 		markerResName = intent.getStringExtra("Res Name");
 		markerCompareUrls = intent.getStringArrayExtra("Compare Urls");
-
+		download = intent.getBooleanExtra("download", true);
+		
 		if (isAudioResourceExist()) {
 			MusicResources.setMusicResources(markerResName);
 			intentService = new Intent(this, MusicService.class);
@@ -139,18 +138,18 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 		
 		Bundle b = new Bundle();
-		b.putBoolean("download", checkNetworkConnectionAndType());
+		b.putBoolean("download", download);
 	
 		
 		Tab tab1 = actionBar.newTab().setText("ABOUT");
 
 		Tab tab2 = actionBar.newTab().setText("PHOTO");
 
-		Tab tab3 = actionBar.newTab().setText("COMPARE");
+		//Tab tab3 = actionBar.newTab().setText("COMPARE");
 
 		tabsAdapter.addTab(tab1, PoiAboutFragment.class, null);
 		tabsAdapter.addTab(tab2, GridFragment.class, b);
-		tabsAdapter.addTab(tab3, CompareNowAndThen.class, b);
+		//tabsAdapter.addTab(tab3, CompareNowAndThen.class, b);
 
 		backwardView.setOnClickListener(this);
 		stopView.setOnClickListener(this);
@@ -200,9 +199,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			} else if (isFinishing()) {
 				Log.i(TAG, "isFinishing executed");
 				if(getGridFragmentTag() != null)
-					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
+					//((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if(getCompareFragmentTag() != null)
-					((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
+					//0((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
 				if (mBound) {
 					unbindService(mConnection);
 					mBound = false;
@@ -223,7 +222,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			}
 		}else{
 			if (isFinishing()) {
-				Log.i(TAG, "isFinishing executed");
+				Log.i(TAG, "isFinishing 2 executed ");
 				if(getGridFragmentTag() != null)
 					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if(getCompareFragmentTag() != null)
@@ -487,20 +486,4 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	}
 	
 
-	private boolean checkNetworkConnectionAndType() {
-		final ConnectivityManager connManager =
-                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-
-		if (networkInfo == null || !networkInfo.isConnectedOrConnecting()) {
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "checkConnection - no connection found");
-            return false;
-        }else if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
-        	Toast.makeText(this, "Mobile internet connection", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "checkConnection - mobile connection found");
-            return false;
-        }
-		return true;
-	}
 }
