@@ -7,6 +7,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -35,6 +37,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 import cut.ac.cy.my_tour_guide.R;
+import cut.ac.cy.my_tour_guide.dialogs.CollisionDialog;
+import cut.ac.cy.my_tour_guide.dialogs.DownloadDialog;
 import cut.ac.cy.my_tour_guide.gallery.GridFragment;
 import cut.ac.cy.my_tour_guide.helpers.MusicResources;
 import cut.ac.cy.my_tour_guide.poi.MusicService.LocalBinder;
@@ -47,6 +51,9 @@ import cut.ac.cy.my_tour_guide.poi.MusicService.LocalBinder;
 public class PoiActivity extends SherlockFragmentActivity implements
 		OnClickListener {
 	private static final String TAG = "Poi Activity";
+	private static final int NO_INTERNET = 0;
+	private static final int MOBILE_INTERNET = 1;
+	private static final int INTERNET = 2;
 	private ViewPager viewPager;
 	private TabsAdapter tabsAdapter;
 	private View transparentView;
@@ -139,7 +146,24 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 		
 		Bundle b = new Bundle();
-		b.putBoolean("download", checkNetworkConnectionAndType());
+		switch(networkConnectionAndType()){
+		case NO_INTERNET:
+			b.putBoolean("download", false);
+			break;
+		case MOBILE_INTERNET:
+			b.putBoolean("download", false);
+			FragmentManager fm2 = getSupportFragmentManager();
+			DownloadDialog dialogDownload = new DownloadDialog();
+			dialogDownload.show(fm2, "Dialog Download");
+			break;
+		case INTERNET:
+			b.putBoolean("download", true);
+			break;
+			default :
+				b.putBoolean("download", true);
+			break;	
+		}
+		
 	
 		
 		Tab tab1 = actionBar.newTab().setText("ABOUT");
@@ -487,7 +511,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	}
 	
 
-	private boolean checkNetworkConnectionAndType() {
+	private int networkConnectionAndType() {
 		final ConnectivityManager connManager =
                 (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
@@ -495,12 +519,26 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		if (networkInfo == null || !networkInfo.isConnectedOrConnecting()) {
             Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
             Log.e(TAG, "checkConnection - no connection found");
-            return false;
+            return 0;
         }else if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
-        	Toast.makeText(this, "Mobile internet connection", Toast.LENGTH_LONG).show();
-            Log.e(TAG, "checkConnection - mobile connection found");
-            return false;
+            return 1;
+        }else{
+        	return 2;
         }
-		return true;
+	}
+	
+	public void networkDialogSelection(int selection){
+		switch(selection){
+		case DialogInterface.BUTTON_POSITIVE:
+			((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).refreshGrid(true);
+			CompareNowAndThen.setDownload(true);
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+			
+			break;
+			default:
+				
+				break;
+		}
 	}
 }

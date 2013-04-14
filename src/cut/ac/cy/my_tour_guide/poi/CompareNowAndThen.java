@@ -31,20 +31,22 @@ public class CompareNowAndThen extends SherlockFragment implements
 	private ParallelImageFetcher mImageFetcher;
 	//private String markerResName;
 	private boolean textVisibility = true;
-	private boolean download;
+	private boolean initDownload;
+	private static boolean download = false; 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate has been called");
 		Bundle bundle = getArguments();
-        download = bundle.getBoolean("download");
+        initDownload = bundle.getBoolean("download");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i(TAG, "onCreateView has been called");
+		
 		//markerResName = ((PoiActivity) getActivity()).getMarkerResName();
 		final View view = inflater.inflate(R.layout.compare_now_and_then,
 				container, false);
@@ -82,7 +84,9 @@ public class CompareNowAndThen extends SherlockFragment implements
 		int pastRes = getResources().getIdentifier(markerResName + "_past",
 				"drawable", "cut.ac.cy.my_tour_guide");
 		pastImageView.setImageResource(pastRes);*/
-		if(download){
+		Log.i(TAG, "Init Download value: " + String.valueOf(initDownload));
+		Log.i(TAG, "Download value: " + String.valueOf(download));
+		if(download || initDownload){
 			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[0], pastImageView);
 			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[1], presentImageView);
 		}else{
@@ -143,6 +147,11 @@ public class CompareNowAndThen extends SherlockFragment implements
 			}
 		}
 	}
+	
+	 public static void setDownload(boolean value){
+	    	download = value;
+	    }
+	    
 	
 	public void clearCachesWhenExit(){
 		if(mImageFetcher != null){

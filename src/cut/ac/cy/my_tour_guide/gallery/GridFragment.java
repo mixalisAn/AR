@@ -270,6 +270,11 @@ public class GridFragment extends SherlockFragment {
 	    }
 	    
 
+	    public void refreshGrid(boolean download){
+	    	this.download = download;
+	    	mAdapter.notifyDataSetChanged();
+	    }
+	    
 		public void PauseImageFetcher(){
 			Log.i(TAG, "Pause image fetcher called");
 			if(mImageFetcher != null){
