@@ -1268,6 +1268,7 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int rialto_theater=0x7f050000;
+        public static final int rialto_theater_old=0x7f050001;
     }
     public static final class string {
         public static final int about=0x7f0b0033;

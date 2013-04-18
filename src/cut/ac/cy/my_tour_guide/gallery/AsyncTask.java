@@ -224,12 +224,17 @@ public abstract class AsyncTask<Params, Progress, Result> {
      * An {@link Executor} that executes tasks one at a time in serial
      * order.  This serialization is global to a particular process.
      */
-    public static final Executor SERIAL_EXECUTOR = Utils.hasHoneycomb() ? new SerialExecutor() :
+    //public static final Executor SERIAL_EXECUTOR = Utils.hasHoneycomb() ? new SerialExecutor() :
+    //        Executors.newSingleThreadExecutor(sThreadFactory);
+    public static final Executor SERIAL_EXECUTOR = 
             Executors.newSingleThreadExecutor(sThreadFactory);
-
+    
+    //public static final Executor DUAL_THREAD_EXECUTOR =
+    //        Executors.newFixedThreadPool(2, sThreadFactory);
+    
     public static final Executor DUAL_THREAD_EXECUTOR =
-            Executors.newFixedThreadPool(2, sThreadFactory);
-
+            SERIAL_EXECUTOR;
+    
     private static final int MESSAGE_POST_RESULT = 0x1;
     private static final int MESSAGE_POST_PROGRESS = 0x2;
 

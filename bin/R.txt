@@ -477,6 +477,7 @@ int layout sherlock_spinner_item 0x7f030026
 int menu maps 0x7f0e0000
 int menu poi 0x7f0e0001
 int raw rialto_theater 0x7f050000
+int raw rialto_theater_old 0x7f050001
 int string about 0x7f0b0033
 int string abs__action_bar_home_description 0x7f0b0000
 int string abs__action_bar_up_description 0x7f0b0001
