@@ -83,6 +83,7 @@ public class CaptureImage {
 					Log.e(TAG, "IO Exception", e);
 				} finally {
 					// restart frozen camera preview after picture taken
+					Toast.makeText(context, "Picture sucesfully taken!", Toast.LENGTH_LONG).show();
 					mCamera.startPreview();
 				}
 			} catch (ExternalStorageException e1) {

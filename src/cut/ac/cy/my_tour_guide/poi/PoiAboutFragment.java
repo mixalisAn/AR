@@ -48,7 +48,8 @@ public class PoiAboutFragment extends SherlockFragment implements
 	private int defaultTextHeight = 0;
 	private int textHeight = 0;
 	private String buttonText = "Show more";
-
+	private static final int VISIBLE_TEXT_LENGTH = 280;
+	
 	// for 3tabs problem see below
 	private int[] defaultScrollPosition = new int[2];
 	private boolean onCreateExecuted;
@@ -222,6 +223,8 @@ public class PoiAboutFragment extends SherlockFragment implements
 		this.markerLink = cursor.getString(3);
 		this.markerAddress = cursor.getString(4);
 		this.markerDesc = cursor.getString(5);
+		if(markerDesc.length() > VISIBLE_TEXT_LENGTH)
+			readMoreButton.setVisibility(View.VISIBLE);
 		this.markerResName = cursor.getString(6);
 
 		setGuiExtraInfo();
@@ -232,21 +235,29 @@ public class PoiAboutFragment extends SherlockFragment implements
 				markerResName, "drawable", "cut.ac.cy.my_tour_guide"));
 		markerTitleView.setText(markerName);
 		markerAddressView.setText(markerAddress);
-		markerLinkView1.setText(markerLink);
+		if(markerLink == null)
+			markerLinkView1.setText("No link available");
+		else
+			markerLinkView1.setText(markerLink);
 		markerLinkView2.setText(markerAddress);
 		markerLinkView3.setText(markerName);
 		markerInfoView.setText(markerDesc);
+		
 	}
 
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.wikipediaLink:
-			((PoiActivity) getActivity()).pauseAudioForFragment();
-			Intent webIntent = new Intent();
-			webIntent.setClass(getActivity(), PoiBrowser.class);
-			webIntent.putExtra("Link", markerLink);
-			startActivity(webIntent);
+			if(markerLink == null){
+				Toast.makeText(getActivity(), "No link available for this Poi", Toast.LENGTH_LONG).show();
+			}else{
+				((PoiActivity) getActivity()).pauseAudioForFragment();
+				Intent webIntent = new Intent();
+				webIntent.setClass(getActivity(), PoiBrowser.class);
+				webIntent.putExtra("Link", markerLink);
+				startActivity(webIntent);
+			}
 			break;
 		case R.id.navigationLink:
 			if (isGoogleMapsInstalled()) {

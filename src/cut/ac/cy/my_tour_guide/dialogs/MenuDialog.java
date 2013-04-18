@@ -17,7 +17,7 @@ import cut.ac.cy.my_tour_guide.helpers.MarkersCategories;
 public class MenuDialog extends SherlockDialogFragment{
 	private static final int REQUEST_CODE = 1;
 	protected static String[] menuItemsValues = { "Pois Categories",
-		"Hide Radar", "Show zoombar", "Gps Settings", "About", "Exit" };
+		"Hide Radar", "Show zoombar", "Gps Settings", "About" };
 	
 	public MenuDialog(){
 	}
@@ -56,9 +56,6 @@ public class MenuDialog extends SherlockDialogFragment{
 					case 4:
 						Intent intent2 = new Intent(getActivity(), About.class);
 						startActivity(intent2);
-						break;
-					case 5:
-						getActivity().finish();
 						break;
 				}
 				

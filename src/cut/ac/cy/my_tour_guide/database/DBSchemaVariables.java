@@ -6,7 +6,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 28;
+	static final int DATABASE_VERSION = 29;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";
@@ -97,7 +97,7 @@ public class DBSchemaVariables {
 				"and incorporated the remains of the Castle into a new Ottoman Fort, which was strengthened considerably with walls measuring 2 meters thick. The underground chamber and the first floor were transformed into prison cells and the Castle remained in use as a prison until 1950. From 1950 considerable maintenance work in the Castle were implemented the Limassol Castle was " +
 				"used as a district archaeological museum. On 28th March 1987 after another renovation and maintenance work the Limassol Castle became the Mediaeval Museum of Cyprus. Now it contains exhibits dated from 4th to 19th century such as gold, silver and bronze objects, including the famous “David” plates from 7th century Lambousa, collection of ancient coins, scissors, keys, " +
 				"buckles and jewellery dating from the 13th century, mediaeval pottery from Italy, works of Islamic art, exhibition of weapons, Frankish and Venetian tombstones and many other rarities."
-				, "platia_irown", 2, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
+				, "platia_irown", 5, "https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg", "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg"));
 		
 
 		initialPois.add(new PoiData("Estia", 34.67902, 33.046151 , 0 , "http://www.estianet.gr/" , "pavlou mela 53" , 

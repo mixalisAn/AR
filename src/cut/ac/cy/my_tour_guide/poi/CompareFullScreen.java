@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -27,6 +28,9 @@ public class CompareFullScreen extends SherlockFragmentActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.compare_fullscreen);
 		
 		 // Fetch screen height and width, to use as our max size when loading images as this
