@@ -3,7 +3,6 @@ package cut.ac.cy.my_tour_guide.ui;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.widget.Toast;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.camera.CameraModel;
 import cut.ac.cy.my_tour_guide.common.Calculator;

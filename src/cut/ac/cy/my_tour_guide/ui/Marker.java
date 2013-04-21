@@ -2,7 +2,6 @@ package cut.ac.cy.my_tour_guide.ui;
 
 import java.text.DecimalFormat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -82,7 +81,6 @@ public class Marker implements Comparable<Marker> {
     //Marker's icon
     private Bitmap bitmap = null;
     
-    private static Activity activity;
     // Used to show exact GPS position
     private static boolean debugGpsPosition = false;
     private PaintablePoint positionPoint = null;
@@ -677,7 +675,7 @@ public class Marker implements Comparable<Marker> {
             double d = distance / 1000.0;
             textStr = name + " (" + DECIMAL_FORMAT.format(d) + "km)";
         }
-        float maxHeight = Math.round(canvas.getHeight() / 10f) + 1;
+        //float maxHeight = Math.round(canvas.getHeight() / 10f) + 1;
 
         if (textBox == null) textBox = new PaintableBoxedText(textStr, pixelsConverter.pixelsToSp(TEXT_SIZE), pixelsConverter.pixelsToDips(250));
         else textBox.set(textStr, pixelsConverter.pixelsToSp(TEXT_SIZE), pixelsConverter.pixelsToDips(250));
@@ -720,8 +718,8 @@ public class Marker implements Comparable<Marker> {
 
         return name.equals(((Marker) marker).getName());
     }
-    
+    /*
     public static void setActivity(Activity act){
     	activity = act;
-    }
+    }*/
 }

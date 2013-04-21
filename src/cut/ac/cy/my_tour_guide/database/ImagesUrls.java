@@ -3,7 +3,7 @@ package cut.ac.cy.my_tour_guide.database;
 //gia 5 pois
 
 public class ImagesUrls {
-	static String[][] fullScreenUrls = {
+	static final String[][] fullScreenUrls = {
 			{
 				"https://lh6.googleusercontent.com/-55osAWw3x0Q/URquUtcFr5I/AAAAAAAAAbs/rWlj1RUKrYI/s1024/A%252520Photographer.jpg",
 	            "https://lh4.googleusercontent.com/--dq8niRp7W4/URquVgmXvgI/AAAAAAAAAbs/-gnuLQfNnBA/s1024/A%252520Song%252520of%252520Ice%252520and%252520Fire.jpg",

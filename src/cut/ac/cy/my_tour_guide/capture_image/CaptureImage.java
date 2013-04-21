@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -19,8 +18,8 @@ import android.widget.Toast;
 
 public class CaptureImage {
 	private static final String TAG = "CaptureImageActivity";
-	private String album = "MyTourGuide";
-	private int initialPhotoNum = 1000;
+	private static final String album = "MyTourGuide";
+	private static final int initialPhotoNum = 1000;
 	private String photoName = "DSC_";
 	private int photoNum;
 	Context context;

@@ -3,7 +3,6 @@ package cut.ac.cy.my_tour_guide.activity;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
@@ -13,12 +12,10 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -26,7 +23,6 @@ import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.common.LowPassFilter;
 import cut.ac.cy.my_tour_guide.common.Matrix;
 import cut.ac.cy.my_tour_guide.data.ARData;
-import cut.ac.cy.my_tour_guide.dialogs.GpsSettingsDialog;
 
 /**
  * This class extends Activity and processes sensor data and location data.

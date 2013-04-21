@@ -1,5 +1,6 @@
 package cut.ac.cy.my_tour_guide.poi;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import cut.ac.cy.my_tour_guide.R;
 
+@SuppressLint("SetJavaScriptEnabled")
 public class PoiBrowser extends Activity{
 
 	private WebView webView = null;

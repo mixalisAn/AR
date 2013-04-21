@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,17 +61,8 @@ public class GridFragment extends SherlockFragment {
 	        mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
 	       
 	        mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
-	    }
-
-	    @Override
-	    public View onCreateView(
-	            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    	Log.i(TAG, "On Create view has been called");
-	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
-	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
-	        //edw pername ton elegxo toy fragment stin poiActivity
-			//to getTag einai methodos poy xrisimopoieitai apo to fragment
-			((PoiActivity)getActivity()).setGridFragmentTag(getTag());
+	        
+	        ((PoiActivity)getActivity()).setGridFragmentTag(getTag());
 			
 	        markerId = ((PoiActivity) getActivity()).getMarkerId();
 			DBHandler db = new DBHandler(getActivity());
@@ -97,6 +87,17 @@ public class GridFragment extends SherlockFragment {
 				Log.e(TAG, "error while in database");
 				e.printStackTrace();
 			}
+	    }
+
+	    @Override
+	    public View onCreateView(
+	            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	    	Log.i(TAG, "On Create view has been called");
+	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
+	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
+	        //edw pername ton elegxo toy fragment stin poiActivity
+			//to getTag einai methodos poy xrisimopoieitai apo to fragment
+			
 	        mGridView.setAdapter(mAdapter);
 	        mGridView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View v,
@@ -184,7 +185,6 @@ public class GridFragment extends SherlockFragment {
 	        private final Context mContext;
 	        private int mItemHeight = 0;
 	        private int mNumColumns = 0;
-	        private int mActionBarHeight = 0;
 	        private GridView.LayoutParams mImageViewLayoutParams;
 
 	        public ImageAdapter(Context context) {

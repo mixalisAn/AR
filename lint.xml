@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
     <issue id="DefaultLocale">
+        <ignore path="src\cut\ac\cy\my_tour_guide\data\LocalDataSource.java" />
         <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesAdapter.java" />
         <ignore path="src\cut\ac\cy\my_tour_guide\helpers\CategoriesRowDetails.java" />
     </issue>

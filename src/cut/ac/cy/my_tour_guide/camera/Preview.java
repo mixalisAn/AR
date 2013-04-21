@@ -32,7 +32,8 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
     private List<Size> mSupportedPreviewSizes;
     private SurfaceView mSurfaceView;
     
-    public Preview(Context context, AttributeSet attributeSet) {
+    @SuppressWarnings("deprecation")
+	public Preview(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         mSurfaceView = new SurfaceView(context, attributeSet);
         addView(mSurfaceView);

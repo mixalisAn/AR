@@ -3,6 +3,11 @@ package cut.ac.cy.my_tour_guide.activity;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,7 +57,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class AugmentedReality extends SensorsActivity implements
-		OnTouchListener, OnClickListener, CollisionDetector , ConfirmationListener{
+		OnTouchListener, OnClickListener, CollisionDetector , ConfirmationListener {
 	private static final String TAG = "AugmentedReality";
 	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
@@ -73,12 +78,12 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static TableRow menuButton = null;
 	protected static Button collisionButton = null;
 	
-	protected static String[] menuItemsValues = { "Pois Categories",
+	protected static final String[] menuItemsValues = { "Pois Categories",
 			"Hide Radar", "Show zoombar", "Gps Settings", "Exit" };
 	// protected static VerticalTextView endLabel = null;
 	protected static RelativeLayout zoomLayout = null;
 	protected static AugmentedView augmentedView = null;
-	private static LocalDataSource localData;
+	private static Callable<List<Marker>> localData;
 	public static final float MAX_ZOOM = 20; // in KM
 	// ti kanoun auta?
 	public static final float ONE_PERCENT = MAX_ZOOM / 100f;
@@ -93,7 +98,8 @@ public class AugmentedReality extends SensorsActivity implements
 
 	//na dw an mporw na to kanw kapws allios
 	private static List<Marker> selectedCollisionMarkers = new ArrayList<Marker>();
-	
+	private static final ExecutorService executor = Executors.newFixedThreadPool(1);
+	private static Future<List<Marker>> future;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -108,7 +114,7 @@ public class AugmentedReality extends SensorsActivity implements
 		
 		setContentView(R.layout.home_screen);
 		
-		Marker.setActivity(this);
+		//Marker.setActivity(this);
 		camPreview = (Preview) findViewById(R.id.cameraPreview);
 		captureButton = (TableRow) findViewById(R.id.buttonCamera);
 		gMapsButton = (TableRow) findViewById(R.id.buttonMaps);
@@ -148,8 +154,16 @@ public class AugmentedReality extends SensorsActivity implements
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		localData = new LocalDataSource(this.getResources(),
 				getApplicationContext());
-
-		ARData.initilizeMarkers(localData.getMarkers()); // edw se perptwsi pou einai
+		future = executor.submit(localData);
+		try {
+			ARData.initilizeMarkers(future.get());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} // edw se perptwsi pou einai
 													// oloi miden epistrefei
 													// tous markers oi opoioi
 													// den einai
@@ -188,6 +202,7 @@ public class AugmentedReality extends SensorsActivity implements
 			
 			camera = null;
 		}
+		
 		//wakeLock.release();
 	}
 
@@ -197,12 +212,33 @@ public class AugmentedReality extends SensorsActivity implements
 			//if (data.hasExtra("selectedCategories")) {
 				/*long[] categoriesId = data.getExtras().getLongArray(
 						"selectedCategories");*/
-				ARData.initilizeMarkers(localData.getMarkers());
+				//ARData.initilizeMarkers(localData.getMarkers());
+			future = executor.submit(localData);
+			try {
+				ARData.initilizeMarkers(future.get());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 				Toast.makeText(this, "Update Markers", Toast.LENGTH_LONG)
 						.show();
 			//}
 		} else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_CODE) {
-			ARData.initilizeMarkers(localData.getMarkers());
+			future = executor.submit(localData);
+			try {
+				ARData.initilizeMarkers(future.get());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//ARData.initilizeMarkers(localData.getMarkers());
 			//addCategorizedMarkers(localData.getMarkers()); // otan einai ola ta categories apenergopoimena tote epistrefei
 																	// markers pou den einai null alla size = 0. tote stin addcategorizedmarkers
 																	// diagrafei olous tous markers apo tin lista
@@ -377,7 +413,17 @@ public class AugmentedReality extends SensorsActivity implements
 			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
 			 */
 			if(collisionMarkers.isEmpty()){
-				ARData.initilizeMarkers(localData.getMarkers());
+				future = executor.submit(localData);
+				try {
+					ARData.initilizeMarkers(future.get());
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//ARData.initilizeMarkers(localData.getMarkers());
 				collisionButton.setVisibility(View.GONE);
 			}else{
 				setSelectedCollisionMarkers(getCollisionMarkers());

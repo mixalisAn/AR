@@ -40,7 +40,6 @@ import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 /**
  * 
  * @author Michail Anastasiou
- * na katharisw ligo tin classi kai na koitaksw ligo ta onomata sta strings genika
  *
  */
 public class MapActivity extends SherlockFragmentActivity implements OnInfoWindowClickListener{
@@ -106,9 +105,9 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 
 		mapDisplayOpt = Integer.parseInt(mapDisplay.getString(
 				"map_display_preference", "0"));
-		//setMapIfNeeded();
+		setMapIfNeeded();
 		setMapType(mapDisplayOpt);
-		//setMapSettings();
+		setMapSettings();
 		boolean isConnected = checkNetworkConnection();
 		if (!isConnected) {
 			connectionAlert();

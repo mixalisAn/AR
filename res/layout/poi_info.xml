@@ -133,7 +133,6 @@
             android:id="@+id/navigationLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="startNavigation"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingTop="5dp" >
@@ -180,7 +179,6 @@
             android:id="@+id/shareLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="shareInfo"
             android:paddingBottom="5dp"
             android:paddingLeft="5dp"
             android:paddingTop="5dp" >

@@ -3,6 +3,7 @@ package cut.ac.cy.my_tour_guide.data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -22,7 +23,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
-public class LocalDataSource extends DataSource {
+public class LocalDataSource implements  Callable<List<Marker>>{
 	private List<Marker> cachedMarkers = new ArrayList<Marker>();
 	private DBHandler db;
 	private Context context;
@@ -42,7 +43,20 @@ public class LocalDataSource extends DataSource {
 		this.res = res; 
 	}
 
-	public List<Marker> getMarkers() {
+	private Bitmap getBitmap(String name) {
+		if(name == null){
+			return BitmapFactory.decodeResource(res, R.drawable.general);
+		}else{
+			name = name.toLowerCase();
+			name = name.replace(" ", "_");
+			int resResult = context.getResources().getIdentifier(name, "drawable",
+					"cut.ac.cy.my_tour_guide");
+			return BitmapFactory.decodeResource(res, resResult);
+		}
+	}
+
+	@Override
+	public List<Marker> call() throws Exception {
 		try {
 			db.open();
 			Cursor cursor = db.getMarkers();
@@ -72,50 +86,8 @@ public class LocalDataSource extends DataSource {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return cachedMarkers;
-	}
-
 	
-
-	private Bitmap getBitmap(String name) {
-		if(name == null){
-			return BitmapFactory.decodeResource(res, R.drawable.general);
-		}else{
-			name = name.toLowerCase();
-			name = name.replace(" ", "_");
-			int resResult = context.getResources().getIdentifier(name, "drawable",
-					"cut.ac.cy.my_tour_guide");
-			return BitmapFactory.decodeResource(res, resResult);
-		}
-			
-		
-	}
-	/*
-	public List<Marker> getCategorizedMarkers(long[] categoriesId) {
-		List<Marker> cachedMarkers = new ArrayList<Marker>();
-		try {
-			db.open();
-			Cursor cursor = db.getSpecificCategoriesMarkers(categoriesId);
-			if (cursor != null) {
-				if (cursor.moveToFirst()) {
-					do {
-						cachedMarkers.add(new Marker(cursor.getLong(0), cursor
-								.getString(1), cursor.getDouble(2), cursor
-								.getDouble(3), cursor.getDouble(4), cursor
-								.getString(5), cursor.getLong(6), Color.GREEN,
-								getBitmap(cursor.getString(7))));
-					} while (cursor.moveToNext());
-				}
-			}
-			db.close();
-			cursor.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		return cachedMarkers;
 	}
-	*/
+
 }

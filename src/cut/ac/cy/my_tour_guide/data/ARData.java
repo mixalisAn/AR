@@ -199,37 +199,7 @@ public abstract class ARData {
 		}
 	}
 
-	/**
-	 * Add a List of Markers to our Collection.
-	 * 
-	 * @param markers
-	 *            List of Markers to add.
-	 */
-/*	public static void addMarkers(Collection<Marker> markers) {
-		if (markers == null)
-			throw new NullPointerException();
-
-		if (markers.size() <= 0)
-			return;
-
-		Log.d(TAG,
-				"New markers, updating markers. new markers="
-						+ markers.toString());
-		synchronized (markerListLock) {
-			for (Marker marker : markers) {
-				if (!markerList.containsKey(marker.getName())) {
-					marker.calcRelativePosition(ARData.getCurrentLocation());
-					markerList.put(marker.getName(), marker);
-				}
-			}
-
-			if (dirty.compareAndSet(false, true)) {
-				Log.v(TAG, "Setting DIRTY flag!");
-				cache.clear();
-			}
-		}
-	}
-	*/
+	
 	public static void initilizeMarkers(Collection<Marker> markers){
 		if (markers == null)
 			throw new NullPointerException();
@@ -255,32 +225,7 @@ public abstract class ARData {
 		}
 	}
 	
-	/**
-	 * Add delete existed markers and update with categorized markers
-	 * if categorized markers are null then it just clears the marker list
-	 */
-	/*
-	public static void addCategorizedMarkers(Collection<Marker> markers) {
-		if (markers == null)
-			throw new NullPointerException();
 
-		Log.d(TAG, "Delete existing markers and add categorized");
-		synchronized (markerListLock) {
-			markerList.clear();
-			if (markers.size() > 0) {
-				for (Marker marker : markers) {
-					marker.calcRelativePosition(ARData.getCurrentLocation());
-					markerList.put(marker.getName(), marker);
-				}
-
-				if (dirty.compareAndSet(false, true)) {
-					Log.v(TAG, "Setting DIRTY flag!");
-					cache.clear();
-				}
-			}
-		}
-	}
-	*/
 	/**
 	 * Get the Markers collection.
 	 * 
