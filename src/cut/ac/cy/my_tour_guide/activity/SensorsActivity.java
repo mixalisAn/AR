@@ -87,7 +87,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onStart() {
 		super.onStart();
-
 		float neg90rads = (float) Math.toRadians(-90);
 
 		// Counter-clockwise rotation at -90 degrees around the x-axis
@@ -470,7 +469,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	public void updateLocation(Location location) {
 		if (checkBestLocationUpdate(location)) {
 			currentBestLocation = location;
-			TextView time = (TextView) findViewById(R.id.testProviderTimeElapsed);
 			TextView provider = (TextView) findViewById(R.id.providerTextView);
 			TextView accuracy = (TextView) findViewById(R.id.providerAccuracyTextView);
 			/*
@@ -479,7 +477,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			 * gpsAltitude.setText("Gps: " +
 			 * String.valueOf(location.getAltitude()));*/
 			 
-			time.setText("Time :" + location.getTime() / 1000);
 			provider.setText(location.getProvider());
 			accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
 

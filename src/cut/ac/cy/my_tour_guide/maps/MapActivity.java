@@ -64,7 +64,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Utils.enableStrictMode();
+	
 		
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);

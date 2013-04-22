@@ -47,7 +47,7 @@ public class GridFragment extends SherlockFragment {
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-
+	        Utils.enableStrictMode();
 	        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
 	        mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
@@ -62,6 +62,18 @@ public class GridFragment extends SherlockFragment {
 	       
 	        mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
 	        
+	        
+	    }
+
+	    @Override
+	    public View onCreateView(
+	            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	    	Log.i(TAG, "On Create view has been called");
+	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
+	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
+	        //edw pername ton elegxo toy fragment stin poiActivity
+			//to getTag einai methodos poy xrisimopoieitai apo to fragment
+			
 	        ((PoiActivity)getActivity()).setGridFragmentTag(getTag());
 			
 	        markerId = ((PoiActivity) getActivity()).getMarkerId();
@@ -87,17 +99,7 @@ public class GridFragment extends SherlockFragment {
 				Log.e(TAG, "error while in database");
 				e.printStackTrace();
 			}
-	    }
-
-	    @Override
-	    public View onCreateView(
-	            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    	Log.i(TAG, "On Create view has been called");
-	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
-	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
-	        //edw pername ton elegxo toy fragment stin poiActivity
-			//to getTag einai methodos poy xrisimopoieitai apo to fragment
-			
+	        
 	        mGridView.setAdapter(mAdapter);
 	        mGridView.setOnItemClickListener(new OnItemClickListener() {
 				public void onItemClick(AdapterView<?> parent, View v,

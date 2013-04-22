@@ -373,19 +373,22 @@ public class AugmentedReality extends SensorsActivity implements
 			// getapplicationcontext() gia metepeita xrisi apo to scanfile
 			CaptureImage image = new CaptureImage(getApplicationContext());
 			photoNumInc = appPrefs.getInt("photoIncrement", 1);
-			
+			try{
 				image.takePicture(camera, photoNumInc);
-			
-			// save photo number to preffile gia na diatirithei to noumero
-			// meta apo kill
-			SharedPreferences appPrefsEdit = getSharedPreferences(PREFS_NAME,
-					MODE_PRIVATE);
-			SharedPreferences.Editor editor = appPrefsEdit.edit();
-			System.out.println("Photo increment" + image.getPhotoNum());
-			editor.putInt("photoIncrement", image.getPhotoNum());
+				// save photo number to preffile gia na diatirithei to noumero
+				// meta apo kill
+				SharedPreferences appPrefsEdit = getSharedPreferences(PREFS_NAME,
+						MODE_PRIVATE);
+				SharedPreferences.Editor editor = appPrefsEdit.edit();
+				System.out.println("Photo increment" + image.getPhotoNum());
+				editor.putInt("photoIncrement", image.getPhotoNum());
 
-			// Commit the edits!
-			editor.commit();
+				// Commit the edits!
+				editor.commit();
+			}catch(Exception e){
+				Toast.makeText(this, "Picture not sucesfully taken! Please try again!", Toast.LENGTH_LONG).show();
+				camera.startPreview();
+			}
 			}
 			break;
 		case R.id.buttonMaps:

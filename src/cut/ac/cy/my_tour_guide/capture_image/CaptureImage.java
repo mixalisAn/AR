@@ -31,12 +31,13 @@ public class CaptureImage {
 		this.context = context;
 	}
 
-	public void takePicture(Camera camera, int photoNum) {
+	public void takePicture(Camera camera, int photoNum) throws Exception{
 		mCamera = camera;
 		this.photoNum = photoNum;
 		this.photoNum++;
 		photoNum = initialPhotoNum + photoNum;
 		photoName += Integer.toString(photoNum);
+		
 		mCamera.takePicture(shutterCallback, rawCallback, jpegCallback);
 	}
 

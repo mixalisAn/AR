@@ -12,6 +12,7 @@ import android.view.View;
 
 
 import cut.ac.cy.my_tour_guide.data.ARData;
+import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 import cut.ac.cy.my_tour_guide.ui.Radar;
@@ -33,6 +34,7 @@ public class AugmentedView extends View {
     
     public AugmentedView(Context context) {
         super(context);
+        Utils.enableStrictMode();
         radar = new Radar(context);
     }
     
