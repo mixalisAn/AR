@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,6 +16,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
+import android.view.Surface;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -117,9 +120,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 				sensorMag = sensors.get(0);
 
 			sensorMgr.registerListener(this, sensorGrav,
-					SensorManager.SENSOR_DELAY_NORMAL);
+					SensorManager.SENSOR_DELAY_GAME);
 			sensorMgr.registerListener(this, sensorMag,
-					SensorManager.SENSOR_DELAY_NORMAL);
+					SensorManager.SENSOR_DELAY_GAME);
 
 			locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
@@ -270,8 +273,22 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		// SensorManager.AXIS_MINUS_X, rotation);
 		// SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_X,
 		// SensorManager.AXIS_MINUS_Z, rotation);
-		SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
-				SensorManager.AXIS_MINUS_Z, rotation);
+		int defaultRotation = getRotation();
+		switch(defaultRotation){
+		case Configuration.ORIENTATION_LANDSCAPE:
+			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_X,
+					SensorManager.AXIS_MINUS_Z, rotation);
+			break;
+		case Configuration.ORIENTATION_PORTRAIT:
+			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
+					SensorManager.AXIS_MINUS_Z, rotation);
+			break;
+			default:
+				SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
+						SensorManager.AXIS_MINUS_Z, rotation);
+				break;
+		}
+		
 
 		/*
 		 * Using Matrix operations instead. This was way too inaccurate, //Get
@@ -559,5 +576,20 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	}
 	
 	
-	
+	private int getRotation() {
+		WindowManager lWindowManager =  (WindowManager) getSystemService(WINDOW_SERVICE);
+
+		Configuration cfg = getResources().getConfiguration();
+		int lRotation = lWindowManager.getDefaultDisplay().getRotation();
+
+		if( (((lRotation == Surface.ROTATION_0) ||(lRotation == Surface.ROTATION_180)) &&   
+		(cfg.orientation == Configuration.ORIENTATION_LANDSCAPE)) ||
+		(((lRotation == Surface.ROTATION_90) ||(lRotation == Surface.ROTATION_270)) &&    
+		(cfg.orientation == Configuration.ORIENTATION_PORTRAIT))){
+
+		  return Configuration.ORIENTATION_LANDSCAPE;
+		  }     
+
+		  return Configuration.ORIENTATION_PORTRAIT;
+		}
 }

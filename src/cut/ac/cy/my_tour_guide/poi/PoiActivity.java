@@ -192,10 +192,10 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				mBound = false;
 			} else if (isFinishing()) {
 				Log.i(TAG, "isFinishing executed");
-				if(getGridFragmentTag() != null)
-					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
+				/*if(getGridFragmentTag() != null)
+					//((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if(getCompareFragmentTag() != null)
-					((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
+					//((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();*/
 				if (mBound) {
 					unbindService(mConnection);
 					mBound = false;
@@ -214,7 +214,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 					mBound = false;
 				}
 			}
-		}else{
+		}/*else{
 			if (isFinishing()) {
 				Log.i(TAG, "isFinishing executed");
 				if(getGridFragmentTag() != null)
@@ -222,7 +222,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				if(getCompareFragmentTag() != null)
 					((CompareNowAndThen)getSupportFragmentManager().findFragmentByTag(getCompareFragmentTag())).clearCachesWhenExit();
 			}
-		}
+		}*/
 	}
 
 	// elegxei an kapoia alli activity exei anoiksei
