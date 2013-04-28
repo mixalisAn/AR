@@ -32,7 +32,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
-import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.MapMarker;
 import cut.ac.cy.my_tour_guide.helpers.MapParcelableHashMap;
 import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
