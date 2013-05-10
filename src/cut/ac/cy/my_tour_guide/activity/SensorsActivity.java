@@ -120,9 +120,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 				sensorMag = sensors.get(0);
 
 			sensorMgr.registerListener(this, sensorGrav,
-					SensorManager.SENSOR_DELAY_GAME);
+					SensorManager.SENSOR_DELAY_UI);
 			sensorMgr.registerListener(this, sensorMag,
-					SensorManager.SENSOR_DELAY_GAME);
+					SensorManager.SENSOR_DELAY_UI);
 
 			locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 			locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
