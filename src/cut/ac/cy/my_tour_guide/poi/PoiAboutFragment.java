@@ -299,9 +299,18 @@ public class PoiAboutFragment extends SherlockFragment implements
 	}
 
 	private String getShareBody() {
-		String shareBody = "Link: " + markerLink + "\n";
-		shareBody += "\nAddress: " + markerAddress + "\n";
-		shareBody += "\nDescription:" + markerDesc + "\n";
+		
+		String shareBody = null;
+		if(markerLink != null){
+			shareBody = "Link: " + markerLink + "\n";
+			shareBody += "\nAddress: " + markerAddress + "\n";
+			shareBody += "\nDescription:" + markerDesc + "\n";
+		}else{
+			shareBody = "Address: " + markerAddress + "\n";
+			shareBody += "\nDescription:" + markerDesc + "\n";
+		}
+		
+		
 		return shareBody;
 	}
 

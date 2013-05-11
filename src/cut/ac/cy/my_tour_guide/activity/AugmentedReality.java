@@ -386,7 +386,7 @@ public class AugmentedReality extends SensorsActivity implements
 				// Commit the edits!
 				editor.commit();
 			}catch(Exception e){
-				Toast.makeText(this, "Picture not sucesfully taken! Please try again!", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "Picture not successfully taken! Please try again!", Toast.LENGTH_LONG).show();
 				camera.startPreview();
 			}
 			}

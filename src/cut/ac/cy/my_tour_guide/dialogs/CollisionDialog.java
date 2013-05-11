@@ -1,6 +1,7 @@
 package cut.ac.cy.my_tour_guide.dialogs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -34,6 +35,9 @@ public class CollisionDialog extends SherlockDialogFragment implements DialogInt
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		collisionMarkers = ((AugmentedReality)getActivity()).getSelectedCollisionMarkers();
+		
+		Collections.sort(collisionMarkers);
+		
 		checkedItems = new boolean[collisionMarkers.size()];
 		markersNames = new String[collisionMarkers.size()];
 		
@@ -59,7 +63,7 @@ public class CollisionDialog extends SherlockDialogFragment implements DialogInt
 						removedMarkers.add(collisionMarkers.get(i));
 					}
 				}
-				System.out.println("Epilecthike to position :  " + String.valueOf(removedMarkers.size())); 
+				//System.out.println("Epilecthike to position :  " + String.valueOf(removedMarkers.size())); 
 				listener.onOkClick(removedMarkers);
 				//((AugmentedReality)getActivity()).setRemovedCollisionMarkers(removedMarkers);
 				break;

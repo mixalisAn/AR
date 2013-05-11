@@ -1099,8 +1099,8 @@ containing a value of this type.
         public static final int old_law_court=0x7f0200a5;
         public static final int old_limassol=0x7f0200a6;
         public static final int paraliakos=0x7f0200a7;
-        public static final int patiki=0x7f0200a8;
-        public static final int patixio=0x7f0200a9;
+        public static final int patixio=0x7f0200a8;
+        public static final int pattiki=0x7f0200a9;
         public static final int pause=0x7f0200aa;
         public static final int pier=0x7f0200ab;
         public static final int play=0x7f0200ac;

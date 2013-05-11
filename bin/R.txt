@@ -318,8 +318,8 @@ int drawable navigation 0x7f0200a4
 int drawable old_law_court 0x7f0200a5
 int drawable old_limassol 0x7f0200a6
 int drawable paraliakos 0x7f0200a7
-int drawable patiki 0x7f0200a8
-int drawable patixio 0x7f0200a9
+int drawable patixio 0x7f0200a8
+int drawable pattiki 0x7f0200a9
 int drawable pause 0x7f0200aa
 int drawable pier 0x7f0200ab
 int drawable play 0x7f0200ac
