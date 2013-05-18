@@ -61,6 +61,7 @@ public class CompareNowAndThen extends SherlockFragment implements
         
      // The ImageFetcher takes care of loading images into our ImageView children asynchronously
         mImageFetcher = new ParallelImageFetcher(getActivity(), longest);
+        
         mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
         mImageFetcher.setImageFadeIn(false);
         

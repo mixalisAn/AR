@@ -59,7 +59,7 @@ public class GridFragment extends SherlockFragment {
 
 	        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
 	        mImageFetcher = new ImageFetcher(getActivity(), mImageThumbSize);
-	       
+	        mImageFetcher.setLoadingImage(R.drawable.loading);
 	        mImageFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
 	        
 	        
