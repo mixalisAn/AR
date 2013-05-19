@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -276,8 +277,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		int defaultRotation = getRotation();
 		switch(defaultRotation){
 		case Configuration.ORIENTATION_LANDSCAPE:
-			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_X,
-					SensorManager.AXIS_MINUS_Z, rotation);
+			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Z,
+					SensorManager.AXIS_Y, rotation);
+			
 			break;
 		case Configuration.ORIENTATION_PORTRAIT:
 			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
