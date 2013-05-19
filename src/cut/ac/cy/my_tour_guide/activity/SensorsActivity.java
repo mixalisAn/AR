@@ -275,20 +275,13 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		// SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_X,
 		// SensorManager.AXIS_MINUS_Z, rotation);
 		int defaultRotation = getRotation();
-		switch(defaultRotation){
-		case Configuration.ORIENTATION_LANDSCAPE:
+	
+		if(defaultRotation == Configuration.ORIENTATION_LANDSCAPE){
 			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Z,
 					SensorManager.AXIS_Y, rotation);
-			
-			break;
-		case Configuration.ORIENTATION_PORTRAIT:
+		}else{
 			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
 					SensorManager.AXIS_MINUS_Z, rotation);
-			break;
-			default:
-				SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
-						SensorManager.AXIS_MINUS_Z, rotation);
-				break;
 		}
 		
 
@@ -389,88 +382,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		}
 		
 	}
-	/*
-	/**
-	 * {@inheritDoc}
-	 
-	@Override
-	public void onProviderDisabled(String provider) {
-		TextView providerDisabled = (TextView) findViewById(R.id.testProviderDisabled);
-		providerDisabled.setText(provider + " Disabled");
-		Toast.makeText(getApplicationContext(), provider + " Disabled", Toast.LENGTH_LONG).show();
-	}
 
-	/**
-	 * {@inheritDoc}
-	 
-	@Override
-	public void onProviderEnabled(String provider) {
-		TextView providerEnabled = (TextView) findViewById(R.id.testProviderEnabled);
-		providerEnabled.setText(provider + " Enabled");
-		Toast.makeText(getApplicationContext(), provider + " Enabled", Toast.LENGTH_LONG).show();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		TextView providerStatus = (TextView) findViewById(R.id.testProviderEnabled);
-		switch(status){
-		case LocationProvider.AVAILABLE:
-			providerStatus.setText(provider + " Status Changed : Available");
-			Toast.makeText(getApplicationContext(), provider + " Status Changed : Available", Toast.LENGTH_LONG).show();
-			break;
-		case LocationProvider.OUT_OF_SERVICE:
-			providerStatus.setText(provider + " Status Changed : Out Of Service");
-			Toast.makeText(getApplicationContext(), provider + " Status Changed Out Of Service: ", Toast.LENGTH_LONG).show();
-			break;
-		case LocationProvider.TEMPORARILY_UNAVAILABLE:
-			providerStatus.setText(provider + " Status Changed : Temporarily Unavailable");
-			Toast.makeText(getApplicationContext(), provider + " Status Changed : Temporarily Unavailable", Toast.LENGTH_LONG).show();
-			break;
-		}
-		
-	}
-
-	/**
-	 * {@inheritDoc}
-	 
-	@Override
-	public void onLocationChanged(Location location) {
-		if (checkBestLocationUpdate(location)) {
-			currentBestLocation = location;
-			TextView time = (TextView) findViewById(R.id.testProviderTimeElapsed);
-			TextView provider = (TextView) findViewById(R.id.providerTextView);
-			TextView accuracy = (TextView) findViewById(R.id.providerAccuracyTextView);
-			/*
-			 * TextView gpsAltitude =
-			 * (TextView)findViewById(R.id.mylocationTestTextView);
-			 * gpsAltitude.setText("Gps: " +
-			 * String.valueOf(location.getAltitude()));
-			 
-			time.setText("Time :" + location.getTime() / 1000);
-			provider.setText(location.getProvider());
-			accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
-
-			ARData.setCurrentLocation(location);
-			gmf = new GeomagneticField((float) ARData.getCurrentLocation()
-					.getLatitude(), (float) ARData.getCurrentLocation()
-					.getLongitude(), (float) ARData.getCurrentLocation()
-					.getAltitude(), System.currentTimeMillis());
-
-			float dec = (float) Math.toRadians(-gmf.getDeclination());
-
-			synchronized (mageticNorthCompensation) {
-				mageticNorthCompensation.toIdentity();
-
-				mageticNorthCompensation.set(FloatMath.cos(dec), 0f,
-						FloatMath.sin(dec), 0f, 1f, 0f, -FloatMath.sin(dec),
-						0f, FloatMath.cos(dec));
-			}
-		}
-	}
-	*/
 	/**
 	 * {@inheritDoc}
 	 */
