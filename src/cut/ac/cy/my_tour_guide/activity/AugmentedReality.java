@@ -59,6 +59,8 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
 public class AugmentedReality extends SensorsActivity implements
 		OnTouchListener, OnClickListener, CollisionDetector , ConfirmationListener {
 	private static final String TAG = "AugmentedReality";
+	private static final String SHOW_COLLISION = "Show Collision";
+	private static final String SHOW_ALL_MARKERS = "Show All Markers";
 	private static final int REQUEST_CODE = 1;
 	public static final String PREFS_NAME = "VariableStorage";
 	private int photoNumInc;
@@ -85,14 +87,15 @@ public class AugmentedReality extends SensorsActivity implements
 	protected static AugmentedView augmentedView = null;
 	private static Callable<List<Marker>> localData;
 	public static final float MAX_ZOOM = 20; // in KM
-	// ti kanoun auta?
+
 	public static final float ONE_PERCENT = MAX_ZOOM / 100f;
 	public static final float TEN_PERCENT = 10f * ONE_PERCENT;
 	public static final float TWENTY_PERCENT = 2f * TEN_PERCENT;
 	public static final float EIGHTY_PERCENTY = 4f * TWENTY_PERCENT;
 
 	public static boolean portrait = false;
-	public static boolean useCollisionDetection = true;
+	public static boolean useCollisionDetection = false;  //is being used by augmentedView to detect collisionMarkers
+	private static boolean isCollisionButton = true;			//is being used for collisionButton. Enable showCollision/Show All Markers
 	public static boolean showRadar = true;
 	public static boolean showZoomBar = false;
 
@@ -120,6 +123,7 @@ public class AugmentedReality extends SensorsActivity implements
 		gMapsButton = (TableRow) findViewById(R.id.buttonMaps);
 		menuButton = (TableRow) findViewById(R.id.buttonMenu);
 		collisionButton = (Button) findViewById(R.id.buttonCollision);
+		collisionButton.setText(SHOW_COLLISION);
 		// set up listeners
 		// buttonListeners();
 		captureButton.setOnClickListener(this);
@@ -158,10 +162,8 @@ public class AugmentedReality extends SensorsActivity implements
 		try {
 			ARData.initilizeMarkers(future.get());
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // edw se perptwsi pou einai
 													// oloi miden epistrefei
@@ -254,13 +256,15 @@ public class AugmentedReality extends SensorsActivity implements
 	public void collisionMarkers(List<Marker> markers) {
 		
 		setCollisionMarkers(markers);
-		if(markers.isEmpty()){
+		/*if(markers.isEmpty()){
 			collisionButton.setText("Show All Markers");
 		}else{
 			collisionButton.setVisibility(View.VISIBLE);
 			collisionButton.setText("Show Collision");
-		}
+		}*/
+		showCollisionMarkers();
 		
+		useCollisionDetection = false;
 	}
 	
 	private synchronized void setCollisionMarkers(List<Marker> markers){
@@ -415,15 +419,13 @@ public class AugmentedReality extends SensorsActivity implements
 			 * Auto to kanw gia na min iparxei periptwsi na allaksei to megethos apo 
 			 * to collisionMarkers epeidi to augmented View tha ta allazei sinexws
 			 */
-			if(collisionMarkers.isEmpty()){
+			/*if(collisionMarkers.isEmpty()){
 				future = executor.submit(localData);
 				try {
 					ARData.initilizeMarkers(future.get());
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//ARData.initilizeMarkers(localData.getMarkers());
@@ -436,11 +438,47 @@ public class AugmentedReality extends SensorsActivity implements
 				dialogCollision.setConfirmationDialogFragmentListener(this);
 				dialogCollision.show(fm2, "Dialog Collision");
 				
+			}*/
+			if(isCollisionButton){
+				useCollisionDetection = true;
+				augmentedView.invalidate();
+				//the result will be passed through collisionDetector
+			}else{
+				showAllMarkers();
+				collisionButton.setText(SHOW_COLLISION);
+				isCollisionButton = true;
 			}
-			
 			break;
 		}
 
+	}
+	
+	private void showAllMarkers(){
+		future = executor.submit(localData);
+		try {
+			ARData.initilizeMarkers(future.get());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void showCollisionMarkers(){
+		if(collisionMarkers.isEmpty()){
+			Toast.makeText(this, "No Collision Markers detected.", Toast.LENGTH_LONG).show();
+		}else{
+			
+			setSelectedCollisionMarkers(getCollisionMarkers());
+			
+			FragmentManager fm2 = getSupportFragmentManager();
+			CollisionDialog dialogCollision = new CollisionDialog();
+			dialogCollision.setConfirmationDialogFragmentListener(this);
+			dialogCollision.show(fm2, "Dialog Collision");
+			
+			collisionButton.setText(SHOW_ALL_MARKERS);
+			isCollisionButton = false;
+		}
 	}
 	
 	//xrisimopoiountai gia tin epikoinwnia me ta dialogs fragments

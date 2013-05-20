@@ -34,8 +34,7 @@
 			        android:minWidth="0dp"
 			        android:padding="8dp"
 			        android:textColor="#FFFFFF"
-			        android:textSize="14sp"
-			        android:visibility="gone" />
+			        android:textSize="14sp" />
 
 			</RelativeLayout>
             <RelativeLayout
