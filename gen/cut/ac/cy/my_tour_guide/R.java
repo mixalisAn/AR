@@ -1130,19 +1130,20 @@ containing a value of this type.
         public static final int play=0x7f0200c6;
         public static final int public_baths=0x7f0200c7;
         public static final int public_library=0x7f0200c8;
-        public static final int roads=0x7f0200c9;
-        public static final int saripolou=0x7f0200ca;
-        public static final int separetor=0x7f0200cb;
-        public static final int share=0x7f0200cc;
-        public static final int stop=0x7f0200cd;
-        public static final int style_button_read=0x7f0200ce;
-        public static final int test=0x7f0200cf;
-        public static final int textlines=0x7f0200d0;
-        public static final int theaters=0x7f0200d1;
-        public static final int trigono_sxiza=0x7f0200d2;
-        public static final int tzami_tzezit=0x7f0200d3;
-        public static final int vasileiou_makedonos=0x7f0200d4;
-        public static final int wikipedia=0x7f0200d5;
+        public static final int rialto_theater=0x7f0200c9;
+        public static final int roads=0x7f0200ca;
+        public static final int saripolou=0x7f0200cb;
+        public static final int separetor=0x7f0200cc;
+        public static final int share=0x7f0200cd;
+        public static final int stop=0x7f0200ce;
+        public static final int style_button_read=0x7f0200cf;
+        public static final int test=0x7f0200d0;
+        public static final int textlines=0x7f0200d1;
+        public static final int theaters=0x7f0200d2;
+        public static final int trigono_sxiza=0x7f0200d3;
+        public static final int tzami_tzezit=0x7f0200d4;
+        public static final int vasileiou_makedonos=0x7f0200d5;
+        public static final int wikipedia=0x7f0200d6;
     }
     public static final class id {
         public static final int FrameLayout=0x7f07006d;
@@ -1315,7 +1316,19 @@ containing a value of this type.
         public static final int poi=0x7f0e0001;
     }
     public static final class raw {
-        public static final int castle=0x7f050000;
+        public static final int agia_napa=0x7f050000;
+        public static final int agora=0x7f050001;
+        public static final int aktaion=0x7f050002;
+        public static final int carnival=0x7f050003;
+        public static final int castle=0x7f050004;
+        public static final int enaerios=0x7f050005;
+        public static final int genethliou_mitela=0x7f050006;
+        public static final int historical_archive=0x7f050007;
+        public static final int katholiki=0x7f050008;
+        public static final int old_law_court=0x7f050009;
+        public static final int public_baths=0x7f05000a;
+        public static final int rialto_theater=0x7f05000b;
+        public static final int vasileiou_makedonos=0x7f05000c;
     }
     public static final class string {
         public static final int about=0x7f080035;
