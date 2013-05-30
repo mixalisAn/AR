@@ -11,6 +11,12 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.maps.MapActivity;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class DownloadDialog extends SherlockDialogFragment implements OnClickListener{
 
 	@Override

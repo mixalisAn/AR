@@ -11,9 +11,8 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-
-import cut.ac.cy.my_tour_guide.BuildConfig;
 import cut.ac.cy.my_tour_guide.R;
+
 //fragment activity einai gia na ipostirizoun kai oi palioteres ekdoseis android fragments
 public class FullScreenActivity extends SherlockFragmentActivity{
 	private static final String IMAGE_CACHE_DIR = "images";
@@ -28,9 +27,6 @@ public class FullScreenActivity extends SherlockFragmentActivity{
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (BuildConfig.DEBUG) {
-            Utils.enableStrictMode();
-        }
         super.onCreate(savedInstanceState);
         
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

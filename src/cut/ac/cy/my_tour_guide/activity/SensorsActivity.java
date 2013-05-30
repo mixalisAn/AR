@@ -15,11 +15,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.FloatMath;
-import android.util.Log;
 import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
@@ -32,32 +30,23 @@ import cut.ac.cy.my_tour_guide.data.ARData;
  * This class extends Activity and processes sensor data and location data.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * 
+ * @author Michalis Anastasiou
  */
 public class SensorsActivity extends SherlockFragmentActivity implements
 		SensorEventListener {
-
-	private static final String TAG = "SensorsActivity";
+	
 	private static final AtomicBoolean computing = new AtomicBoolean(false);
-
-	private static final int TWO_MINUTES = 1000 * 60 * 2; // einai gia to best
-															// locationUpdate
+	//einai gia to best locationUpdate
+	private static final int TWO_MINUTES = 1000 * 60 * 2; 
 	private static final int MIN_TIME = 30 * 1000;
 	private static final int MIN_DISTANCE = 3;
 	private static Location currentBestLocation;
 
-	private static final float temp[] = new float[9]; // Temporary rotation
-														// matrix in Android
-														// format
-	private static final float rotation[] = new float[9]; // Final rotation
-															// matrix in Android
-															// format
-	private static final float grav[] = new float[3]; // Gravity (a.k.a
-														// accelerometer data)
-	private static final float mag[] = new float[3]; // Magnetic
-	/*
-	 * Using Matrix operations instead. This was way too inaccurate, private
-	 * static final float apr[] = new float[3]; //Azimuth, pitch, roll
-	 */
+	private static final float temp[] = new float[9]; 
+	private static final float rotation[] = new float[9]; 
+	private static final float grav[] = new float[3];
+	private static final float mag[] = new float[3]; 
 
 	private static final Matrix worldCoord = new Matrix();
 	private static final Matrix magneticCompensatedCoord = new Matrix();
@@ -268,12 +257,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		// // Find real world position relative to phone location ////
 		// Get rotation matrix given the gravity and geomagnetic matrices
 		SensorManager.getRotationMatrix(temp, null, grav, mag);
-
-		// Translate the rotation matrices from Y and -Z (landscape)
-		// SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
-		// SensorManager.AXIS_MINUS_X, rotation);
-		// SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_X,
-		// SensorManager.AXIS_MINUS_Z, rotation);
+		//xrisimopoieitai gia na prosarmwsei ta apotelesmata apo tous aisthitires
+		//analoga me to an einai portrait or landscape
 		int defaultRotation = getRotation();
 	
 		if(defaultRotation == Configuration.ORIENTATION_LANDSCAPE){
@@ -283,16 +268,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			SensorManager.remapCoordinateSystem(temp, SensorManager.AXIS_Y,
 					SensorManager.AXIS_MINUS_Z, rotation);
 		}
-		
-
-		/*
-		 * Using Matrix operations instead. This was way too inaccurate, //Get
-		 * the azimuth, pitch, roll SensorManager.getOrientation(rotation,apr);
-		 * float floatAzimuth = (float)Math.toDegrees(apr[0]); if
-		 * (floatAzimuth<0) floatAzimuth+=360; ARData.setAzimuth(floatAzimuth);
-		 * ARData.setPitch((float)Math.toDegrees(apr[1]));
-		 * ARData.setRoll((float)Math.toDegrees(apr[2]));
-		 */
 
 		// Convert from float[9] to Matrix
 		worldCoord
@@ -393,7 +368,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 		if (sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD
 				&& accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE) {
-			Log.e(TAG, "Compass data unreliable");
 		}
 	}
 	
@@ -402,11 +376,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 			currentBestLocation = location;
 			TextView provider = (TextView) findViewById(R.id.providerTextView);
 			TextView accuracy = (TextView) findViewById(R.id.providerAccuracyTextView);
-			/*
-			 * TextView gpsAltitude =
-			 * (TextView)findViewById(R.id.mylocationTestTextView);
-			 * gpsAltitude.setText("Gps: " +
-			 * String.valueOf(location.getAltitude()));*/
 			 
 			provider.setText(location.getProvider());
 			accuracy.setText("+/- " + String.valueOf(location.getAccuracy()));
@@ -429,7 +398,9 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 		}
 		
 	}
-
+	/**
+	 * http://developer.android.com/guide/topics/location/strategies.html
+	 */
 	private boolean checkBestLocationUpdate(Location location) {
 		if (currentBestLocation == null)
 			return true;
@@ -455,10 +426,6 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	    boolean isMoreAccurate = accuracyDelta < 0;
 	    boolean isSignificantlyLessAccurate = accuracyDelta > 90;
 
-	    // Check if the old and new location are from the same provider
-	    //boolean isFromSameProvider = isSameProvider(location.getProvider(),
-	      //      currentBestLocation.getProvider());
-
 	    // Determine location quality using a combination of timeliness and accuracy
 	    if (isMoreAccurate) {
 	        return true;
@@ -470,22 +437,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	    return false;
 
 	}
-	/*
-	/** Checks whether two providers are the same 
-	private boolean isSameProvider(String provider1, String provider2) {
-	    if (provider1 == null) {
-	      return provider2 == null;
-	    }
-	    return provider1.equals(provider2);
-	}
-	*/
+	
 	private boolean isGpsEnabled(){
-		/*final boolean gpsEnabled =
-				 locationMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
-		if(!gpsEnabled){
-			GpsSettingsDialog dialog = new GpsSettingsDialog();
-			dialog.show(getSupportFragmentManager(), "GpsSettings Dialog");
-		}*/
 		return locationMgr.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 	

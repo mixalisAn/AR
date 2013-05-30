@@ -14,6 +14,12 @@ import cut.ac.cy.my_tour_guide.activity.About;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.helpers.MarkersCategories;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class MenuDialog extends SherlockDialogFragment{
 	private static final int REQUEST_CODE = 1;
 	protected static String[] menuItemsValues = { "Pois Categories",

@@ -14,6 +14,12 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import cut.ac.cy.my_tour_guide.activity.AugmentedReality;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class CollisionDialog extends SherlockDialogFragment implements DialogInterface.OnClickListener, DialogInterface.OnMultiChoiceClickListener {
 	private List<Marker> collisionMarkers = new ArrayList<Marker>();
 	private String[] markersNames;

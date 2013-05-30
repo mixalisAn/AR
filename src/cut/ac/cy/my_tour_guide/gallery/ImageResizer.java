@@ -22,7 +22,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.util.Log;
 
 import java.io.FileDescriptor;
 
@@ -34,7 +33,6 @@ import cut.ac.cy.my_tour_guide.BuildConfig;
  * memory.
  */
 public class ImageResizer extends ImageWorker {
-    private static final String TAG = "ImageResizer";
     protected int mImageWidth;
     protected int mImageHeight;
 
@@ -90,7 +88,7 @@ public class ImageResizer extends ImageWorker {
      */
     private Bitmap processBitmap(int resId) {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "processBitmap - " + resId);
+            //Log.d(TAG, "processBitmap - " + resId);
         }
         return decodeSampledBitmapFromResource(mResources, resId, mImageWidth,
                 mImageHeight, getImageCache());
@@ -208,7 +206,7 @@ public class ImageResizer extends ImageWorker {
 
             if (inBitmap != null) {
                 if (BuildConfig.DEBUG) {
-                    Log.d(TAG, "Found bitmap to use for inBitmap");
+                    //Log.d(TAG, "Found bitmap to use for inBitmap");
                 }
                 options.inBitmap = inBitmap;
             }

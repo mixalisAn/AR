@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,9 +28,14 @@ import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
 import cut.ac.cy.my_tour_guide.dialogs.ErrorDialog;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
+
 public class PoiAboutFragment extends SherlockFragment implements
 		OnClickListener {
-	private static final String TAG = "Poi About Fragment";
 	// Views and values
 	private ScrollView scrollView = null;
 	private ImageView markerMainImageView = null;
@@ -79,12 +83,11 @@ public class PoiAboutFragment extends SherlockFragment implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		onCreateExecuted = true; // gia to problima me to trito tab pou
 									// dimiourgei mono to oncreateview sto proto
 									// tab
-		Log.i(TAG, "onCreate has been called");
+		
 		currentLocationLat = ARData.getCurrentLocation().getLatitude();
 		currentLocationLng = ARData.getCurrentLocation().getLongitude();
 		/**
@@ -95,7 +98,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 		 * sosta
 		 */
 		if (savedInstanceState != null) {
-			Log.i(TAG, "Restore values in on create!");
 			buttonText = savedInstanceState.getString("Button Text");
 			textHeight = savedInstanceState.getInt("Text Height");
 			defaultScrollPosition = savedInstanceState
@@ -108,7 +110,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		Log.i(TAG, "On Create view is being called" + textHeight);
 		final View view = inflater.inflate(R.layout.poi_info, container, false);
 
 		scrollView = (ScrollView) view.findViewById(R.id.scrollView);
@@ -136,7 +137,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 		if (onCreateExecuted) {
 			defaultTextHeight = markerInfoView.getLayoutParams().height;
 			if (savedInstanceState != null) {
-				Log.i(TAG, "Restore values!");
 				buttonText = savedInstanceState.getString("Button Text");
 				textHeight = savedInstanceState.getInt("Text Height");
 				readMoreButton.setText(buttonText);
@@ -151,7 +151,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 						}
 					});
 			} else {
-				Log.i(TAG, "Initialize values!");
 				textHeight = defaultTextHeight;
 				readMoreButton.setText(buttonText);
 			}
@@ -183,7 +182,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		Log.i(TAG, "On Activity created is being called");
 		markerId = ((PoiActivity) getActivity()).getMarkerId();
 		db = new DBHandler(getActivity());
 		try {
@@ -197,7 +195,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 			db.close();
 			cursor.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -330,7 +327,6 @@ public class PoiAboutFragment extends SherlockFragment implements
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		Log.i(TAG, "Save Instance");
 		super.onSaveInstanceState(outState);
 
 		outState.putInt("Text Height", textHeight);

@@ -13,21 +13,22 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListActivity;
 
 import cut.ac.cy.my_tour_guide.database.DBHandler;
-
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
 public class MarkersCategories extends SherlockListActivity {
 	private DBHandler db;
 	private ArrayAdapter<CategoriesRowDetails> listAdapter;
-	//private long[] selectedCategories;
 	private int numOfSelectedCategories = 0;
 	List<CategoriesRowDetails> categories;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		db = new DBHandler(this);
-
-		// String[] categories = getCategories();
+		
 		categories = getCategories();
 		listAdapter = new CategoriesAdapter(this, categories);
 		setListAdapter(listAdapter);
@@ -42,21 +43,15 @@ public class MarkersCategories extends SherlockListActivity {
 						.get(i).isSelected());
 				if (categories.get(i).isSelected()) {
 					numOfSelectedCategories++;
-					/*selectedCategories[i] = categories.get(i).getCategoryId();
-					Log.i("MarkersCategories",
-							String.valueOf(selectedCategories[i]));*/
 				}
 			}
 			if (numOfSelectedCategories > 0) {
-				//Intent data = new Intent();
-				//data.putExtra("selectedCategories", selectedCategories);
 				setResult(RESULT_OK);
 			}else{
 				setResult(RESULT_CANCELED);
 			}
 			db.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		super.finish();
@@ -70,7 +65,6 @@ public class MarkersCategories extends SherlockListActivity {
 			Cursor cursor = db.getCategories();
 			if (cursor != null) {
 				if (cursor.moveToFirst()) {
-					//selectedCategories = new long[cursor.getCount()];
 					do {
 						if (cursor.getInt(2) == 1)
 							isSelected = true;
@@ -85,7 +79,6 @@ public class MarkersCategories extends SherlockListActivity {
 			db.close();
 			cursor.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return categories;

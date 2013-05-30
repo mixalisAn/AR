@@ -1,7 +1,11 @@
 package cut.ac.cy.my_tour_guide.helpers;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
 public class MapMarker implements Serializable{
 	/**
 	 * Default number gia tis seriazable classes

@@ -26,6 +26,8 @@ import cut.ac.cy.my_tour_guide.objects.PaintablePosition;
  * should be extended if you want to change the way a Marker is viewed.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * @author Michalis Anastasiou
+ * 
  */
 public class Marker implements Comparable<Marker> {
 
@@ -344,14 +346,7 @@ public class Marker implements Comparable<Marker> {
             isInView = true;
             
         }
-        /*
-         * Log.w("updateView", "name "+this.name); Log.w("updateView",
-         * "ul (x="+(ulX)+" y="+(ulY)+")"); Log.w("updateView",
-         * "lr (x="+(lrX)+" y="+(lrY)+")"); Log.w("updateView",
-         * "cam (w="+(cam.getWidth())+" h="+(cam.getHeight())+")"); if
-         * (!isInView) Log.w("updateView", "isInView "+isInView); else
-         * Log.e("updateView", "isInView "+isInView);
-         */
+        
     }
 
     /**
@@ -718,8 +713,5 @@ public class Marker implements Comparable<Marker> {
 
         return name.equals(((Marker) marker).getName());
     }
-    /*
-    public static void setActivity(Activity act){
-    	activity = act;
-    }*/
+    
 }

@@ -13,11 +13,15 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
+
 public class CaptureImage {
-	private static final String TAG = "CaptureImageActivity";
 	private static final String album = "MyTourGuide";
 	private static final int initialPhotoNum = 1000;
 	private String photoName = "DSC_";
@@ -43,13 +47,11 @@ public class CaptureImage {
 
 	ShutterCallback shutterCallback = new ShutterCallback() {
 		public void onShutter() {
-			// TODO Do something when the shutter closes.
 		}
 	};
 
 	PictureCallback rawCallback = new PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-			// TODO Do something with the image RAW data.
 		}
 	};
 
@@ -78,12 +80,12 @@ public class CaptureImage {
 					galleryAddPicture(file.getAbsolutePath());
 					
 				} catch (FileNotFoundException e) {
-					Log.e(TAG, "File Note Found", e);
+					//Log.e(TAG, "File Note Found", e);
 				} catch (IOException e) {
-					Log.e(TAG, "IO Exception", e);
+					//Log.e(TAG, "IO Exception", e);
 				} finally {
 					// restart frozen camera preview after picture taken
-					Toast.makeText(context, "Picture sucesfully taken!", Toast.LENGTH_LONG).show();
+					Toast.makeText(context, "Picture sucesfully taken", Toast.LENGTH_LONG).show();
 					mCamera.startPreview();
 				}
 			} catch (ExternalStorageException e1) {
@@ -120,7 +122,7 @@ public class CaptureImage {
 			Toast.makeText(context, "External Storage Hasn't Write Licence",
 					Toast.LENGTH_LONG).show();
 
-			throw new ExternalStorageException("Non writable external storage.");
+			throw new ExternalStorageException("Non writable external storage");
 		} else {
 			// Something else is wrong. It may be one of many other states, but
 			// all we need

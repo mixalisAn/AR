@@ -7,6 +7,12 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class ErrorDialog extends SherlockDialogFragment implements DialogInterface.OnClickListener{
 	
 	public ErrorDialog(){

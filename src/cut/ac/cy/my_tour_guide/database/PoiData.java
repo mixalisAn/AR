@@ -1,5 +1,11 @@
 package cut.ac.cy.my_tour_guide.database;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class PoiData {
 	private String name;
 	private double latitude;

@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.util.Log;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
 import cut.ac.cy.my_tour_guide.ui.Marker;
@@ -22,6 +21,7 @@ import cut.ac.cy.my_tour_guide.ui.Marker;
  * SQLite or through any other source.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * @author Michalis Anastasiou
  */
 public class LocalDataSource implements  Callable<List<Marker>>{
 	private List<Marker> cachedMarkers = new ArrayList<Marker>();
@@ -29,12 +29,7 @@ public class LocalDataSource implements  Callable<List<Marker>>{
 	private Context context;
 	private Resources res;
 	
-	//den prepei na xrisimopoieitai pleon
-	/*// dikia mou gia na xrisimopoiithei apo tin Maps
-	public LocalDataSource() {
 
-	}
-*/
 	public LocalDataSource(Resources res, Context cx) {
 		if (res == null)
 			throw new NullPointerException();
@@ -66,12 +61,12 @@ public class LocalDataSource implements  Callable<List<Marker>>{
 				//tha crasharei
 				if (cursor.moveToFirst()) {
 					do {
-						Log.i("LocalDataSource",
+						/*Log.i("LocalDataSource",
 								String.valueOf(cursor.getLong(0))
 										+ cursor.getString(1)
 										+ cursor.getString(5)
 										+ String.valueOf(cursor.getLong(6)));
-
+						*/
 						cachedMarkers.add(new Marker(context, cursor.getLong(0), cursor
 								.getString(1), cursor.getDouble(2), cursor
 								.getDouble(3), cursor.getDouble(4), cursor

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,14 @@ import cut.ac.cy.my_tour_guide.database.DBHandler;
 import cut.ac.cy.my_tour_guide.gallery.ImageCache.ImageCacheParams;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 
+/**
+ * from androidDevelopers BitmapFunProject
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class GridFragment extends SherlockFragment {
-	 private static final String TAG = "ImageGridFragment";
+	 
 	    private static final String IMAGE_CACHE_DIR = "images";
 
 	    private int mImageThumbSize;
@@ -48,8 +53,7 @@ public class GridFragment extends SherlockFragment {
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        Utils.enableStrictMode();
-	        
+ 
 	        Bundle bundle = getArguments();
 	        download = bundle.getBoolean("download");
 	        
@@ -73,7 +77,7 @@ public class GridFragment extends SherlockFragment {
 	    @Override
 	    public View onCreateView(
 	            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	    	Log.i(TAG, "On Create view has been called");
+	    	//Log.i(TAG, "On Create view has been called");
 	        final View v = inflater.inflate(R.layout.fragment_grid, container, false);
 	        final GridView mGridView = (GridView) v.findViewById(R.id.gridview);
 	        //edw pername ton elegxo toy fragment stin poiActivity
@@ -101,7 +105,7 @@ public class GridFragment extends SherlockFragment {
 				db.close();
 				cursor.close();
 			} catch (SQLException e) {
-				Log.e(TAG, "error while in database");
+				//Log.e(TAG, "error while in database");
 				e.printStackTrace();
 			}
 	        
@@ -150,7 +154,7 @@ public class GridFragment extends SherlockFragment {
 	                                mAdapter.setNumColumns(numColumns);
 	                                mAdapter.setItemHeight(columnWidth);
 	                                if (BuildConfig.DEBUG) {
-	                                    Log.d(TAG, "onCreateView - numColumns set to " + numColumns);
+	                                    //Log.d(TAG, "onCreateView - numColumns set to " + numColumns);
 	                                }
 	                            }
 	                        }
@@ -199,13 +203,6 @@ public class GridFragment extends SherlockFragment {
 	            mContext = context;
 	            mImageViewLayoutParams = new GridView.LayoutParams(
 	                    LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-	            // Calculate ActionBar height
-	           /* TypedValue tv = new TypedValue();
-	            if (context.getTheme().resolveAttribute(
-	                    android.R.attr.actionBarSize, tv, true)) {
-	                mActionBarHeight = TypedValue.complexToDimensionPixelSize(
-	                        tv.data, context.getResources().getDisplayMetrics());
-	            }*/
 	        }
 
 	        @Override
@@ -223,36 +220,9 @@ public class GridFragment extends SherlockFragment {
 	        public long getItemId(int position) {
 	            return position ;
 	        }
-/*
-	        @Override
-	        public int getViewTypeCount() {
-	            // Two types of views, the normal ImageView and the top row of empty views
-	            return ;
-	        }
 
-	        @Override
-	        public int getItemViewType(int position) {
-	            return (position < mNumColumns) ? 1 : 0;
-	        }
-
-	        @Override
-	        public boolean hasStableIds() {
-	            return true;
-	        }
-*/
 	        @Override
 	        public View getView(int position, View convertView, ViewGroup container) {
-	            // First check if this is the top row
-	            /*if (position < mNumColumns) {
-	                if (convertView == null) {
-	                    convertView = new View(mContext);
-	                }
-	                // Set empty view with height of ActionBar
-	                convertView.setLayoutParams(new AbsListView.LayoutParams(
-	                        ViewGroup.LayoutParams.MATCH_PARENT, mActionBarHeight));
-	                return convertView;
-	            }*/
-
 	            // Now handle the main ImageView thumbnails
 	            ImageView imageView;
 	            if (convertView == null) { // if it's not recycled, instantiate and initialize
@@ -307,14 +277,14 @@ public class GridFragment extends SherlockFragment {
 	    
 
 		public void PauseImageFetcher(){
-			Log.i(TAG, "Pause image fetcher called");
+			//Log.i(TAG, "Pause image fetcher called");
 			if(mImageFetcher != null){
 				mImageFetcher.setPauseWork(true);
 			}
 		}
 		
 		public void ResumeImageFetcher(){
-			Log.i(TAG, "Resume image fetcher called");
+			//Log.i(TAG, "Resume image fetcher called");
 			if(mImageFetcher != null){
 				mImageFetcher.setPauseWork(false);
 			}

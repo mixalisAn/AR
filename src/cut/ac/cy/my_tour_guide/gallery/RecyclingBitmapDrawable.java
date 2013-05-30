@@ -20,7 +20,6 @@ import cut.ac.cy.my_tour_guide.BuildConfig;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 
 
 /**
@@ -87,8 +86,8 @@ public class RecyclingBitmapDrawable extends BitmapDrawable {
         if (mCacheRefCount <= 0 && mDisplayRefCount <= 0 && mHasBeenDisplayed
                 && hasValidBitmap()) {
             if (BuildConfig.DEBUG) {
-                Log.d(LOG_TAG, "No longer being used or cached so recycling. "
-                        + toString());
+                //Log.d(LOG_TAG, "No longer being used or cached so recycling. "
+                 //       + toString());
             }
 
             getBitmap().recycle();

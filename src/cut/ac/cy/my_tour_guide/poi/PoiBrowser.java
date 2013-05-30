@@ -11,7 +11,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import cut.ac.cy.my_tour_guide.R;
-
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
 @SuppressLint("SetJavaScriptEnabled")
 public class PoiBrowser extends Activity{
 
@@ -19,7 +23,6 @@ public class PoiBrowser extends Activity{
 	private String link = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
 		setContentView(R.layout.poi_browser);
@@ -53,7 +56,6 @@ public class PoiBrowser extends Activity{
 
 		@Override
 		public boolean shouldOverrideUrlLoading(WebView view, String url) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 

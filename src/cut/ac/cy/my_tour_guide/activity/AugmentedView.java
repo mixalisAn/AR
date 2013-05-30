@@ -12,7 +12,6 @@ import android.view.View;
 
 
 import cut.ac.cy.my_tour_guide.data.ARData;
-import cut.ac.cy.my_tour_guide.gallery.Utils;
 import cut.ac.cy.my_tour_guide.helpers.CollisionDetector;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 import cut.ac.cy.my_tour_guide.ui.Radar;
@@ -22,6 +21,7 @@ import cut.ac.cy.my_tour_guide.ui.Radar;
  * circle, and markers on the View.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * @author Michalis Anastasiou
  */
 public class AugmentedView extends View {
 
@@ -34,7 +34,6 @@ public class AugmentedView extends View {
     
     public AugmentedView(Context context) {
         super(context);
-        Utils.enableStrictMode();
         radar = new Radar(context);
     }
     

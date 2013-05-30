@@ -14,16 +14,16 @@ import cut.ac.cy.my_tour_guide.common.Matrix;
 import cut.ac.cy.my_tour_guide.ui.Marker;
 
 import android.location.Location;
-import android.util.Log;
 
 /**
  * Abstract class which should be used to set global data.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * @author Michalis Anastasiou
  */
+
 public abstract class ARData {
 
-	private static final String TAG = "ARData";
 	private static final Map<String, Marker> markerList = new ConcurrentHashMap<String, Marker>();
 	private static final List<Marker> cache = new CopyOnWriteArrayList<Marker>();
 	private static final AtomicBoolean dirty = new AtomicBoolean(false);
@@ -60,7 +60,7 @@ public abstract class ARData {
 			throw new NullPointerException();
 
 		synchronized (ARData.zoomLevel) {
-			Log.i(TAG, "ZoomLevel = " + ARData.zoomLevel);
+			//Log.i(TAG, "ZoomLevel = " + ARData.zoomLevel);
 			ARData.zoomLevel = zoomLevel;
 		}
 	}
@@ -85,10 +85,10 @@ public abstract class ARData {
 	public static void setZoomProgress(int zoomProgress) {
 		synchronized (ARData.zoomProgressLock) {
 			if (ARData.zoomProgress != zoomProgress) {
-				Log.i(TAG, "ZoomProgress = " + String.valueOf(ARData.zoomProgress));
+				//Log.i(TAG, "ZoomProgress = " + String.valueOf(ARData.zoomProgress));
 				ARData.zoomProgress = zoomProgress;
 				if (dirty.compareAndSet(false, true)) {
-					Log.v(TAG, "Setting DIRTY flag!");
+					//Log.v(TAG, "Setting DIRTY flag!");
 					cache.clear();
 				}
 			}
@@ -114,7 +114,7 @@ public abstract class ARData {
 	 */
 	public static void setRadius(float radius) {
 		synchronized (ARData.radiusLock) {
-			Log.i(TAG, "Radius = " + String.valueOf(ARData.radius));
+			//Log.i(TAG, "Radius = " + String.valueOf(ARData.radius));
 			ARData.radius = radius;
 		}
 	}
@@ -142,7 +142,7 @@ public abstract class ARData {
 		if (currentLocation == null)
 			throw new NullPointerException();
 
-		Log.d(TAG, "current location. location=" + currentLocation.toString());
+		//Log.d(TAG, "current location. location=" + currentLocation.toString());
 		synchronized (currentLocation) {
 			ARData.currentLocation = currentLocation;
 		}
@@ -150,16 +150,14 @@ public abstract class ARData {
 	}
 
 	private static void onLocationChanged(Location location) {
-		Log.d(TAG,
-				"New location, updating markers. location="
-						+ location.toString());
+		//Log.d(TAG,"New location, updating markers. location=" + location.toString());
 		synchronized (markerListLock) {
 			for (Marker ma : markerList.values()) {
 				ma.calcRelativePosition(location);
 			}
 
 			if (dirty.compareAndSet(false, true)) {
-				Log.v(TAG, "Setting DIRTY flag!");
+				//Log.v(TAG, "Setting DIRTY flag!");
 				cache.clear();
 			}
 		}
@@ -207,7 +205,7 @@ public abstract class ARData {
 		if (markers.size() < 0)
 			return;
 		
-		Log.d(TAG, "Delete existing markers and add new");
+		//Log.d(TAG, "Delete existing markers and add new");
 		synchronized (markerListLock) {
 			cache.clear();
 			markerList.clear();
@@ -218,7 +216,7 @@ public abstract class ARData {
 				}
 
 				if (dirty.compareAndSet(false, true)) {
-					Log.v(TAG, "Setting DIRTY flag!");
+					//Log.v(TAG, "Setting DIRTY flag!");
 					cache.clear();
 				}
 			}
@@ -235,15 +233,14 @@ public abstract class ARData {
 		// If markers we added, zero out the altitude to recompute the collision
 		// detection
 		if (dirty.compareAndSet(true, false)) {
-			Log.v(TAG,
-					"DIRTY flag found, resetting all marker heights to zero.");
+			//Log.v(TAG,"DIRTY flag found, resetting all marker heights to zero.");
 			for (Marker ma : markerList.values()) {
 				ma.getLocation().get(locationArray);
 				locationArray[1] = ma.getInitialY();
 				ma.getLocation().set(locationArray);
 			}
 
-			Log.v(TAG, "Populating the cache.");
+			//Log.v(TAG, "Populating the cache.");
 			List<Marker> copy = new ArrayList<Marker>();
 			copy.addAll(markerList.values());
 			Collections.sort(copy, comparator);
@@ -263,8 +260,8 @@ public abstract class ARData {
 		if (markers == null)
 			throw new NullPointerException();
 
-		Log.d(TAG, "Remove selected collision markers");
-		Log.i(TAG, "To size apo tous markers pou erxontai eiani : " + String.valueOf(markers.size()));
+		//Log.d(TAG, "Remove selected collision markers");
+		//Log.i(TAG, "To size apo tous markers pou erxontai eiani : " + String.valueOf(markers.size()));
 		synchronized (markerListLock) {
 			if (markers.size() > 0) {
 				for (Marker marker : markers) {
@@ -272,7 +269,7 @@ public abstract class ARData {
 				}
 
 				if (dirty.compareAndSet(false, true)) {
-					Log.v(TAG, "Setting DIRTY flag!");
+					//Log.v(TAG, "Setting DIRTY flag!");
 					cache.clear();
 				}
 			}

@@ -10,6 +10,12 @@ import android.provider.Settings;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class GpsSettingsDialog extends SherlockDialogFragment implements OnClickListener{
 
 	public GpsSettingsDialog(){
@@ -35,8 +41,5 @@ public class GpsSettingsDialog extends SherlockDialogFragment implements OnClick
 			break;
 		}
 		dialog.dismiss();
-	}
-
-	
-	
+	}	
 }

@@ -14,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -39,11 +38,10 @@ import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
 import cut.ac.cy.my_tour_guide.poi.PoiActivity;
 /**
  * 
- * @author Michail Anastasiou
+ * @author Michalis Anastasiou
  *
  */
 public class MapActivity extends SherlockFragmentActivity implements OnInfoWindowClickListener{
-	private static final String TAG = "MapActivity";
 	private ConnectivityManager connManager = null;
 	private ConnectionStatusReceiver connectionReceiver = null;
 
@@ -179,7 +177,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 					.findFragmentById(R.id.map)).getMap();
 			mapMarkers = new MapParcelableHashMap();
 			if (map != null) {
-				Log.i(TAG, "Map initialization!");
+				//Log.i(TAG, "Map initialization!");
 				// my current location
 				if(ARData.getCurrentLocation() == ARData.hardFix){
 					lat = 34.677178;
@@ -235,7 +233,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 		uiSettings = map.getUiSettings();
 		SharedPreferences mapSettings = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		Log.i(TAG, "Shared Preferences " + mapSettings);
+		//Log.i(TAG, "Shared Preferences " + mapSettings);
 		uiSettings.setZoomControlsEnabled(mapSettings.getBoolean(
 				"zoom_buttons", true));
 		uiSettings.setCompassEnabled(mapSettings.getBoolean("compass", true));
@@ -366,12 +364,12 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 	public void registerBroadcastReceiver() {
 		this.registerReceiver(connectionReceiver, new IntentFilter(
 				ConnectivityManager.CONNECTIVITY_ACTION));
-		Log.i(TAG, "Register connection status Receiver");
+		//Log.i(TAG, "Register connection status Receiver");
 	}
 
 	public void unregisterBroadcastReceiver() {
 		this.unregisterReceiver(connectionReceiver);
-		Log.i(TAG, "Unregister connection status Receiver");
+		//Log.i(TAG, "Unregister connection status Receiver");
 	}
 
 	@Override

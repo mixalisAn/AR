@@ -7,11 +7,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
 
 public class DBHandler extends DBSchemaVariables{
 	static final String TAG = "DBHandler";			
-	
 	
 	final Context context;
 	
@@ -34,7 +38,7 @@ public class DBHandler extends DBSchemaVariables{
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			Log.i(TAG, "Creating database!");
+			//Log.i(TAG, "Creating database!");
 			
 			db.execSQL(CREATE_TABLE_CATEGORIES);
 			db.execSQL(CREATE_TABLE_POI);
@@ -71,8 +75,8 @@ public class DBHandler extends DBSchemaVariables{
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-					+ newVersion + ", which will destroy all data");
+			/*Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+					+ newVersion + ", which will destroy all data");*/
 			db.execSQL("DROP TABLE IF EXISTS " + POI_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + IMAGES_URLS_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);

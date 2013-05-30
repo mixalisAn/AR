@@ -1,8 +1,8 @@
 package cut.ac.cy.my_tour_guide.helpers;
 
-/**otan einai final i class den mporei na kanei inherit kapoia alli
+/**
  * 
- *
+ *@author Michalis Anastasiou
  */
 //Ayti i klasi einai gia na mporei na parei to service to resource apo tin activity
 //den mporei na to parei allios giati xreiazomaste mono bind

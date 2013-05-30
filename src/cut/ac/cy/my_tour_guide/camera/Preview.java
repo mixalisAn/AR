@@ -7,7 +7,6 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -18,8 +17,12 @@ import android.view.ViewGroup;
  * to the surface. We need to center the SurfaceView because not all devices have cameras that
  * support preview sizes at the same aspect ratio as the device's display.
  */
+
+/**
+ * http://developer.android.com/training/camera/cameradirect.html
+ * @author Michalis Anastasiou
+ */
 public class Preview extends ViewGroup implements SurfaceHolder.Callback {
-    private final String TAG = "Preview";
 
     public interface PreviewSizeChangedCallback {
         void previewSizeChanged();
@@ -57,7 +60,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
        try {
            camera.setPreviewDisplay(mHolder);
        } catch (IOException exception) {
-           Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+           //Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
        }
        if (mSupportedPreviewSizes != null) {
            mPreviewSize = getOptimalPreviewSize(mSupportedPreviewSizes, 
@@ -73,7 +76,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
        }
        catch (RuntimeException e)
        {
-           Log.e(TAG, "error setting parameters", e);
+           //Log.e(TAG, "error setting parameters", e);
        }
     }
 
@@ -130,7 +133,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
                 mCamera.setPreviewDisplay(holder);
             }
         } catch (IOException exception) {
-            Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
+            //Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
         }
     }
 
@@ -194,7 +197,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
             }
             catch (RuntimeException e)
             {
-                Log.e(TAG, "error setting parameters", e);
+                //Log.e(TAG, "error setting parameters", e);
             }
 
             mCamera.startPreview();

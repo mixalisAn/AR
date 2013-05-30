@@ -20,6 +20,7 @@ import cut.ac.cy.my_tour_guide.objects.PaintableText;
  * blips on the screen in their appropriate locations.
  * 
  * @author Justin Wetherell <phishman3579@gmail.com>
+ * @author Michalis Anastasiou
  */
 public class Radar {
 

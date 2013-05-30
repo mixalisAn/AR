@@ -48,9 +48,6 @@ public class CompareFullScreenFragment extends SherlockFragment{
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		/*int resResult = getResources().getIdentifier(resName, "drawable",
-				"cut.ac.cy.my_tour_guide");
-		imageView.setImageResource(resResult);*/
 		
 		 // Use the parent activity to load the image asynchronously into the ImageView (so a single
         // cache can be used over all pages in the ViewPager

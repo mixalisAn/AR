@@ -1,5 +1,11 @@
 package cut.ac.cy.my_tour_guide.database;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 //gia 36 pois
 
 public class ImagesUrls {

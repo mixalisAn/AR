@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -37,13 +36,21 @@ import cut.ac.cy.my_tour_guide.helpers.MusicResources;
 import cut.ac.cy.my_tour_guide.poi.MusicService.LocalBinder;
 
 /**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
+
+/**
  * fragmentactivity exei to lifecycle apo tin kanoniki activity apla exei kai
  * merikes alles methodous pou tin voithoun gia na epikoinwnei me to fragment
  * 
  */
+
+
 public class PoiActivity extends SherlockFragmentActivity implements
 		OnClickListener {
-	private static final String TAG = "Poi Activity";
 	private ViewPager viewPager;
 	private TabsAdapter tabsAdapter;
 	private View transparentView;
@@ -92,15 +99,11 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Log.i(TAG, "on Create has been called");
-		//Utils.enableStrictMode();
 		setContentView(R.layout.poi_info_main);
 		// setup action bar for tabs
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		// actionBar.setDisplayShowHomeEnabled(false);
-		// actionBar.setDisplayShowTitleEnabled(false);
-
+		
 		Intent intent = getIntent();
 		markerId = intent.getLongExtra("Id", 0);
 		markerResName = intent.getStringExtra("Res Name");
@@ -173,7 +176,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.i(TAG, "on Resume executed");
 		if (audioExists) {
 			// Bind to service
 			Intent intent = new Intent(this, MusicService.class);
@@ -184,19 +186,16 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
-		Log.i(TAG, "On Pause executed");
 		if (audioExists) {
 			// stop service
 			if (isTopActivityFromDiffPackage()) {
-				
-				Log.i(TAG, "is Not top Activity executed");
 				audioPosition = mService.getAudioPosition();
 				audioWasPlaying = mService.isAudioPlaying();
 				mService.stopAudio();
 				unbindService(mConnection);
 				mBound = false;
 			} else if (isFinishing()) {
-				Log.i(TAG, "isFinishing executed");
+				//Log.i(TAG, "isFinishing executed");
 				if(getGridFragmentTag() != null)
 					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if(getCompareFragmentTag() != null)
@@ -207,7 +206,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 				}
 				stopService(intentService);
 			} else {
-				Log.i(TAG, "O TRITOS ELEGXOS KALEITAI");
+				//Log.i(TAG, "O TRITOS ELEGXOS KALEITAI");
 				if (mBound) {
 					if (audioPausedFromFragment) {
 						audioPausedFromFragment = false;
@@ -221,7 +220,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			}
 		}else{
 			if (isFinishing()) {
-				Log.i(TAG, "isFinishing executed");
+				//Log.i(TAG, "isFinishing executed");
 				if(getGridFragmentTag() != null)
 					((GridFragment)getSupportFragmentManager().findFragmentByTag(getGridFragmentTag())).clearCachesWhenExit();
 				if(getCompareFragmentTag() != null)
@@ -236,7 +235,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		ActivityManager am = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
 		List<RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-		Log.i(TAG, String.valueOf(taskInfo.size()));
 		if (!taskInfo.isEmpty()) {
 			ComponentName topActivity = taskInfo.get(0).topActivity;
 
@@ -251,7 +249,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.i(TAG, "OnDestroy has been called!");
 	}
 
 	@Override
@@ -328,7 +325,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		public void onServiceConnected(ComponentName className, IBinder service) {
 			// We've bound to LocalService, cast the IBinder and get
 			// LocalService instance
-			Log.i(TAG, "Service binded");
 			LocalBinder binder = (LocalBinder) service;
 			mService = binder.getService();
 			mBound = true;
@@ -401,7 +397,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		@Override
 		public Fragment getItem(int position) {
 			TabInfo info = mTabs.get(position);
-			Log.i(TAG, "Get item has been called");
 			return Fragment.instantiate(mContext, info.clss.getName(),
 					info.args);
 		}
@@ -419,7 +414,6 @@ public class PoiActivity extends SherlockFragmentActivity implements
 
 		public void onTabSelected(Tab tab, FragmentTransaction ft) {
 			Object tag = tab.getTag();
-			Log.i(TAG, "onTabSelected has been called");
 			if(gridTag != null)
 				((GridFragment)mContext.getSupportFragmentManager().findFragmentByTag(gridTag)).ResumeImageFetcher();
 			for (int i = 0; i < mTabs.size(); i++) {
@@ -430,7 +424,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 
 		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-			Log.i(TAG, "onTabUnSelected has been called");
+
 			if(gridTag != null)
 				((GridFragment)mContext.getSupportFragmentManager().findFragmentByTag(gridTag)).PauseImageFetcher();
 		}

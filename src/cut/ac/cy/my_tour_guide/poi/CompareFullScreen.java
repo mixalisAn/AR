@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -18,10 +17,8 @@ import cut.ac.cy.my_tour_guide.gallery.ImageFetcher;
 public class CompareFullScreen extends SherlockFragmentActivity{
 	private static final int NUM_ITEMS = 2;
 	private static final String IMAGE_CACHE_DIR = "images";
-	private static final String TAG = "CompareFullScreen";
 	private static final String INIT_RES = "markerCompareUrls";
 	private static final String INIT_SELECTION ="selectedRes";
-	//private static String[] mResources = new String[2];
 	private static String[] compareUrls = new String[2];
 	private ImageFetcher mImageFetcher;
 	
@@ -58,8 +55,7 @@ public class CompareFullScreen extends SherlockFragmentActivity{
         
 		compareUrls = getIntent().getStringArrayExtra(INIT_RES);
 		int position = getIntent().getIntExtra(INIT_SELECTION, -1);
-		Log.i(TAG, "Position: " + String.valueOf(position));
-		//initResourses(resName);
+		
 		MyAdapter mAdapter = new MyAdapter(getSupportFragmentManager());
 		ViewPager mPager = (ViewPager) findViewById(R.id.pager2);
 		mPager.setAdapter(mAdapter);
@@ -74,14 +70,6 @@ public class CompareFullScreen extends SherlockFragmentActivity{
     public ImageFetcher getImageFetcher() {
         return mImageFetcher;
     }
-
-
-	/*
-	private void initResourses(String resName) {
-		mResources[0] = resName + "_present";
-		mResources[1] = resName + "_past";
-	}
-	*/
 
 	public static class MyAdapter extends FragmentPagerAdapter{
 

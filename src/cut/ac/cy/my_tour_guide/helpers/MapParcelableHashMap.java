@@ -4,7 +4,11 @@ import java.util.HashMap;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
 public class MapParcelableHashMap implements Parcelable{
 	private HashMap<String, MapMarker> mapMarkersData;
 	

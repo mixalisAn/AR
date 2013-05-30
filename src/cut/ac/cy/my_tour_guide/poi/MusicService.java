@@ -8,11 +8,14 @@ import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
-import android.util.Log;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
 
 public class MusicService extends Service{
-	private static final String TAG = "MusicService";
 	private MediaPlayer mPlayer;
 	private AudioManager am;
 	
@@ -34,7 +37,7 @@ public class MusicService extends Service{
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		Log.i(TAG, "onBind has been called");
+		//Log.i(TAG, "onBind has been called");
 		return mBinder;
 	}
 	
@@ -43,7 +46,6 @@ public class MusicService extends Service{
 	 */
 	@Override
 	public void onCreate(){
-		Log.i(TAG, "service created");
 		int audioRes = getResources().getIdentifier(
 				MusicResources.getMusicResources(), "raw", "cut.ac.cy.my_tour_guide");
 		mPlayer = MediaPlayer.create(this, audioRes);	
@@ -55,13 +57,11 @@ public class MusicService extends Service{
 	 */
     @Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-    	Log.i(TAG, "Service onStartCommand executed.");
 		return START_STICKY;
 	}
 
 	@Override
     public void onDestroy() {
-    	Log.i(TAG, "service destroyed");
         mPlayer.release();
         mPlayer = null;
     }
@@ -104,7 +104,6 @@ public class MusicService extends Service{
     
     @Override
     public boolean onUnbind(Intent intent){
-    	Log.i(TAG,"onUnbind");
     	return false;
     	
     }

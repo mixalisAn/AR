@@ -1,5 +1,11 @@
 package cut.ac.cy.my_tour_guide.helpers;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
+
 public class CategoriesRowDetails {
 
 	private long categoryId;

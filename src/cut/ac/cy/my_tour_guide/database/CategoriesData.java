@@ -1,5 +1,11 @@
 package cut.ac.cy.my_tour_guide.database;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ *
+ */
+
 public class CategoriesData {
 	private String category;
 	private boolean selected;
@@ -8,7 +14,6 @@ public class CategoriesData {
 		this.category = category;
 		this.selected = selected;
 	}
-	
 	
 	public String getCategory(){
 		return category;

@@ -3,7 +3,6 @@ package cut.ac.cy.my_tour_guide.helpers;
 import java.util.List;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,13 @@ import cut.ac.cy.my_tour_guide.R;
  * tou. To checkbox prepei omws na exei to apothikeumeno check apo to sigekrimeno checkbox
  *
  */
+
+/**
+ * 
+ * @author Michalis Anastasiou
+ *	code from http://www.vogella.com/articles/AndroidListView/article.html
+ */
+
 public class CategoriesAdapter extends ArrayAdapter<CategoriesRowDetails>{
 	private final Activity context;
 	private final List<CategoriesRowDetails> categories;
@@ -70,9 +76,9 @@ public class CategoriesAdapter extends ArrayAdapter<CategoriesRowDetails>{
 	    }else{
 	    	holder.imageView.setImageResource(resResult);
 	    }
-	    Log.i("CategoriesAdapter", String.valueOf(categories.get(position).isSelected()) + "position = " + String.valueOf(position));
+	    //Log.i("CategoriesAdapter", String.valueOf(categories.get(position).isSelected()) + "position = " + String.valueOf(position));
 	    holder.checkBox.setChecked(categories.get(position).isSelected());
-	    Log.i("CategoriesAdapter", String.valueOf(holder.checkBox.isChecked()));
+	    //Log.i("CategoriesAdapter", String.valueOf(holder.checkBox.isChecked()));
 		return rowView;
 	}
 

@@ -7,7 +7,11 @@ import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.os.Bundle;
 import android.widget.Toast;
-
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
 public class ConnectionStatusReceiver extends BroadcastReceiver{
 
 	@Override

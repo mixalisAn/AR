@@ -3,6 +3,12 @@ package cut.ac.cy.my_tour_guide.database;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Michalis Anastasiou
+ * 
+ */
+
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";

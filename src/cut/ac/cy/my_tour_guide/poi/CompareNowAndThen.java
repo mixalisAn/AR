@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +20,6 @@ import cut.ac.cy.my_tour_guide.gallery.ParallelImageFetcher;
 public class CompareNowAndThen extends SherlockFragment implements
 		OnClickListener {
 	private static final String IMAGE_CACHE_DIR = "images";
-	private static final String TAG = "Comapre Now And Then";
 	private static final String RES_NAME = "markerCompareUrls";
 	private static final String SELECTED_RES = "selectedRes";
 	private ImageView pastImageView;
@@ -36,16 +34,15 @@ public class CompareNowAndThen extends SherlockFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i(TAG, "onCreate has been called");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		Log.i(TAG, "onCreateView has been called");
+		
 		Bundle bundle = getArguments();
         download = bundle.getBoolean("download");
-		//markerResName = ((PoiActivity) getActivity()).getMarkerResName();
+		
 		final View view = inflater.inflate(R.layout.compare_now_and_then,
 				container, false);
 		
@@ -75,14 +72,6 @@ public class CompareNowAndThen extends SherlockFragment implements
 		textViewPast = (TextView) view.findViewById(R.id.textViewPast);
 		textViewPresent = (TextView) view.findViewById(R.id.textViewPresent);
 		
-		/*int presentRes = getResources().getIdentifier(
-				markerResName + "_present", "drawable",
-				"cut.ac.cy.my_tour_guide");
-		presentImageView.setImageResource(presentRes);
-		
-		int pastRes = getResources().getIdentifier(markerResName + "_past",
-				"drawable", "cut.ac.cy.my_tour_guide");
-		pastImageView.setImageResource(pastRes);*/
 		if(download){
 			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[0], pastImageView);
 			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[1], presentImageView);
