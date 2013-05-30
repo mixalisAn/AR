@@ -9,11 +9,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.PowerManager.WakeLock;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +46,7 @@ import cut.ac.cy.my_tour_guide.capture_image.CaptureImage;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.data.LocalDataSource;
 import cut.ac.cy.my_tour_guide.dialogs.CollisionDialog;
+import cut.ac.cy.my_tour_guide.dialogs.DownloadDialog;
 import cut.ac.cy.my_tour_guide.dialogs.MenuDialog;
 import cut.ac.cy.my_tour_guide.dialogs.CollisionDialog.ConfirmationListener;
 import cut.ac.cy.my_tour_guide.gallery.Utils;
@@ -103,6 +108,11 @@ public class AugmentedReality extends SensorsActivity implements
 	private static List<Marker> selectedCollisionMarkers = new ArrayList<Marker>();
 	private static final ExecutorService executor = Executors.newFixedThreadPool(1);
 	private static Future<List<Marker>> future;
+	private Marker selectedMarker;
+	private static final int NO_INTERNET = 0;
+	private static final int MOBILE_INTERNET = 1;
+	private static final int INTERNET = 2;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -355,16 +365,39 @@ public class AugmentedReality extends SensorsActivity implements
 	};
 
 	protected void markerTouched(Marker marker) {
-		String[] compareUrls = {marker.getPastUrl(), marker.getPresentUrl()};
-		Intent intent = new Intent(this, PoiActivity.class);
-		intent.putExtra("Id", marker.getId());
-		intent.putExtra("Res Name", marker.getResName());
-		intent.putExtra("Compare Urls", compareUrls);
-
-		startActivity(intent);
+		selectedMarker = marker;
+		
+		switch(checkNetworkConnectionAndType()){
+		case NO_INTERNET:
+			startPoiActivity(false);
+			break;
+		case MOBILE_INTERNET:
+			DownloadDialog dialog = new DownloadDialog();
+			dialog.show(getSupportFragmentManager(), "Dialog Download");
+			
+			break;
+		case INTERNET:
+			startPoiActivity(true);
+			break;
+			default:
+				startPoiActivity(true);
+				break;
+		}
+		
 		Log.w(TAG, "markerTouched() not implemented.");
 	}
 
+	private void startPoiActivity(boolean download){
+		String[] compareUrls = {selectedMarker.getPastUrl(), selectedMarker.getPresentUrl()};
+		Intent intent = new Intent(this, PoiActivity.class);
+		intent.putExtra("Id", selectedMarker.getId());
+		intent.putExtra("Res Name", selectedMarker.getResName());
+		intent.putExtra("Compare Urls", compareUrls);
+		intent.putExtra("download", download);
+
+		startActivity(intent);
+	}
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -505,5 +538,32 @@ public class AugmentedReality extends SensorsActivity implements
 	
 	
 	
+	private int checkNetworkConnectionAndType() {
+		final ConnectivityManager connManager =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+		if (networkInfo == null || !networkInfo.isConnected()) {
+            return 0;
+        }else if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
+            return 1;
+        }else{
+        	return 2;
+        }
+	}
+	
+	public void networkDialogSelection(int selection){
+		switch(selection){
+		case DialogInterface.BUTTON_POSITIVE:
+			startPoiActivity(true);
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+			startPoiActivity(false);
+			break;
+			default:
+				startPoiActivity(true);
+				break;
+		}
+	}
 	
 }

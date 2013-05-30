@@ -31,7 +31,8 @@ public class CompareNowAndThen extends SherlockFragment implements
 	private ParallelImageFetcher mImageFetcher;
 	//private String markerResName;
 	private boolean textVisibility = true;
-
+	private boolean download;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,6 +43,8 @@ public class CompareNowAndThen extends SherlockFragment implements
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.i(TAG, "onCreateView has been called");
+		Bundle bundle = getArguments();
+        download = bundle.getBoolean("download");
 		//markerResName = ((PoiActivity) getActivity()).getMarkerResName();
 		final View view = inflater.inflate(R.layout.compare_now_and_then,
 				container, false);
@@ -80,8 +83,13 @@ public class CompareNowAndThen extends SherlockFragment implements
 		int pastRes = getResources().getIdentifier(markerResName + "_past",
 				"drawable", "cut.ac.cy.my_tour_guide");
 		pastImageView.setImageResource(pastRes);*/
-		mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[0], pastImageView);
-		mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[1], presentImageView);
+		if(download){
+			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[0], pastImageView);
+			mImageFetcher.loadImage(((PoiActivity) getActivity()).getCompareUrls()[1], presentImageView);
+		}else{
+			mImageFetcher.loadImage(null, pastImageView);
+			mImageFetcher.loadImage(null, presentImageView);
+		}
 		textViewPast.setBackgroundColor(Color.argb(180, 00, 00, 00));
 		textViewPresent.setBackgroundColor(Color.argb(180, 00, 00, 00));
 		

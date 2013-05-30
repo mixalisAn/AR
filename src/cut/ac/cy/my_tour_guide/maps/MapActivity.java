@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import cut.ac.cy.my_tour_guide.R;
 import cut.ac.cy.my_tour_guide.data.ARData;
 import cut.ac.cy.my_tour_guide.database.DBHandler;
+import cut.ac.cy.my_tour_guide.dialogs.DownloadDialog;
 import cut.ac.cy.my_tour_guide.helpers.MapMarker;
 import cut.ac.cy.my_tour_guide.helpers.MapParcelableHashMap;
 import cut.ac.cy.my_tour_guide.poi.ConnectionStatusReceiver;
@@ -51,6 +52,10 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 	private UiSettings uiSettings;
 	private GoogleMap map;
 	private DBHandler db = null;
+	private Marker selectedMarker;
+	private static final int NO_INTERNET = 0;
+	private static final int MOBILE_INTERNET = 1;
+	private static final int INTERNET = 2;
 	/**
 	 * Xrisimopoiountai mono primatives giauto kai Integer. I java kanei autoboxing giauto eite valw
 	 * map("kati", 3) eite map("kati", new Integer(3)) einai to idio
@@ -343,6 +348,20 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 		return isConnected;
 	}
 
+	private int checkNetworkConnectionAndType() {
+		final ConnectivityManager connManager =
+                (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+		if (networkInfo == null || !networkInfo.isConnected()) {
+            return 0;
+        }else if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE){
+            return 1;
+        }else{
+        	return 2;
+        }
+	}
+	
 	// register broadcast receiver
 	public void registerBroadcastReceiver() {
 		this.registerReceiver(connectionReceiver, new IntentFilter(
@@ -357,13 +376,48 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		
-		Intent intent = new Intent(this, PoiActivity.class);
-		intent.putExtra("Id", mapMarkers.get(marker.getId()).getId());
-		intent.putExtra("Res Name", mapMarkers.get(marker.getId()).getResName());
-		intent.putExtra("Compare Urls", mapMarkers.get(marker.getId()).getCompareUrls());
-		
-		startActivity(intent);
+		selectedMarker = marker;
+
+		switch(checkNetworkConnectionAndType()){
+		case NO_INTERNET:
+			startPoiActivity(false);
+			break;
+		case MOBILE_INTERNET:
+			DownloadDialog dialog = new DownloadDialog();
+			dialog.show(getSupportFragmentManager(), "Dialog Download");
+			
+			break;
+		case INTERNET:
+			startPoiActivity(true);
+			break;
+			default:
+				startPoiActivity(true);
+				break;
+		}
 	}
 
+	private void startPoiActivity(boolean download){
+		Intent intent = new Intent(this, PoiActivity.class);
+		intent.putExtra("Id", mapMarkers.get(selectedMarker.getId()).getId());
+		intent.putExtra("Res Name", mapMarkers.get(selectedMarker.getId()).getResName());
+		intent.putExtra("Compare Urls", mapMarkers.get(selectedMarker.getId()).getCompareUrls());
+		intent.putExtra("download", download);
+
+		startActivity(intent);
+	}
+	
+	public void networkDialogSelection(int selection){
+		switch(selection){
+		case DialogInterface.BUTTON_POSITIVE:
+			startPoiActivity(true);
+			break;
+		case DialogInterface.BUTTON_NEGATIVE:
+			startPoiActivity(false);
+			break;
+			default:
+				startPoiActivity(true);
+				break;
+		}
+	}
+	
 }

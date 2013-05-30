@@ -38,6 +38,7 @@ public class GridFragment extends SherlockFragment {
 	    private String[] mFullScreenUrls;
 	    private String[] mGridStrings;
 	    private long markerId;
+	    private boolean download;
 
 	    /**
 	     * Empty constructor as per the Fragment documentation
@@ -48,6 +49,10 @@ public class GridFragment extends SherlockFragment {
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        Utils.enableStrictMode();
+	        
+	        Bundle bundle = getArguments();
+	        download = bundle.getBoolean("download");
+	        
 	        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
 	        mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
@@ -265,7 +270,12 @@ public class GridFragment extends SherlockFragment {
 
 	            // Finally load the image asynchronously into the ImageView, this also takes care of
 	            // setting a placeholder image while the background thread runs
-	            mImageFetcher.loadImage(mGridStrings[position], imageView);
+	            if(download){
+	            	mImageFetcher.loadImage(mGridStrings[position], imageView);
+
+	            }else{
+	            	mImageFetcher.loadImage(null, null);
+	            }
 	            return imageView;
 	        }
 

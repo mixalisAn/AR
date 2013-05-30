@@ -6,7 +6,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 1;
+	static final int DATABASE_VERSION = 51;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";
@@ -69,7 +69,7 @@ public class DBSchemaVariables {
 	//36 ROWS INITIALIZATION
 	private void initializePois() {
 		initialPois.add(new PoiData("Agia Zoni", 34.684168, 33.043946 , 0 , null , "Agias Zonis",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"agia_zoni", 1, "http://www.cut.ac.cy/images/cut/galleries/other/0001/agia_zoni-90'_3.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/agia_zoni_present.jpg"));
 		
 		initialPois.add(new PoiData("Agia Napa", 34.673828, 33.044343 , 0 , null , "Agiou Andreou - Genethliou Mitela",
@@ -83,19 +83,19 @@ public class DBSchemaVariables {
 				,"katholiki", 1, "http://www.cut.ac.cy/images/cut/galleries/other/0001/katholiki-30'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/katholiki_present.jpg"));
 		
 		initialPois.add(new PoiData("Tzami Tzezit", 34.672288, 33.038287 , 0 , null , "Angira",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"tzami_tzezit", 1, "http://www.cut.ac.cy/images/cut/galleries/other/0001/tzami_tzetit-70'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/tzami_tzezit_present.jpg"));
 		
 		initialPois.add(new PoiData("Hellas", 34.678989,33.051349 , 0 , null , "28th Oktomvriou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"hellas", 2, "http://www.cut.ac.cy/images/cut/galleries/other/0001/hellas-70'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/hellas_present.jpg"));
 		
 		initialPois.add(new PoiData("Continental", 34.674492, 33.046194 , 0 , null , "Spirou Araouzou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"continental", 4, "http://www.cut.ac.cy/images/cut/galleries/other/0001/continental-40'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/continental_present.jpg"));
 		
 		initialPois.add(new PoiData("Europa", 34.684351,33.059554 , 0 , null , "28th Oktomvriou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"europa", 4, "http://www.cut.ac.cy/images/cut/galleries/other/0001/europa-80'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/europa_present.jpg"));
 		
 		initialPois.add(new PoiData("Agora", 34.676014, 33.043066 , 0 , null , "Saripolou",
@@ -112,7 +112,7 @@ public class DBSchemaVariables {
 				,"aktaion", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/aktaion-1926_3.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/aktaion_present.jpg"));
 		
 		initialPois.add(new PoiData("City Hall", 34.6749, 33.044131 , 0 , "http://www.limassolmunicipal.com.cy/index_en.html" , "Arxiepiskopou Kiprianou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"city_hall", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/city_hall_1.jpg","http://www.cut.ac.cy/images/cut/galleries/other/0001/city_hall_present.jpg"));
 		
 		initialPois.add(new PoiData("Public Baths", 34.680513, 33.054061 , 0 , null , "28th Oktomvriou",
@@ -121,7 +121,7 @@ public class DBSchemaVariables {
 				,"public_baths", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/public_baths-1926%20_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/public_baths_present.jpg"));
 		
 		initialPois.add(new PoiData("Public Library", 34.6802, 33.049278 , 0 , "http://www.limassolmunicipal.com.cy/publiclibrary/index_en.html" , "Agiou Andreou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"public_library", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/public_library_4.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/public_library_present.jpg"));
 		
 		initialPois.add(new PoiData("Castle", 34.672262, 33.04179 , 0 , "http://en.wikipedia.org/wiki/Limassol_Castle" , "Vasilisis Veregarias",
@@ -139,7 +139,7 @@ public class DBSchemaVariables {
 				,"castle", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/castle-1940_4.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/castle_present.jpg"));
 		
 		initialPois.add(new PoiData("District Administration", 34.678919, 33.043933 , 0 , null , "Anexartisias",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"district_administration", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/district_administration-30'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/district_administration_present.jpg"));
 		
 		initialPois.add(new PoiData("Historical Archive", 34.684731,33.054887 , 0 , null , "Lord Byron",
@@ -147,11 +147,11 @@ public class DBSchemaVariables {
 				,"historical_archive", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/historical_archive-%2030'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/historical_archive_present.jpg"));
 		
 		initialPois.add(new PoiData("Pattiki", 34.674366, 33.042221 , 0 , null , "Spartis - Ellados",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"pattiki", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/patiki-60_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/patiki_present.jpg"));
 		
 		initialPois.add(new PoiData("Trigono Sxiza", 34.673832, 33.043933 , 0 , null , "Agiou Andreou - Genethliou Mitela",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"trigono_sxiza", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/trigono_sxiza_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/trigono_sxiza_present.jpg"));
 		
 		initialPois.add(new PoiData("Old Law Court", 34.675568, 33.044796 , 0 , null , "Ifigenias",
@@ -159,7 +159,7 @@ public class DBSchemaVariables {
 				,"old_law_court", 5, "http://www.cut.ac.cy/images/cut/galleries/other/0001/old_law_court-60'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/old_law_court_present.jpg"));
 		//sto molos exei mpei pier giati iparxei provlima me tin katigoria molos
 		initialPois.add(new PoiData("Molos", 34.670901, 33.044445 , 0 , null , "Molos",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"pier", 6, "http://www.cut.ac.cy/images/cut/galleries/other/0001/molos_10.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/molos_present.jpg"));
 		
 		initialPois.add(new PoiData("Carnival", 34.675482, 33.04769 , 0 , null , "Spirou Araouzou",
@@ -185,15 +185,15 @@ public class DBSchemaVariables {
 		
 
 		initialPois.add(new PoiData("Old Limassol", 34.673179, 33.042052 , 0 , "http://en.wikipedia.org/wiki/Limassol" , "Agiou Andreou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"old_limassol", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/old_limassol_5.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/limassol_present.jpg"));
 		
 		initialPois.add(new PoiData("Agiou Andreou", 34.67415, 33.044804 , 0 , null , "Agiou Andreou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"agiou_andreou", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/agiou_andreou-80'_7.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/agiou_andreou_present.jpg"));
 		
 		initialPois.add(new PoiData("Anexartisias", 34.675407, 33.04632 , 0 , null , "Anexartisias",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"anexartisias", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/anexartisias-40'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/anexartisias_present.jpg"));
 		
 		initialPois.add(new PoiData("Genethliou Mitela", 34.673146, 33.043356 , 0 , null , "Genethliou Mitela",
@@ -201,11 +201,11 @@ public class DBSchemaVariables {
 				,"genethliou_mitela", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/genethliou_mitela-80'_5.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/genethliou_mitela_present.jpg"));
 		
 		initialPois.add(new PoiData("Agiou Andreou - Ifigenias", 34.674825, 33.045858 , 0 , null , "Agiou Andreou - Ifigenias",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"agiou_andreou_ifigenias", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/agiou_andreou_ifigenias-60'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/agiou_andreou_ifigenias_present.jpg"));
 		
 		initialPois.add(new PoiData("Saripolou", 34.674639, 33.043707 , 0 , null , "Saripolou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"saripolou", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/saripolou-80'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/saripolou_present.jpg"));
 		
 		initialPois.add(new PoiData("Vasiliou Makedonos", 34.677533,33.046642 , 0 , null , "Vasileiou Makedonos",
@@ -213,23 +213,23 @@ public class DBSchemaVariables {
 				,"vasileiou_makedonos", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/vasileiou_makedonos-60'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/vasileiou_makedonos_present.jpg"));
 		
 		initialPois.add(new PoiData("Makariou", 34.686974, 33.03889, 0 , null , "Makariou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"makariou", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/makariou-1955_1.jpg","http://www.cut.ac.cy/images/cut/galleries/other/0001/makariou_present.jpg"));
 		
 		initialPois.add(new PoiData("Agiris", 34.6728, 33.041098 , 0 , null , "Angiris",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"angiris", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/angiris%20-75'-76'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/angiris_present.jpg"));
 		
 		initialPois.add(new PoiData("Eirinis", 34.67374, 33.041854 , 0 , null , "Eirinis",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"eirinis", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/eirinis_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/eirinis_present.jpg"));
 		
 		initialPois.add(new PoiData("Kitiou Kiprianou", 34.674829,33.042887 , 0 , null , "Kitiou Kiprianou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"kitiou_kiprianou", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/kitiou_kirpianou-70'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/kitiou_kiprianou_present.jpg"));
 		
 		initialPois.add(new PoiData("Paraliakos", 34.674909,33.047031 , 0 , null , "Spirou Araouzou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"paraliakos", 7, "http://www.cut.ac.cy/images/cut/galleries/other/0001/paraliakos-50'_7.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/paraliakos_present.jpg"));
 		
 		
@@ -245,11 +245,11 @@ public class DBSchemaVariables {
 				,"rialto_theater", 8, "http://www.cut.ac.cy/images/cut/galleries/other/0001/rialto-60'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/rialto_present.jpg"));
 		
 		initialPois.add(new PoiData("Maxim", 34.678736, 33.048884 , 0 , null , "Agiou Andreou",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"maxim", 8, "http://www.cut.ac.cy/images/cut/galleries/other/0001/maxim-40'_2.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/maxim_present.jpg"));
 		
 		initialPois.add(new PoiData("Patixio", 34.681204,33.043624 , 0 , null , "Agias Zonis",
-				"The building was made in 1979. No more info available"
+				"No info available for this Point of Interest."
 				,"patixio", 8, "http://www.cut.ac.cy/images/cut/galleries/other/0001/patixio-60'_1.jpg", "http://www.cut.ac.cy/images/cut/galleries/other/0001/patixio_present.jpg"));
 		
 		
