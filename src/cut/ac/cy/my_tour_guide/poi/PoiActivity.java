@@ -68,6 +68,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	
 	private String gridFragmentTag;
 	private String compareFragmentTag;
+	private boolean download;
 	
 	public void setGridFragmentTag(String tag){
 		gridFragmentTag = tag;
@@ -104,7 +105,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		markerId = intent.getLongExtra("Id", 0);
 		markerResName = intent.getStringExtra("Res Name");
 		markerCompareUrls = intent.getStringArrayExtra("Compare Urls");
-
+		download = intent.getBooleanExtra("download", true);
+		
 		if (isAudioResourceExist()) {
 			MusicResources.setMusicResources(markerResName);
 			intentService = new Intent(this, MusicService.class);
@@ -135,6 +137,9 @@ public class PoiActivity extends SherlockFragmentActivity implements
 			}
 		}
 		
+		Bundle b = new Bundle();
+		b.putBoolean("download", download);
+		
 		Tab tab1 = actionBar.newTab().setText("ABOUT");
 
 		Tab tab2 = actionBar.newTab().setText("PHOTO");
@@ -142,8 +147,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		Tab tab3 = actionBar.newTab().setText("COMPARE");
 
 		tabsAdapter.addTab(tab1, PoiAboutFragment.class, null);
-		tabsAdapter.addTab(tab2, GridFragment.class, null);
-		tabsAdapter.addTab(tab3, CompareNowAndThen.class, null);
+		tabsAdapter.addTab(tab2, GridFragment.class, b);
+		tabsAdapter.addTab(tab3, CompareNowAndThen.class, b);
 
 		backwardView.setOnClickListener(this);
 		stopView.setOnClickListener(this);
@@ -165,6 +170,8 @@ public class PoiActivity extends SherlockFragmentActivity implements
 		}
 	}
 
+	
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -246,6 +253,7 @@ public class PoiActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		Runtime.getRuntime().gc();
 		Log.i(TAG, "OnDestroy has been called!");
 	}
 
