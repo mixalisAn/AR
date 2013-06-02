@@ -1321,14 +1321,18 @@ containing a value of this type.
         public static final int aktaion=0x7f050002;
         public static final int carnival=0x7f050003;
         public static final int castle=0x7f050004;
-        public static final int enaerios=0x7f050005;
-        public static final int genethliou_mitela=0x7f050006;
-        public static final int historical_archive=0x7f050007;
-        public static final int katholiki=0x7f050008;
-        public static final int old_law_court=0x7f050009;
-        public static final int public_baths=0x7f05000a;
-        public static final int rialto_theater=0x7f05000b;
-        public static final int vasileiou_makedonos=0x7f05000c;
+        public static final int city_hall=0x7f050005;
+        public static final int continental=0x7f050006;
+        public static final int enaerios=0x7f050007;
+        public static final int europa=0x7f050008;
+        public static final int genethliou_mitela=0x7f050009;
+        public static final int historical_archive=0x7f05000a;
+        public static final int katholiki=0x7f05000b;
+        public static final int old_law_court=0x7f05000c;
+        public static final int public_baths=0x7f05000d;
+        public static final int public_library=0x7f05000e;
+        public static final int rialto_theater=0x7f05000f;
+        public static final int vasileiou_makedonos=0x7f050010;
     }
     public static final class string {
         public static final int about=0x7f080035;
