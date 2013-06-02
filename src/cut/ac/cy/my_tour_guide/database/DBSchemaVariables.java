@@ -12,7 +12,7 @@ import java.util.List;
 public class DBSchemaVariables {
 	
 	static final String DATABASE_NAME = "MyTourGuide";
-	static final int DATABASE_VERSION = 51;
+	static final int DATABASE_VERSION = 53;
 	static final String FOREIGN_KEY_ENABLE = "PRAGMA foreign_keys = ON";
 	//TABLE POI VARIABLES
 	static final String POI_TABLE = "pois";

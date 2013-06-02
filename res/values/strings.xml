@@ -8,7 +8,7 @@
    
     <string name="title_activity_poi_info">PoiInfo</string>
     <string name="title_activity_poi_browser">PoiBrowser</string>
-    <string name="wikipedia">Wikipedia:</string>
+    <string name="website">Website:</string>
     <string name="navigation">Navigate to:</string>
     <string name="share">Share:</string>
     <string name="map_settings">Settings</string>

@@ -38,7 +38,7 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 	
 	private static final AtomicBoolean computing = new AtomicBoolean(false);
 	//einai gia to best locationUpdate
-	private static final int TWO_MINUTES = 1000 * 60 * 2; 
+	private static final int ONE_MINUTE = 1000 * 60; 
 	private static final int MIN_TIME = 30 * 1000;
 	private static final int MIN_DISTANCE = 3;
 	private static Location currentBestLocation;
@@ -407,8 +407,8 @@ public class SensorsActivity extends SherlockFragmentActivity implements
 
 		// Check whether the new location fix is newer or older
 		long timeDelta = location.getTime() - currentBestLocation.getTime();
-		boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
-		boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+		boolean isSignificantlyNewer = timeDelta > ONE_MINUTE;
+		boolean isSignificantlyOlder = timeDelta < -ONE_MINUTE;
 		boolean isNewer = timeDelta > 0;
 		
 		// If it's been more than two minutes since the current location, use the new location

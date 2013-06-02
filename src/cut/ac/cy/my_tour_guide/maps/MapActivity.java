@@ -179,13 +179,16 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 			if (map != null) {
 				//Log.i(TAG, "Map initialization!");
 				// my current location
-				if(ARData.getCurrentLocation() == ARData.hardFix){
+				/*if(ARData.getCurrentLocation() == ARData.hardFix){
 					lat = 34.677178;
 					lng = 33.045097;
 				}else{
 					lat = ARData.getCurrentLocation().getLatitude();
 					lng = ARData.getCurrentLocation().getLongitude();
-				}
+				}*/
+				lat = 34.678574;
+				lng = 33.042948;
+				
 				myCurrentLocation = new LatLng(lat, lng);
 				
 				// map.addMarker(new
@@ -219,7 +222,7 @@ public class MapActivity extends SherlockFragmentActivity implements OnInfoWindo
 				}
 				
 				map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-						myCurrentLocation, 15));
+						myCurrentLocation, 14));
 				// Zoom in, animating the camera.
 				//map.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, null);
 				map.setMyLocationEnabled(true);

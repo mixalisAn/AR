@@ -1469,7 +1469,7 @@ containing a value of this type.
         public static final int title_activity_maps=0x7f080023;
         public static final int title_activity_poi_browser=0x7f080027;
         public static final int title_activity_poi_info=0x7f080026;
-        public static final int wikipedia=0x7f080028;
+        public static final int website=0x7f080028;
     }
     public static final class style {
         public static final int Sherlock___TextAppearance_Small=0x7f0c0046;

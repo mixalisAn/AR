@@ -606,7 +606,7 @@ int string title_activity_map_about 0x7f08002c
 int string title_activity_maps 0x7f080023
 int string title_activity_poi_browser 0x7f080027
 int string title_activity_poi_info 0x7f080026
-int string wikipedia 0x7f080028
+int string website 0x7f080028
 int style Sherlock___TextAppearance_Small 0x7f0c0046
 int style Sherlock___Theme 0x7f0c0051
 int style Sherlock___Theme_DarkActionBar 0x7f0c0053
